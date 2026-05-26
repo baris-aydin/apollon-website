@@ -42,7 +42,7 @@ export function Hero({ locale, title, subtitle }: HeroProps) {
         </div>
 
         {/* Headline */}
-        <h1 className="font-heading text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl">
+        <h1 className="font-heading text-5xl font-bold leading-[1.15] tracking-tight md:text-7xl lg:text-8xl pb-1">
           {title}
         </h1>
 

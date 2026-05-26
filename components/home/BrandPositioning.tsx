@@ -20,7 +20,7 @@ export function BrandPositioning({ locale }: { locale: Locale }) {
           <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-24">
             <div className="space-y-5">
               <div className="h-px w-12 bg-bronze/50" />
-              <h2 className="font-heading text-3xl font-semibold leading-tight tracking-tight md:text-4xl lg:text-[2.75rem]">
+              <h2 className="font-heading text-3xl font-semibold leading-[1.2] tracking-tight md:text-4xl lg:text-[2.75rem] pb-0.5">
                 {c.heading}
               </h2>
             </div>

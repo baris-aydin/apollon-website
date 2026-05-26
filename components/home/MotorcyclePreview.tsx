@@ -68,7 +68,7 @@ export function MotorcyclePreview({ locale }: { locale: Locale }) {
             <span className="text-xs font-medium uppercase tracking-[0.3em] text-bronze/70">
               {c.eyebrow}
             </span>
-            <h2 className="font-heading text-3xl font-semibold leading-tight md:text-4xl">
+            <h2 className="font-heading text-3xl font-semibold leading-[1.2] md:text-4xl pb-0.5">
               {c.heading}
             </h2>
             <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">

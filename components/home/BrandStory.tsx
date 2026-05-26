@@ -32,7 +32,7 @@ export function BrandStory({ locale }: { locale: Locale }) {
               </span>
               <span className="h-px w-8 bg-bronze/40" />
             </div>
-            <h2 className="font-heading text-3xl font-semibold leading-tight tracking-tight md:text-4xl lg:text-5xl">
+            <h2 className="font-heading text-3xl font-semibold leading-[1.2] tracking-tight md:text-4xl lg:text-5xl pb-0.5">
               {c.heading}
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground md:text-lg">

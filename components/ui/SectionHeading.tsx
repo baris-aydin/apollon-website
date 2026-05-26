@@ -21,7 +21,7 @@ export function SectionHeading({
           </span>
         </div>
       )}
-      <h2 className="font-heading text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+      <h2 className="font-heading text-3xl font-bold leading-[1.2] tracking-tight text-foreground md:text-4xl lg:text-5xl pb-0.5">
         {title}
       </h2>
       {subtitle && (

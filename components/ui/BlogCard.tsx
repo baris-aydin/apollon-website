@@ -44,10 +44,10 @@ export function BlogCard({
             {category}
           </span>
         )}
-        <h3 className="font-heading text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-bronze line-clamp-2">
+        <h3 className="font-heading text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-bronze line-clamp-2 pb-0.5">
           {title}
         </h3>
-        <p className="text-sm leading-relaxed text-muted-foreground line-clamp-3">
+        <p className="text-sm leading-relaxed text-muted-foreground line-clamp-3 pb-0.5">
           {excerpt}
         </p>
         {publishedAt && (

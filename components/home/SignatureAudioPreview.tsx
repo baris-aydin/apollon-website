@@ -35,7 +35,7 @@ export function SignatureAudioPreview({ locale }: { locale: Locale }) {
             {c.badge}
           </span>
 
-          <h2 className="font-heading text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl">
+          <h2 className="font-heading text-4xl font-bold leading-[1.15] tracking-tight md:text-6xl lg:text-7xl pb-1">
             {c.heading}
           </h2>
 
