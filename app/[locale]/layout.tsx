@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton"
 import { isValidLocale, type Locale } from "@/lib/i18n"
 
 type LocaleLayoutProps = {
@@ -27,6 +28,7 @@ export default async function LocaleLayout({
       <Header locale={validLocale} />
       {children}
       <Footer locale={validLocale} />
+      <WhatsAppButton />
     </>
   )
 }

@@ -1,66 +1,166 @@
 import Link from "next/link"
 import { type Locale } from "@/lib/i18n"
 
-type FooterProps = {
-  locale: Locale
+type FooterProps = { locale: Locale }
+
+const products = {
+  tr: [
+    { label: "Araç Multimedya", href: "/products/car-multimedia" },
+    { label: "Güvenlik & Dashcam", href: "/products/car-safety-security" },
+    { label: "Motosiklet Sistemleri", href: "/products/motorcycle-smart-systems" },
+    { label: "Signature Audio", href: "/products/signature-audio-series" },
+  ],
+  en: [
+    { label: "Car Multimedia", href: "/products/car-multimedia" },
+    { label: "Safety & Dashcam", href: "/products/car-safety-security" },
+    { label: "Motorcycle Systems", href: "/products/motorcycle-smart-systems" },
+    { label: "Signature Audio", href: "/products/signature-audio-series" },
+  ],
+}
+
+const company = {
+  tr: [
+    { label: "Hakkımızda", href: "/about" },
+    { label: "Journal", href: "/journal" },
+    { label: "Distribütörlük", href: "/partner-distributor" },
+    { label: "İletişim", href: "/contact" },
+  ],
+  en: [
+    { label: "About", href: "/about" },
+    { label: "Journal", href: "/journal" },
+    { label: "Partnership", href: "/partner-distributor" },
+    { label: "Contact", href: "/contact" },
+  ],
+}
+
+const legal = {
+  tr: [
+    { label: "Garanti", href: "/warranty" },
+    { label: "KVKK / Gizlilik", href: "/privacy" },
+    { label: "Kullanım Şartları", href: "/terms" },
+  ],
+  en: [
+    { label: "Warranty", href: "/warranty" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms", href: "/terms" },
+  ],
+}
+
+const tagline = {
+  tr: "Otomobil ve motosikletler için premium mobilite teknolojileri.",
+  en: "Premium mobility technology for cars and motorcycles.",
+}
+
+const h = {
+  tr: { products: "Ürünler", company: "Şirket", contact: "İletişim" },
+  en: { products: "Products", company: "Company", contact: "Contact" },
 }
 
 export function Footer({ locale }: FooterProps) {
+  const year = new Date().getFullYear()
+  const labels = h[locale]
+
   return (
-    <footer className="border-t border-white/10 bg-black px-6 py-12 text-white">
-      <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-4">
-        <div className="space-y-3">
-          <p className="font-semibold">APOLLON</p>
-          <p className="max-w-xs text-sm text-neutral-400">
-            {locale === "tr"
-              ? "Otomobil ve motosikletler için premium mobilite teknolojileri."
-              : "Premium mobility technology for cars and motorcycles."}
-          </p>
-        </div>
+    <footer className="border-t border-border/50 bg-background">
+      <div className="section-container py-16">
+        <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr_1fr]">
 
-        <div>
-          <p className="mb-3 text-sm font-medium">
-            {locale === "tr" ? "Ürünler" : "Products"}
-          </p>
-          <ul className="space-y-2 text-sm text-neutral-400">
-            <li>
-              <Link href={`/${locale}/products/car-multimedia`}>
-                Car Multimedia
-              </Link>
-            </li>
-            <li>
-              <Link href={`/${locale}/products/car-safety-security`}>
-                Safety & Security
-              </Link>
-            </li>
-            <li>
-              <Link href={`/${locale}/products/motorcycle-smart-systems`}>
-                Motorcycle Systems
-              </Link>
-            </li>
-          </ul>
-        </div>
+          {/* Brand */}
+          <div className="space-y-6">
+            <Link
+              href={`/${locale}`}
+              className="font-heading text-xl font-bold tracking-[0.14em] text-foreground transition-colors hover:text-bronze"
+            >
+              APOLLON
+            </Link>
+            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+              {tagline[locale]}
+            </p>
+            <div className="flex items-center gap-3">
+              <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-sm border border-border/60 text-muted-foreground transition-colors hover:border-bronze/40 hover:text-bronze">
+                <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <a href="#" aria-label="YouTube" className="flex h-8 w-8 items-center justify-center rounded-sm border border-border/60 text-muted-foreground transition-colors hover:border-bronze/40 hover:text-bronze">
+                <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <a href="#" aria-label="LinkedIn" className="flex h-8 w-8 items-center justify-center rounded-sm border border-border/60 text-muted-foreground transition-colors hover:border-bronze/40 hover:text-bronze">
+                <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+            </div>
+          </div>
 
-        <div>
-          <p className="mb-3 text-sm font-medium">
-            {locale === "tr" ? "Şirket" : "Company"}
-          </p>
-          <ul className="space-y-2 text-sm text-neutral-400">
-            <li>
-              <Link href={`/${locale}/about`}>About</Link>
-            </li>
-            <li>
-              <Link href={`/${locale}/partner-distributor`}>Partner</Link>
-            </li>
-            <li>
-              <Link href={`/${locale}/contact`}>Contact</Link>
-            </li>
-          </ul>
-        </div>
+          {/* Products */}
+          <div>
+            <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-foreground">
+              {labels.products}
+            </p>
+            <ul className="space-y-3">
+              {products[locale].map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={`/${locale}${item.href}`}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <div>
-          <p className="mb-3 text-sm font-medium">Contact</p>
-          <p className="text-sm text-neutral-400">info@apollon.example</p>
+          {/* Company */}
+          <div>
+            <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-foreground">
+              {labels.company}
+            </p>
+            <ul className="space-y-3">
+              {company[locale].map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={`/${locale}${item.href}`}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-foreground">
+              {labels.contact}
+            </p>
+            <address className="not-italic space-y-2.5">
+              <p className="text-sm text-muted-foreground">
+                info@apollonentertainment.com
+              </p>
+              <p className="text-sm text-muted-foreground">+90 (000) 000 00 00</p>
+              <p className="text-sm text-muted-foreground">İstanbul, Türkiye</p>
+            </address>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-border/50">
+        <div className="section-container flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-muted-foreground/60">
+            © {year} Apollon Entertainment Systems.{" "}
+            {locale === "tr" ? "Tüm hakları saklıdır." : "All rights reserved."}
+          </p>
+          <nav className="flex flex-wrap gap-x-6 gap-y-2">
+            {legal[locale].map((item) => (
+              <Link
+                key={item.href}
+                href={`/${locale}${item.href}`}
+                className="text-xs text-muted-foreground/60 transition-colors hover:text-muted-foreground"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
     </footer>

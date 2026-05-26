@@ -1,64 +1,62 @@
-import { homepageQuery } from "@/sanity/lib/queries"
-import { sanityClient } from "@/sanity/lib/client"
+import { Hero } from "@/components/home/Hero"
+import { ProductCategories } from "@/components/home/ProductCategories"
+import { CTABlock } from "@/components/ui/CTABlock"
+import { type Locale } from "@/lib/i18n"
 
 type HomePageProps = {
-  params: Promise<{
-    locale: "tr" | "en"
-  }>
+  params: Promise<{ locale: Locale }>
 }
 
-type HomepageData = {
-  heroTitle?: string
-  heroSubtitle?: string
-  seoTitle?: string
-  seoDescription?: string
+const heroContent = {
+  tr: {
+    title: "Ruhu Olan Teknoloji",
+    subtitle: "Otomobil ve motosikletler için premium eğlence, güvenlik ve bağlantı sistemleri.",
+  },
+  en: {
+    title: "Technology With Soul",
+    subtitle: "Premium mobility entertainment systems for cars, motorcycles, safety, and sound.",
+  },
+}
+
+const ctaContent = {
+  tr: {
+    eyebrow: "Distribütörlük",
+    title: "Türkiye'de distribütörümüz olun",
+    description: "Premium mobilite teknolojilerini bölgenize taşıyın. Distribütör ve bayi başvuruları için bizimle iletişime geçin.",
+    primaryLabel: "Başvuru Yap",
+    primaryHref: "/partner-distributor",
+    secondaryLabel: "Bize Ulaşın",
+    secondaryHref: "/contact",
+  },
+  en: {
+    eyebrow: "Partnership",
+    title: "Become a distributor in your region",
+    description: "Bring premium mobility technology to your market. Contact us for distributor and dealer applications.",
+    primaryLabel: "Apply Now",
+    primaryHref: "/partner-distributor",
+    secondaryLabel: "Contact Us",
+    secondaryHref: "/contact",
+  },
 }
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params
-
-  const data = await sanityClient.fetch<HomepageData>(homepageQuery, {
-    locale,
-  })
-
-  const fallback = {
-    tr: {
-      title: "Ruhu Olan Teknoloji",
-      description:
-        "Otomobil ve motosikletler için premium eğlence, güvenlik ve bağlantı sistemleri.",
-      cta: "Ürünleri Keşfet",
-    },
-    en: {
-      title: "Technology With Soul",
-      description:
-        "Premium mobility entertainment systems for cars, motorcycles, safety, and sound.",
-      cta: "Explore Products",
-    },
-  }[locale]
-
-  const title = data?.heroTitle || fallback.title
-  const description = data?.heroSubtitle || fallback.description
+  const hero = heroContent[locale]
+  const cta = ctaContent[locale]
 
   return (
-    <main className="min-h-screen bg-black text-white flex items-center justify-center px-6 pt-16">
-      <section className="max-w-4xl text-center space-y-6">
-        <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
-          Apollon Entertainment Systems
-        </p>
-
-        <h1 className="text-5xl md:text-7xl font-semibold">{title}</h1>
-
-        <p className="mx-auto max-w-2xl text-lg text-neutral-300">
-          {description}
-        </p>
-
-        <a
-          href={`/${locale}/products`}
-          className="inline-flex rounded-full border border-neutral-700 px-6 py-3 text-sm font-medium hover:bg-white hover:text-black transition"
-        >
-          {fallback.cta}
-        </a>
-      </section>
+    <main>
+      <Hero locale={locale} title={hero.title} subtitle={hero.subtitle} />
+      <ProductCategories locale={locale} />
+      <CTABlock
+        eyebrow={cta.eyebrow}
+        title={cta.title}
+        description={cta.description}
+        primaryLabel={cta.primaryLabel}
+        primaryHref={`/${locale}${cta.primaryHref}`}
+        secondaryLabel={cta.secondaryLabel}
+        secondaryHref={`/${locale}${cta.secondaryHref}`}
+      />
     </main>
   )
 }
