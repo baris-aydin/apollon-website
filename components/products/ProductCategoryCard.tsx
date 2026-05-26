@@ -7,6 +7,7 @@ type ProductCategoryCardProps = {
   href: string
   icon: LucideIcon
   status?: "available" | "coming-soon"
+  ctaLabel?: string
 }
 
 export function ProductCategoryCard({
@@ -15,6 +16,7 @@ export function ProductCategoryCard({
   href,
   icon: Icon,
   status = "available",
+  ctaLabel = "Explore",
 }: ProductCategoryCardProps) {
   return (
     <Link
@@ -39,7 +41,7 @@ export function ProductCategoryCard({
       </div>
 
       <div className="mt-auto flex items-center gap-1 text-xs font-medium text-bronze/60 transition-colors group-hover:text-bronze">
-        <span>Explore</span>
+        <span>{ctaLabel}</span>
         <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
       </div>
     </Link>

@@ -8,8 +8,16 @@ type HeroProps = {
 }
 
 const labels = {
-  tr: { explore: "Ürünleri Keşfet", distributor: "Distribütör Ol" },
-  en: { explore: "Explore Products", distributor: "Become a Distributor" },
+  tr: {
+    explore: "Ürünleri Keşfet",
+    distributor: "Distribütör Ol",
+    contact: "İletişime Geç",
+  },
+  en: {
+    explore: "Explore Products",
+    distributor: "Become a Distributor",
+    contact: "Contact Us",
+  },
 }
 
 export function Hero({ locale, title, subtitle }: HeroProps) {
@@ -43,7 +51,7 @@ export function Hero({ locale, title, subtitle }: HeroProps) {
           {subtitle}
         </p>
 
-        {/* CTAs */}
+        {/* Primary CTAs */}
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
           <Link
             href={`/${locale}/products`}
@@ -56,6 +64,16 @@ export function Hero({ locale, title, subtitle }: HeroProps) {
             className="inline-flex items-center rounded-sm border border-border px-7 py-3 text-sm font-semibold text-foreground transition-all hover:border-bronze/40 hover:text-bronze"
           >
             {t.distributor}
+          </Link>
+        </div>
+
+        {/* Tertiary CTA */}
+        <div>
+          <Link
+            href={`/${locale}/contact`}
+            className="text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-bronze hover:underline"
+          >
+            {t.contact}
           </Link>
         </div>
       </div>

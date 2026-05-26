@@ -1,6 +1,14 @@
 import { Hero } from "@/components/home/Hero"
+import { BrandPositioning } from "@/components/home/BrandPositioning"
 import { ProductCategories } from "@/components/home/ProductCategories"
+import { CarMultimediaPreview } from "@/components/home/CarMultimediaPreview"
+import { MotorcyclePreview } from "@/components/home/MotorcyclePreview"
+import { SafetyPreview } from "@/components/home/SafetyPreview"
+import { SignatureAudioPreview } from "@/components/home/SignatureAudioPreview"
+import { BrandStory } from "@/components/home/BrandStory"
 import { CTABlock } from "@/components/ui/CTABlock"
+import { JournalPreview } from "@/components/home/JournalPreview"
+import { ContactCTA } from "@/components/home/ContactCTA"
 import { type Locale } from "@/lib/i18n"
 
 type HomePageProps = {
@@ -10,53 +18,81 @@ type HomePageProps = {
 const heroContent = {
   tr: {
     title: "Ruhu Olan Teknoloji",
-    subtitle: "Otomobil ve motosikletler için premium eğlence, güvenlik ve bağlantı sistemleri.",
+    subtitle:
+      "Otomobil ve motosikletler için premium eğlence, güvenlik ve bağlantı sistemleri.",
   },
   en: {
     title: "Technology With Soul",
-    subtitle: "Premium mobility entertainment systems for cars, motorcycles, safety, and sound.",
+    subtitle:
+      "Premium mobility entertainment systems inspired by sound, safety, and culture.",
   },
 }
 
-const ctaContent = {
+const partnerContent = {
   tr: {
     eyebrow: "Distribütörlük",
-    title: "Türkiye'de distribütörümüz olun",
-    description: "Premium mobilite teknolojilerini bölgenize taşıyın. Distribütör ve bayi başvuruları için bizimle iletişime geçin.",
-    primaryLabel: "Başvuru Yap",
+    title: "Apollon'u pazarınıza taşıyın.",
+    description:
+      "Premium mobilite teknolojileri için distribütör ve montaj ağı kuruyoruz. Otomotiv aksesuarları, motosiklet teknolojileri, araç elektroniği, montaj hizmetleri veya bölgesel dağıtım alanında faaliyet gösteriyorsanız sizinle görüşmek isteriz.",
+    primaryLabel: "Distribütör Başvurusu",
     primaryHref: "/partner-distributor",
-    secondaryLabel: "Bize Ulaşın",
-    secondaryHref: "/contact",
   },
   en: {
     eyebrow: "Partnership",
-    title: "Become a distributor in your region",
-    description: "Bring premium mobility technology to your market. Contact us for distributor and dealer applications.",
-    primaryLabel: "Apply Now",
+    title: "Bring Apollon to your market.",
+    description:
+      "We are building a distributor and installer network for premium mobility technology products. If you operate in automotive accessories, motorcycle technology, vehicle electronics, installation services, or regional distribution, we would like to hear from you.",
+    primaryLabel: "Become a Distributor",
     primaryHref: "/partner-distributor",
-    secondaryLabel: "Contact Us",
-    secondaryHref: "/contact",
   },
 }
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params
   const hero = heroContent[locale]
-  const cta = ctaContent[locale]
+  const partner = partnerContent[locale]
 
   return (
     <main>
+      {/* 1. Hero */}
       <Hero locale={locale} title={hero.title} subtitle={hero.subtitle} />
+
+      {/* 2. Brand Positioning */}
+      <BrandPositioning locale={locale} />
+
+      {/* 3. Product Categories */}
       <ProductCategories locale={locale} />
+
+      {/* 4. Car Multimedia Preview */}
+      <CarMultimediaPreview locale={locale} />
+
+      {/* 5. Motorcycle Smart Systems Preview */}
+      <MotorcyclePreview locale={locale} />
+
+      {/* 6. Car Safety & Security Preview */}
+      <SafetyPreview locale={locale} />
+
+      {/* 7. Signature Audio Coming Soon */}
+      <SignatureAudioPreview locale={locale} />
+
+      {/* 8. Brand Story */}
+      <BrandStory locale={locale} />
+
+      {/* 9. Partner / Distributor CTA */}
       <CTABlock
-        eyebrow={cta.eyebrow}
-        title={cta.title}
-        description={cta.description}
-        primaryLabel={cta.primaryLabel}
-        primaryHref={`/${locale}${cta.primaryHref}`}
-        secondaryLabel={cta.secondaryLabel}
-        secondaryHref={`/${locale}${cta.secondaryHref}`}
+        eyebrow={partner.eyebrow}
+        title={partner.title}
+        description={partner.description}
+        primaryLabel={partner.primaryLabel}
+        primaryHref={`/${locale}${partner.primaryHref}`}
+        variant="muted"
       />
+
+      {/* 10. Journal Preview */}
+      <JournalPreview locale={locale} />
+
+      {/* 11. Contact CTA */}
+      <ContactCTA locale={locale} />
     </main>
   )
 }
