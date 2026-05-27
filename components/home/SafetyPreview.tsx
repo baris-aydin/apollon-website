@@ -82,7 +82,7 @@ export function SafetyPreview({ locale }: { locale: Locale }) {
               <span className="text-xs font-medium uppercase tracking-[0.3em] text-bronze/70">
                 {c.eyebrow}
               </span>
-              <h2 className="font-heading text-3xl font-semibold leading-[1.2] md:text-4xl pb-0.5">
+              <h2 className="font-heading text-3xl font-semibold leading-[1.15] md:text-4xl pb-[0.1em]">
                 {c.heading}
               </h2>
               <p className="text-base leading-relaxed text-muted-foreground">

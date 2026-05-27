@@ -55,7 +55,7 @@ export function FeaturedProductCard({
         <h3 className="font-heading text-base font-semibold text-foreground transition-colors group-hover:text-bronze">
           {name}
         </h3>
-        <p className="line-clamp-3 pb-0.5 text-xs leading-relaxed text-muted-foreground">
+        <p className="line-clamp-3 pb-1.5 text-xs leading-relaxed text-muted-foreground">
           {description}
         </p>
       </div>

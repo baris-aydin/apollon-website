@@ -437,8 +437,8 @@ export default async function ProductsPage({ params }: ProductsPageProps) {
   return (
     <main>
       {/* 1. Hero */}
-      <section className="relative overflow-hidden border-b border-border/30 bg-background pb-24 pt-28">
-        <div className="pointer-events-none absolute inset-0">
+      <section className="relative border-b border-border/30 bg-background pb-24 pt-28">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,oklch(0.22_0.08_245_/_0.20),transparent)]" />
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-bronze to-transparent opacity-20" />
         </div>
@@ -451,7 +451,7 @@ export default async function ProductsPage({ params }: ProductsPageProps) {
               </span>
               <span className="h-px w-10 bg-bronze/40" />
             </div>
-            <h1 className="font-heading text-4xl font-bold leading-[1.15] tracking-tight md:text-5xl lg:text-6xl pb-1">
+            <h1 className="font-heading text-4xl font-bold leading-[1.12] tracking-tight md:text-5xl lg:text-6xl pb-[0.14em]">
               {h.heroTitle}
             </h1>
             <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground">
@@ -544,7 +544,7 @@ export default async function ProductsPage({ params }: ProductsPageProps) {
       <section className="border-t border-border/30 py-24">
         <div className="section-container space-y-14">
           <div className="space-y-5">
-            <h2 className="font-heading text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+            <h2 className="font-heading text-3xl font-bold leading-[1.15] tracking-tight text-foreground md:text-4xl lg:text-5xl pb-[0.1em]">
               {h.whyTitle}
             </h2>
             <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">

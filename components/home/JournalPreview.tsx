@@ -104,7 +104,7 @@ export function JournalPreview({ locale }: { locale: Locale }) {
                 {h.eyebrow}
               </span>
             </div>
-            <h2 className="font-heading text-3xl font-semibold md:text-4xl">{h.title}</h2>
+            <h2 className="font-heading text-3xl font-semibold leading-[1.15] md:text-4xl pb-[0.1em]">{h.title}</h2>
             <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
               {h.subtitle}
             </p>

@@ -34,7 +34,7 @@ export function ProductCategoryCard({
       </div>
 
       <div className="space-y-2">
-        <h3 className="font-heading text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-bronze">
+        <h3 className="font-heading text-lg font-semibold leading-[1.3] text-foreground transition-colors group-hover:text-bronze">
           {title}
         </h3>
         <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>

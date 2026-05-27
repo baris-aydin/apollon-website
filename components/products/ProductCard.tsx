@@ -58,7 +58,7 @@ export function ProductCard({
         <h3 className="font-heading text-base font-semibold text-foreground transition-colors group-hover:text-bronze">
           {title}
         </h3>
-        <p className="text-xs leading-relaxed text-muted-foreground line-clamp-2 pb-0.5">
+        <p className="text-xs leading-relaxed text-muted-foreground line-clamp-2 pb-1.5">
           {description}
         </p>
       </div>

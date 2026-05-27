@@ -22,9 +22,11 @@ export function CTABlock({
   variant = "default",
 }: CTABlockProps) {
   return (
-    <section className={`py-24 ${variant === "muted" ? "bg-muted" : "relative overflow-hidden bg-background"}`}>
+    <section className={`py-24 ${variant === "muted" ? "bg-muted" : "relative bg-background"}`}>
       {variant !== "muted" && (
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,oklch(0.22_0.08_245_/_0.15),transparent)]" />
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,oklch(0.22_0.08_245_/_0.15),transparent)]" />
+        </div>
       )}
 
       <div className="section-container relative">
@@ -39,7 +41,7 @@ export function CTABlock({
             </div>
           )}
 
-          <h2 className="font-heading text-3xl font-bold tracking-tight md:text-5xl">
+          <h2 className="font-heading text-3xl font-bold leading-[1.15] tracking-tight md:text-5xl pb-[0.1em]">
             {title}
           </h2>
 
