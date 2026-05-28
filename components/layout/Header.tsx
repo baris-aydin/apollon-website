@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { type Locale } from "@/lib/i18n"
 import { MobileNav } from "./MobileNav"
 
@@ -29,11 +30,15 @@ export function Header({ locale }: HeaderProps) {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="section-container flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link
-          href={`/${locale}`}
-          className="font-heading text-xl font-bold tracking-[0.14em] text-foreground transition-colors hover:text-bronze"
-        >
-          APOLLON
+        <Link href={`/${locale}`} className="flex items-center">
+          <Image
+            src="/logos/apollon-logo-dark.jpeg"
+            alt="Apollon Entertainment Systems"
+            width={180}
+            height={48}
+            priority
+            className="h-11 w-auto"
+          />
         </Link>
 
         {/* Desktop nav */}
