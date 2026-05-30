@@ -5,27 +5,26 @@ import { createClient } from "next-sanity"
 // TODO: Add to .env.local:
 //   SANITY_API_WRITE_TOKEN=your_server_only_write_token
 //   RESEND_API_KEY=your_resend_api_key
-//   CONTACT_NOTIFICATION_EMAIL=internal@yourdomain.com
-//   CONTACT_FROM_EMAIL=noreply@yourdomain.com  (must be a verified Resend sender domain)
+//   PARTNER_NOTIFICATION_EMAIL=internal@yourdomain.com
+//   PARTNER_FROM_EMAIL=noreply@yourdomain.com  (must be verified in Resend)
 // TODO: Add rate limiting (e.g. upstash/ratelimit) before production launch
 // TODO: Add Cloudflare Turnstile or reCAPTCHA after basic setup is confirmed working
 // TODO: Review KVKK / privacy consent wording with legal before launch
 
-type ContactFormPayload = {
-  name: string
+type PartnerApplicationPayload = {
+  companyName: string
+  country: string
+  city: string
+  contactPerson: string
+  phone: string
   email: string
-  phone?: string
-  company?: string
-  inquiryType: string
-  subject: string
-  message: string
-  vehicleBrand?: string
-  vehicleModel?: string
-  vehicleYear?: string
-  preferredContactMethod?: string
+  businessType: string
+  interestedCategories: string[]
+  salesChannels: string[]
+  message?: string
   consent: boolean
   locale: "tr" | "en"
-  website?: string // honeypot — reject silently if non-empty
+  _hp?: string // honeypot — reject silently if non-empty
 }
 
 function createWriteClient() {
@@ -46,8 +45,13 @@ function trim(v: unknown): string {
   return typeof v === "string" ? v.trim() : ""
 }
 
+function sanitizeStringArray(v: unknown): string[] {
+  if (!Array.isArray(v)) return []
+  return v.filter((s): s is string => typeof s === "string").map((s) => s.trim()).filter(Boolean)
+}
+
 export async function POST(request: Request) {
-  let body: ContactFormPayload
+  let body: PartnerApplicationPayload
 
   try {
     body = await request.json()
@@ -59,34 +63,36 @@ export async function POST(request: Request) {
   }
 
   // Honeypot — silent reject to not signal bot detection
-  if (body.website) {
+  if (body._hp) {
     return NextResponse.json({ success: true, message: "ok" })
   }
 
   // Sanitize all inputs server-side — never trust the client
-  const name = trim(body.name)
-  const email = trim(body.email)
+  const companyName = trim(body.companyName)
+  const country = trim(body.country)
+  const city = trim(body.city)
+  const contactPerson = trim(body.contactPerson)
   const phone = trim(body.phone)
-  const company = trim(body.company)
-  const inquiryType = trim(body.inquiryType)
-  const subject = trim(body.subject)
+  const email = trim(body.email)
+  const businessType = trim(body.businessType)
+  const interestedCategories = sanitizeStringArray(body.interestedCategories)
+  const salesChannels = sanitizeStringArray(body.salesChannels)
   const message = trim(body.message).slice(0, 2000)
-  const vehicleBrand = trim(body.vehicleBrand)
-  const vehicleModel = trim(body.vehicleModel)
-  const vehicleYear = trim(body.vehicleYear)
-  const preferredContactMethod = trim(body.preferredContactMethod)
   const consent = body.consent === true
   const locale = body.locale === "en" ? "en" : "tr"
 
   // Server-side validation
   const errors: Record<string, string> = {}
-  if (!name) errors.name = "Required"
+  if (!companyName) errors.companyName = "Required"
+  if (!country) errors.country = "Required"
+  if (!city) errors.city = "Required"
+  if (!contactPerson) errors.contactPerson = "Required"
+  if (!phone) errors.phone = "Required"
   if (!email) errors.email = "Required"
   else if (!isValidEmail(email)) errors.email = "Invalid email address"
-  if (!inquiryType) errors.inquiryType = "Required"
-  if (!subject) errors.subject = "Required"
-  if (!message) errors.message = "Required"
-  else if (message.length < 10) errors.message = "Message must be at least 10 characters"
+  if (!businessType) errors.businessType = "Required"
+  if (interestedCategories.length === 0)
+    errors.interestedCategories = "Select at least one category"
   if (!consent) errors.consent = "Consent is required"
 
   if (Object.keys(errors).length > 0) {
@@ -102,32 +108,31 @@ export async function POST(request: Request) {
     if (!process.env.SANITY_API_WRITE_TOKEN) {
       // During development, log the lead rather than crashing
       // TODO: Set SANITY_API_WRITE_TOKEN before production launch
-      console.warn("[contact] SANITY_API_WRITE_TOKEN not set — lead not persisted")
+      console.warn("[partner-application] SANITY_API_WRITE_TOKEN not set — lead not persisted")
     } else {
       const writeClient = createWriteClient()
       await writeClient.create({
-        _type: "contactLead",
-        name,
+        _type: "partnerLead",
+        companyName,
+        country,
+        city,
+        contactPerson,
+        phone,
         email,
-        phone: phone || undefined,
-        company: company || undefined,
-        inquiryType,
-        subject,
-        message,
-        vehicleBrand: vehicleBrand || undefined,
-        vehicleModel: vehicleModel || undefined,
-        vehicleYear: vehicleYear || undefined,
-        preferredContactMethod: preferredContactMethod || undefined,
+        businessType,
+        interestedCategories,
+        salesChannels,
+        message: message || undefined,
         consent,
         locale,
         status: "new",
-        source: "contact-page",
+        source: "partner-distributor-page",
         createdAt: new Date().toISOString(),
       })
       savedToSanity = true
     }
   } catch (err) {
-    console.error("[contact] Sanity write error:", err)
+    console.error("[partner-application] Sanity write error:", err)
   }
 
   // ── Email notification ────────────────────────────────────────────────────
@@ -139,44 +144,45 @@ export async function POST(request: Request) {
   //   const { Resend } = await import("resend")
   //   const resend = new Resend(process.env.RESEND_API_KEY)
   //   await resend.emails.send({
-  //     from: process.env.CONTACT_FROM_EMAIL!,
-  //     to: process.env.CONTACT_NOTIFICATION_EMAIL!,
-  //     subject: `New Apollon Contact Request — ${subject}`,
+  //     from: process.env.PARTNER_FROM_EMAIL!,
+  //     to: process.env.PARTNER_NOTIFICATION_EMAIL!,
+  //     subject: `New Apollon Partner Application — ${companyName}`,
   //     html: `
-  //       <h2>New Contact Request</h2>
-  //       <p><strong>Name:</strong> ${name}</p>
+  //       <h2>New Partner Application</h2>
+  //       <p><strong>Company:</strong> ${companyName}</p>
+  //       <p><strong>Contact:</strong> ${contactPerson}</p>
   //       <p><strong>Email:</strong> ${email}</p>
-  //       <p><strong>Phone:</strong> ${phone || "—"}</p>
-  //       <p><strong>Company:</strong> ${company || "—"}</p>
-  //       <p><strong>Inquiry Type:</strong> ${inquiryType}</p>
-  //       <p><strong>Subject:</strong> ${subject}</p>
-  //       <p><strong>Message:</strong> ${message}</p>
-  //       <p><strong>Vehicle Brand:</strong> ${vehicleBrand || "—"}</p>
-  //       <p><strong>Vehicle Model:</strong> ${vehicleModel || "—"}</p>
-  //       <p><strong>Vehicle Year:</strong> ${vehicleYear || "—"}</p>
-  //       <p><strong>Preferred Contact Method:</strong> ${preferredContactMethod || "—"}</p>
+  //       <p><strong>Phone:</strong> ${phone}</p>
+  //       <p><strong>Country:</strong> ${country}</p>
+  //       <p><strong>City:</strong> ${city}</p>
+  //       <p><strong>Business Type:</strong> ${businessType}</p>
+  //       <p><strong>Categories:</strong> ${interestedCategories.join(", ")}</p>
+  //       <p><strong>Sales Channels:</strong> ${salesChannels.join(", ")}</p>
+  //       <p><strong>Message:</strong> ${message || "—"}</p>
   //       <p><strong>Locale:</strong> ${locale}</p>
   //       <p><strong>Submitted:</strong> ${new Date().toISOString()}</p>
   //     `,
   //   })
   // } catch (emailErr) {
-  //   console.error("[contact] Email notification failed:", emailErr)
+  //   console.error("[partner-application] Email notification failed:", emailErr)
   // }
 
   // Fallback log during setup so no lead is lost silently
   if (!savedToSanity) {
-    console.log("[contact] Lead (not saved to Sanity):", {
-      name,
+    console.log("[partner-application] Lead (not saved to Sanity):", {
+      companyName,
+      country,
+      city,
+      contactPerson,
       email,
-      inquiryType,
-      subject,
-      locale,
+      businessType,
+      interestedCategories,
       submittedAt: new Date().toISOString(),
     })
   }
 
   return NextResponse.json(
-    { success: true, message: "Contact request received." },
+    { success: true, message: "Partnership application received." },
     { status: 201 }
   )
 }
