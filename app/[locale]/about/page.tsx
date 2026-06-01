@@ -492,40 +492,14 @@ export default async function AboutPage({ params }: PageProps) {
               </div>
             </div>
 
-            {/* Visual column — abstract east/west motif */}
-            <div className="flex items-center justify-center">
-              <div className="relative flex items-center justify-center gap-0">
-                {/* Left block — Turkey */}
-                <div className="relative flex h-48 w-40 flex-col items-center justify-center gap-3 rounded-l-sm border border-border/40 bg-card/30 px-5 text-center backdrop-blur-sm">
-                  <span className="text-xs font-medium uppercase tracking-[0.25em] text-muted-foreground">
-                    {locale === "tr" ? "Türkiye" : "Turkey"}
-                  </span>
-                  <div className="h-px w-8 bg-bronze/30" />
-                  <span className="text-xs leading-relaxed text-muted-foreground/70">
-                    {locale === "tr"
-                      ? "Marka · Pazar · İletişim"
-                      : "Brand · Market · Communication"}
-                  </span>
-                </div>
-
-                {/* Center divider with bronze dot */}
-                <div className="relative z-10 -mx-px flex h-16 w-px flex-col items-center justify-center bg-bronze/20">
-                  <div className="h-2.5 w-2.5 rounded-full bg-bronze/60" />
-                </div>
-
-                {/* Right block — China */}
-                <div className="relative flex h-48 w-40 flex-col items-center justify-center gap-3 rounded-r-sm border border-border/40 bg-card/30 px-5 text-center backdrop-blur-sm">
-                  <span className="text-xs font-medium uppercase tracking-[0.25em] text-muted-foreground">
-                    {locale === "tr" ? "Çin" : "China"}
-                  </span>
-                  <div className="h-px w-8 bg-bronze/30" />
-                  <span className="text-xs leading-relaxed text-muted-foreground/70">
-                    {locale === "tr"
-                      ? "Üretim · Donanım · Kaynak"
-                      : "Production · Hardware · Sourcing"}
-                  </span>
-                </div>
-              </div>
+            {/* World map — subtle outline visual */}
+            <div className="flex items-center justify-center py-4 lg:py-0">
+              <img
+                src="/images/world-map-outline.svg"
+                alt=""
+                aria-hidden="true"
+                className="w-full max-w-lg h-auto opacity-20 select-none pointer-events-none"
+              />
             </div>
           </div>
         </div>

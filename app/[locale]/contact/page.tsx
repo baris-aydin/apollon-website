@@ -353,7 +353,6 @@ export default async function ContactPage({ params }: PageProps) {
         />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_-10%,oklch(0.22_0.08_245_/_0.45),transparent)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_40%_30%_at_50%_50%,oklch(0.70_0.12_65_/_0.04),transparent)]" />
-        <div className="pointer-events-none absolute left-0 right-0 top-[40%] h-px bg-gradient-to-r from-transparent via-bronze/10 to-transparent" />
 
         <div className="section-container relative">
           <div className="mx-auto max-w-3xl text-center">
