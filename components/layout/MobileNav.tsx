@@ -5,7 +5,11 @@ import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { type Locale } from "@/lib/i18n"
 
-type NavItem = { label: string; href: string }
+export type NavItem = {
+  label: string
+  href: string
+  children?: { label: string; href: string }[]
+}
 
 type MobileNavProps = {
   locale: Locale
@@ -52,16 +56,32 @@ export function MobileNav({ locale, items, otherLocale }: MobileNavProps) {
           </div>
 
           {/* Nav links */}
-          <nav className="flex flex-1 flex-col justify-center gap-1 px-6">
+          <nav className="flex flex-1 flex-col justify-center gap-1 overflow-y-auto px-6 py-6">
             {items.map((item) => (
-              <Link
-                key={item.href}
-                href={`/${locale}${item.href}`}
-                onClick={() => setOpen(false)}
-                className="border-b border-border/30 py-5 font-heading text-2xl font-semibold text-foreground transition-colors hover:text-bronze"
-              >
-                {item.label}
-              </Link>
+              <div key={item.href} className="border-b border-border/30">
+                <Link
+                  href={`/${locale}${item.href}`}
+                  onClick={() => setOpen(false)}
+                  className="block py-5 font-heading text-2xl font-semibold text-foreground transition-colors hover:text-bronze"
+                >
+                  {item.label}
+                </Link>
+                {item.children && (
+                  <ul className="-mt-1 space-y-1 pb-5 pl-4">
+                    {item.children.map((child) => (
+                      <li key={child.href}>
+                        <Link
+                          href={`/${locale}${child.href}`}
+                          onClick={() => setOpen(false)}
+                          className="block py-2 text-base text-muted-foreground transition-colors hover:text-bronze"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             ))}
           </nav>
 

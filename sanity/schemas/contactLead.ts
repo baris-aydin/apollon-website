@@ -54,6 +54,12 @@ export const contactLead = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "product",
+      title: "Product of Interest",
+      type: "string",
+      description: "Product inquiries only",
+    }),
+    defineField({
       name: "subject",
       title: "Subject",
       type: "string",
@@ -80,6 +86,32 @@ export const contactLead = defineType({
       name: "vehicleYear",
       title: "Vehicle Year",
       type: "string",
+    }),
+    // ── Distributor / partnership inquiries only ─────────────────────────────
+    defineField({
+      name: "country",
+      title: "Country",
+      type: "string",
+      description: "Distributor / partnership inquiries only",
+    }),
+    defineField({
+      name: "city",
+      title: "City",
+      type: "string",
+      description: "Distributor / partnership inquiries only",
+    }),
+    defineField({
+      name: "businessType",
+      title: "Business Type",
+      type: "string",
+      description: "Distributor / partnership inquiries only",
+    }),
+    defineField({
+      name: "interestedCategories",
+      title: "Interested Product Categories",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Distributor / partnership inquiries only",
     }),
     defineField({
       name: "preferredContactMethod",

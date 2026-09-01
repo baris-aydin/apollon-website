@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
+import { headers } from "next/headers"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 import "./globals.css"
 
@@ -23,14 +24,16 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://apollonentertainment.com"),
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const headersList = await headers()
+  const locale = headersList.get("x-locale") ?? "tr"
   return (
     <html
-      lang="tr"
+      lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">

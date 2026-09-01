@@ -23,8 +23,8 @@ const labels = {
     interestType: "Interested In",
     selectPlaceholder: "Select your interest",
     interestOptions: [
-      { value: "car-multimedia", label: "Car Multimedia Systems" },
-      { value: "motorcycle-smart", label: "Motorcycle Smart Systems" },
+      { value: "car", label: "Car Technology Systems" },
+      { value: "motorcycle-smart", label: "MotoPlay Series" },
       { value: "dashcam", label: "Dashcam Technology" },
       { value: "premium-sound", label: "Premium Sound" },
       { value: "brand-updates", label: "Brand Updates" },
@@ -48,8 +48,8 @@ const labels = {
     interestType: "İlgi Alanı",
     selectPlaceholder: "İlgi alanınızı seçin",
     interestOptions: [
-      { value: "car-multimedia", label: "Araç Multimedya Sistemleri" },
-      { value: "motorcycle-smart", label: "Motosiklet Akıllı Sistemleri" },
+      { value: "car", label: "Otomobil Teknoloji Sistemleri" },
+      { value: "motorcycle-smart", label: "MotoPlay Series" },
       { value: "dashcam", label: "Araç Kamerası Teknolojileri" },
       { value: "premium-sound", label: "Premium Ses" },
       { value: "brand-updates", label: "Marka Güncellemeleri" },

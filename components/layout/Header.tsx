@@ -1,26 +1,42 @@
 import Link from "next/link"
 import Image from "next/image"
+import { ChevronDown } from "lucide-react"
 import { type Locale } from "@/lib/i18n"
-import { MobileNav } from "./MobileNav"
+import { MobileNav, type NavItem } from "./MobileNav"
 
 type HeaderProps = { locale: Locale }
 
-const navItems = {
+const navItems: Record<Locale, NavItem[]> = {
   tr: [
-    { label: "Ürünler", href: "/products" },
+    {
+      label: "Ürünler",
+      href: "/products",
+      children: [
+        { label: "Motosiklet", href: "/products/motorcycle" },
+        { label: "Otomobil", href: "/products/car" },
+      ],
+    },
     { label: "Hakkımızda", href: "/about" },
     { label: "Journal", href: "/journal" },
-    { label: "Distribütörlük", href: "/partner-distributor" },
   ],
   en: [
-    { label: "Products", href: "/products" },
+    {
+      label: "Products",
+      href: "/products",
+      children: [
+        { label: "Motorcycle", href: "/products/motorcycle" },
+        { label: "Car", href: "/products/car" },
+      ],
+    },
     { label: "About", href: "/about" },
     { label: "Journal", href: "/journal" },
-    { label: "Partner", href: "/partner-distributor" },
   ],
 }
 
 const contactLabel = { tr: "İletişim", en: "Contact" }
+
+const navLinkClass =
+  "relative text-sm text-muted-foreground transition-colors hover:text-foreground after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-bronze after:transition-[width] hover:after:w-full"
 
 export function Header({ locale }: HeaderProps) {
   const otherLocale = locale === "tr" ? "en" : "tr"
@@ -34,24 +50,51 @@ export function Header({ locale }: HeaderProps) {
           <Image
             src="/logos/apollon-logo-dark.jpeg"
             alt="Apollon Entertainment Systems"
-            width={180}
-            height={48}
+            width={220}
+            height={56}
             priority
-            className="h-11 w-auto"
+            className="h-auto w-[135px] md:w-[165px] lg:w-[175px]"
           />
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-8 md:flex">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={`/${locale}${item.href}`}
-              className="relative text-sm text-muted-foreground transition-colors hover:text-foreground after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-bronze after:transition-[width] hover:after:w-full"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {items.map((item) =>
+            item.children ? (
+              // CSS-only submenu — opens on hover and on keyboard focus, so the
+              // header stays a server component.
+              <div key={item.href} className="group relative">
+                <Link
+                  href={`/${locale}${item.href}`}
+                  className={`${navLinkClass} inline-flex items-center gap-1`}
+                >
+                  {item.label}
+                  <ChevronDown
+                    className="h-3 w-3 transition-transform group-hover:rotate-180"
+                    aria-hidden
+                  />
+                </Link>
+                <div className="invisible absolute left-1/2 top-full z-10 w-56 -translate-x-1/2 pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  <ul className="overflow-hidden rounded-sm border border-border/60 bg-background/95 py-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.35)] backdrop-blur-xl">
+                    {item.children.map((child) => (
+                      <li key={child.href}>
+                        <Link
+                          href={`/${locale}${child.href}`}
+                          className="block px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-card/60 hover:text-bronze"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <Link key={item.href} href={`/${locale}${item.href}`} className={navLinkClass}>
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
 
         {/* Right side */}

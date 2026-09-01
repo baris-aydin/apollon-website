@@ -39,9 +39,8 @@ export const product = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Car Multimedia Systems", value: "car-multimedia" },
-          { title: "Car Safety & Security", value: "car-safety-security" },
-          { title: "Motorcycle Smart Systems", value: "motorcycle-smart-systems" },
+          { title: "Motorcycle — MotoPlay Series", value: "motorcycle" },
+          { title: "Car Technology Systems", value: "car" },
           { title: "Signature Audio Series", value: "signature-audio-series" },
         ],
       },

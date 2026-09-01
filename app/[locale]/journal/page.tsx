@@ -3,6 +3,7 @@ import Link from "next/link"
 import { type Locale } from "@/lib/i18n"
 import { JournalUpdateForm } from "@/components/forms/JournalUpdateForm"
 import { BlogCard } from "@/components/ui/BlogCard"
+import { Reveal } from "@/components/motion/Reveal"
 import { sanityClient } from "@/sanity/lib/client"
 import { publishedPostsQuery } from "@/sanity/lib/queries"
 
@@ -97,12 +98,12 @@ const content: Record<Locale, PageContent> = {
       heading: "Future content categories",
       items: [
         {
-          title: "Car Multimedia Systems",
+          title: "Car Technology Systems",
           description:
-            "Android multimedia screens, vehicle-specific fitment, connectivity, navigation, and cabin modernization.",
+            "In-car multimedia platforms, connectivity, navigation, connected cameras, and cabin modernization.",
         },
         {
-          title: "Motorcycle Smart Systems",
+          title: "MotoPlay Series",
           description:
             "Rider-focused displays, navigation, camera systems, Bluetooth audio, and connected motorcycle experiences.",
         },
@@ -219,12 +220,12 @@ const content: Record<Locale, PageContent> = {
       heading: "Gelecek içerik kategorileri",
       items: [
         {
-          title: "Araç Multimedya Sistemleri",
+          title: "Otomobil Teknoloji Sistemleri",
           description:
-            "Android multimedya ekranları, araca özel uyumluluk, bağlantı, navigasyon ve kabin modernizasyonu.",
+            "Araç içi multimedya platformları, bağlantı, navigasyon, bağlantılı kameralar ve kabin modernizasyonu.",
         },
         {
-          title: "Motosiklet Akıllı Sistemleri",
+          title: "MotoPlay Series",
           description:
             "Sürüş odaklı ekranlar, navigasyon, kamera sistemleri, Bluetooth ses ve bağlantılı motosiklet deneyimleri.",
         },
@@ -486,7 +487,7 @@ export default async function JournalPage({ params }: PageProps) {
       {hasArticles && (
         <section className="border-t border-border/30 py-24">
           <div className="section-container space-y-14">
-            <div className="mx-auto max-w-2xl space-y-4 text-center">
+            <Reveal className="mx-auto max-w-2xl space-y-4 text-center">
               <div className="flex items-center justify-center gap-3">
                 <span className="h-px w-8 bg-bronze/40" />
                 <span className={eyebrowClass}>{c.listing.eyebrow}</span>
@@ -496,20 +497,21 @@ export default async function JournalPage({ params }: PageProps) {
               <p className="text-base leading-relaxed text-muted-foreground">
                 {c.listing.subtitle}
               </p>
-            </div>
+            </Reveal>
 
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <BlogCard
-                  key={post._id}
-                  title={post.title}
-                  excerpt={post.excerpt ?? ""}
-                  slug={post.slug.current}
-                  locale={locale}
-                  category={post.category}
-                  publishedAt={post.publishedAt}
-                  coverImage={post.coverImage}
-                />
+              {posts.map((post, i) => (
+                <Reveal key={post._id} delay={i * 60}>
+                  <BlogCard
+                    title={post.title}
+                    excerpt={post.excerpt ?? ""}
+                    slug={post.slug.current}
+                    locale={locale}
+                    category={post.category}
+                    publishedAt={post.publishedAt}
+                    coverImage={post.coverImage}
+                  />
+                </Reveal>
               ))}
             </div>
           </div>
@@ -522,7 +524,7 @@ export default async function JournalPage({ params }: PageProps) {
           {/* ── SECTION 2: Coming Soon message ──────────────────────────── */}
           <section className="border-t border-border/30 py-24">
             <div className="section-container">
-              <div className="mx-auto max-w-3xl space-y-10">
+              <Reveal className="mx-auto max-w-3xl space-y-10">
                 <div className="space-y-6 text-center">
                   <h2 className={sectionHeadingClass}>{c.comingSoon.heading}</h2>
                   <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
@@ -545,49 +547,50 @@ export default async function JournalPage({ params }: PageProps) {
                     </span>
                   ))}
                 </div>
-              </div>
+              </Reveal>
             </div>
           </section>
 
           {/* ── SECTION 3: Editorial direction ──────────────────────────── */}
           <section className="border-t border-border/30 py-24">
             <div className="section-container">
-              <div className="mx-auto max-w-3xl space-y-6 text-center">
+              <Reveal className="mx-auto max-w-3xl space-y-6 text-center">
                 <h2 className={sectionHeadingClass}>{c.editorial.heading}</h2>
                 <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
                   {c.editorial.text}
                 </p>
-              </div>
+              </Reveal>
             </div>
           </section>
 
           {/* ── SECTION 4: Future content categories ────────────────────── */}
           <section className="border-t border-border/30 py-24">
             <div className="section-container space-y-12">
-              <div className="text-center">
+              <Reveal className="text-center">
                 <h2 className={sectionHeadingClass}>{c.categories.heading}</h2>
-              </div>
+              </Reveal>
 
               {/* 8 category cards — future content, not existing posts */}
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {c.categories.items.map((item, i) => (
-                  <div
-                    key={i}
-                    className="group rounded-sm border border-border/40 bg-card/30 p-5 backdrop-blur-sm transition-colors hover:border-bronze/20"
-                  >
-                    <div className="mb-3 flex items-center gap-2">
-                      <span className="text-xs font-medium tabular-nums text-bronze/40">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span className="h-px flex-1 bg-border/30" />
+                  <Reveal key={i} delay={i * 50}>
+                    <div
+                      className="group rounded-sm border border-border/40 bg-card/30 p-5 backdrop-blur-sm transition-colors hover:border-bronze/20 h-full"
+                    >
+                      <div className="mb-3 flex items-center gap-2">
+                        <span className="text-xs font-medium tabular-nums text-bronze/40">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="h-px flex-1 bg-border/30" />
+                      </div>
+                      <h3 className="font-heading mb-2 text-sm font-semibold leading-[1.3] text-foreground">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs leading-relaxed text-muted-foreground">
+                        {item.description}
+                      </p>
                     </div>
-                    <h3 className="font-heading mb-2 text-sm font-semibold leading-[1.3] text-foreground">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs leading-relaxed text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             </div>
@@ -596,28 +599,30 @@ export default async function JournalPage({ params }: PageProps) {
           {/* ── SECTION 5: Editorial principles ─────────────────────────── */}
           <section className="border-t border-border/30 py-24">
             <div className="section-container space-y-12">
-              <div className="mx-auto max-w-2xl space-y-5 text-center">
+              <Reveal className="mx-auto max-w-2xl space-y-5 text-center">
                 <h2 className={sectionHeadingClass}>{c.principles.heading}</h2>
                 <p className="text-base leading-relaxed text-muted-foreground">
                   {c.principles.intro}
                 </p>
-              </div>
+              </Reveal>
 
               <div className="mx-auto grid max-w-3xl gap-5 sm:grid-cols-2">
                 {c.principles.items.map((item, i) => (
-                  <div key={i} className={`${glassCard} space-y-3`}>
-                    <div className="flex items-start gap-4">
-                      <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-sm border border-bronze/20 bg-bronze/5 text-xs font-semibold text-bronze/70">
-                        {i + 1}
-                      </span>
-                      <h3 className="font-heading text-base font-semibold leading-[1.3] text-foreground">
-                        {item.title}
-                      </h3>
+                  <Reveal key={i} delay={i * 70}>
+                    <div className={`${glassCard} space-y-3 h-full`}>
+                      <div className="flex items-start gap-4">
+                        <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-sm border border-bronze/20 bg-bronze/5 text-xs font-semibold text-bronze/70">
+                          {i + 1}
+                        </span>
+                        <h3 className="font-heading text-base font-semibold leading-[1.3] text-foreground">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className="pl-11 text-sm leading-relaxed text-muted-foreground">
+                        {item.description}
+                      </p>
                     </div>
-                    <p className="pl-11 text-sm leading-relaxed text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             </div>
@@ -633,7 +638,7 @@ export default async function JournalPage({ params }: PageProps) {
         <div className="section-container">
           <div className="grid gap-12 lg:grid-cols-[1fr_2fr]">
             {/* Left: heading + description */}
-            <div className="space-y-4">
+            <Reveal className="space-y-4">
               <div className="flex items-center gap-3">
                 <span className="h-px w-6 bg-bronze/40" />
                 <span className={eyebrowClass}>JOURNAL</span>
@@ -642,12 +647,12 @@ export default async function JournalPage({ params }: PageProps) {
               <p className="text-base leading-relaxed text-muted-foreground">
                 {c.form.description}
               </p>
-            </div>
+            </Reveal>
 
             {/* Right: form */}
-            <div className="relative rounded-sm border border-border/40 bg-card/30 p-8 backdrop-blur-sm">
+            <Reveal delay={150} className="relative rounded-sm border border-border/40 bg-card/30 p-8 backdrop-blur-sm">
               <JournalUpdateForm locale={locale} />
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -660,7 +665,7 @@ export default async function JournalPage({ params }: PageProps) {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,oklch(0.22_0.08_245_/_0.20),transparent)]" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_50%_100%,oklch(0.70_0.12_65_/_0.04),transparent)]" />
 
-            <div className="relative space-y-6">
+            <Reveal className="relative space-y-6">
               <h2 className="font-heading text-3xl font-semibold leading-[1.15] tracking-tight md:text-4xl pb-[0.1em]">
                 {c.cta.heading}
               </h2>
@@ -681,13 +686,13 @@ export default async function JournalPage({ params }: PageProps) {
                   {c.cta.secondary}
                 </Link>
                 <Link
-                  href={`/${locale}/partner-distributor`}
+                  href={`/${locale}/contact?type=distributor#contact-form`}
                   className="rounded-sm border border-border/60 px-7 py-3 text-sm font-semibold text-foreground transition-colors hover:border-bronze/40 hover:text-bronze"
                 >
                   {c.cta.tertiary}
                 </Link>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

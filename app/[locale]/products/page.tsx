@@ -1,10 +1,11 @@
 import Link from "next/link"
-import { Monitor, Shield, Bike, Music, type LucideIcon } from "lucide-react"
+import { Bike, Car, type LucideIcon } from "lucide-react"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { LargeCategoryCard } from "@/components/products/LargeCategoryCard"
 import { FeaturedProductCard } from "@/components/products/FeaturedProductCard"
-import { VehicleBrandCard } from "@/components/products/VehicleBrandCard"
 import { type Locale } from "@/lib/i18n"
+import { Reveal } from "@/components/motion/Reveal"
+import { CAR_GROUP_LABELS, getCarProduct } from "@/lib/products/car"
 
 type ProductsPageProps = {
   params: Promise<{ locale: Locale }>
@@ -32,11 +33,6 @@ type ProductItem = {
   ctaLabel: string
 }
 
-type BrandItem = {
-  brand: string
-  slug: string
-}
-
 type ValueItem = {
   title: string
   body: string
@@ -54,11 +50,7 @@ type PageContent = {
   featuredEyebrow: string
   featuredTitle: string
   products: ProductItem[]
-  brandsTitle: string
-  brandsSubtitle: string
-  brandsCta: string
-  brandsViewLabel: string
-  brands: BrandItem[]
+  viewProductLabel: string
   whyTitle: string
   whyIntro: string
   values: ValueItem[]
@@ -74,153 +66,70 @@ type PageContent = {
 const content: Record<Locale, PageContent> = {
   en: {
     heroEyebrow: "APOLLON PRODUCT CATALOG",
-    heroTitle: "Premium mobility systems for cars, motorcycles, safety, and sound.",
+    heroTitle: "Premium mobility technology for motorcycles and cars.",
     heroSubtitle:
-      "Explore Apollon's product families — from Android multimedia systems and connected dashcams to motorcycle smart displays and future premium audio experiences.",
+      "Two product families — the MotoPlay Series for motorcycles and Car Technology Systems for connected cameras, 360° vision and premium multimedia.",
     heroPrimary: "Explore Categories",
     heroSecondary: "Product Inquiry",
-    categoriesEyebrow: "Product Categories",
-    categoriesTitle: "Four product families. One mobility vision.",
+    categoriesEyebrow: "Product Families",
+    categoriesTitle: "Two product families. One mobility vision.",
     categories: [
       {
-        title: "Car Multimedia Systems",
+        title: "Motorcycle",
         description:
-          "Vehicle-specific and universal Android multimedia systems designed to modernize the cabin while preserving the identity of the car.",
-        features: [
-          "Universal Android screens",
-          "Vehicle-specific fitment",
-          "Apple CarPlay / Android Auto",
-          "Navigation and entertainment",
-          "Compatibility-focused inquiry flow",
-        ],
-        href: "/products/car-multimedia",
-        icon: Monitor,
-        status: "available",
-        ctaLabel: "Explore Car Multimedia",
-      },
-      {
-        title: "Car Safety & Security",
-        description:
-          "Smart dashcams and connected safety systems designed to protect the vehicle, the driver, and every journey.",
-        features: [
-          "Smart dashcams",
-          "Front/rear camera support",
-          "4G remote access on supported models",
-          "Cloud support on supported models",
-          "Parking and driving protection",
-        ],
-        href: "/products/car-safety-security",
-        icon: Shield,
-        status: "available",
-        ctaLabel: "Explore Safety Systems",
-      },
-      {
-        title: "Motorcycle Smart Systems",
-        description:
-          "Riding-focused smart displays and camera systems that bring wireless CarPlay, Android Auto, navigation, audio, and safety features to motorcycles.",
+          "The MotoPlay Series — riding-focused smart displays and cameras that bring wireless CarPlay, Android Auto, navigation and recording to motorcycles.",
         features: [
           "Wireless Apple CarPlay",
           "Android Auto",
-          "Waterproof display design",
-          "Camera and DVR options",
-          "Tire pressure monitoring on supported models",
+          "Water resistant displays",
+          "Mini dash camera option",
+          "GPS and Bluetooth",
         ],
-        href: "/products/motorcycle-smart-systems",
+        href: "/products/motorcycle",
         icon: Bike,
         status: "available",
-        ctaLabel: "Explore Motorcycle Systems",
+        ctaLabel: "Explore MotoPlay Series",
       },
       {
-        title: "Signature Audio Series",
+        title: "Car Technology Systems",
         description:
-          "A future premium audio line shaped by sound, design, cultural inspiration, and Apollon's long-term vision for mobility experiences.",
+          "One unified automotive family: connected dash cameras, multi-channel and 360° vision systems, and Qualcomm-based premium multimedia platforms.",
         features: [
-          "Premium sound direction",
-          "Research & development phase",
-          "Boutique audio positioning",
-          "Inspired by culture and movement",
-          "Early partnership opportunities",
+          "4G connected cameras",
+          "Multi-channel recording",
+          "360° camera system",
+          "Qualcomm multimedia platforms",
+          "Wireless CarPlay / Android Auto",
         ],
-        href: "/products/signature-audio-series",
-        icon: Music,
-        status: "coming-soon",
-        ctaLabel: "View Coming Soon",
-        badge: "Coming Soon / R&D",
+        href: "/products/car",
+        icon: Car,
+        status: "available",
+        ctaLabel: "Explore Car Systems",
       },
     ],
     featuredEyebrow: "Featured Products",
     featuredTitle: "Selected from the Apollon catalog.",
     products: [
       {
-        name: "MDC-SMART02",
-        category: "Motorcycle Smart Systems",
+        name: "APOLLON RIDE VISION",
+        category: "MotoPlay Series",
         description:
-          "A motorcycle smart display system with wireless CarPlay, Android Auto, high-brightness screen support, camera integration, and riding-focused control features.",
-        href: "/products/motorcycle-smart-systems",
+          "A motorcycle CarPlay system with a premium high-brightness IPS display, dual Bluetooth, Android Auto and GPS in a water-resistant body.",
+        href: "/products/motorcycle/mdc-smart02",
         status: "available",
         ctaLabel: "View Product",
       },
       {
-        name: "MDC-PLUS02",
-        category: "Motorcycle Smart Systems",
+        name: "APOLLON RX ONE",
+        category: "MotoPlay Series",
         description:
-          "A connected motorcycle display and DVR-focused system designed for navigation, media, camera recording, Bluetooth audio, and daily riding convenience.",
-        href: "/products/motorcycle-smart-systems",
+          "A compact 1080P mini dash camera for motorcycles with wide-angle coverage, loop recording, G-sensor and parking mode.",
+        href: "/products/motorcycle/moto-dash-cam-tr-v2",
         status: "available",
         ctaLabel: "View Product",
-      },
-      {
-        name: "Moto Dash Cam TR V2",
-        category: "Motorcycle Smart Systems",
-        description:
-          "A compact motorcycle dashcam solution with Full HD recording, Wi-Fi app connection, loop recording, and weather-resistant design.",
-        href: "/products/motorcycle-smart-systems",
-        status: "available",
-        ctaLabel: "View Product",
-      },
-      {
-        name: "DC-UHD04 Smart Dashcam",
-        category: "Car Safety & Security",
-        description:
-          "A connected smart dashcam with 2K recording, front/rear camera support, 4G remote access, cloud support, electronic fence, push notifications, and TF card storage.",
-        href: "/products/car-safety-security",
-        status: "available",
-        ctaLabel: "View Product",
-      },
-      {
-        name: "DC-UHD5 4G Dashcam",
-        category: "Car Safety & Security",
-        description:
-          "A 4G smart dashcam option for connected vehicle monitoring, remote access, cloud-supported safety features, and modern driving security.",
-        href: "/products/car-safety-security",
-        status: "available",
-        ctaLabel: "View Product",
-      },
-      {
-        name: "Signature Audio Series",
-        category: "Signature Audio Series",
-        description:
-          "Apollon's future premium audio direction, currently in R&D, shaped by sound, design, culture, and the emotional side of mobility.",
-        href: "/products/signature-audio-series",
-        status: "coming-soon",
-        ctaLabel: "Learn More",
       },
     ],
-    brandsTitle: "Vehicle-specific multimedia systems",
-    brandsSubtitle:
-      "Explore Android multimedia systems organized by vehicle brand. Compatibility depends on model, year, trim, and factory system, so Apollon uses an inquiry-first approach instead of a generic checkout flow.",
-    brandsCta: "Check Compatibility",
-    brandsViewLabel: "View Category",
-    brands: [
-      { brand: "Universal Android Screens", slug: "universal-android-screens" },
-      { brand: "Audi", slug: "audi" },
-      { brand: "BMW", slug: "bmw" },
-      { brand: "Mercedes-Benz", slug: "mercedes-benz" },
-      { brand: "Porsche", slug: "porsche" },
-      { brand: "Toyota", slug: "toyota" },
-      { brand: "Lexus", slug: "lexus" },
-      { brand: "Range Rover / Land Rover", slug: "range-rover-land-rover" },
-    ],
+    viewProductLabel: "View Product",
     whyTitle: "Why Apollon?",
     whyIntro:
       "Apollon is built as more than a product supplier. It is a premium mobility technology brand designed for drivers, riders, installers, and distributors who expect refined products, clear communication, and long-term product direction.",
@@ -251,153 +160,70 @@ const content: Record<Locale, PageContent> = {
   },
   tr: {
     heroEyebrow: "APOLLON ÜRÜN KATALOĞU",
-    heroTitle: "Otomobiller, motosikletler, güvenlik ve ses için premium mobilite sistemleri.",
+    heroTitle: "Motosikletler ve otomobiller için premium mobilite teknolojileri.",
     heroSubtitle:
-      "Android multimedya sistemlerinden bağlantılı araç kameralarına, motosiklet akıllı ekranlarından geleceğin premium ses deneyimlerine kadar Apollon ürün ailelerini keşfedin.",
+      "İki ürün ailesi — motosikletler için MotoPlay Series ve bağlantılı kameralar, 360° görüş ve premium multimedya için Otomobil Teknoloji Sistemleri.",
     heroPrimary: "Kategorileri Keşfet",
     heroSecondary: "Ürün Bilgisi Al",
-    categoriesEyebrow: "Ürün Kategorileri",
-    categoriesTitle: "Dört ürün ailesi. Tek mobilite vizyonu.",
+    categoriesEyebrow: "Ürün Aileleri",
+    categoriesTitle: "İki ürün ailesi. Tek mobilite vizyonu.",
     categories: [
       {
-        title: "Araç Multimedya Sistemleri",
+        title: "Motosiklet",
         description:
-          "Aracın kimliğini korurken kabin deneyimini modernleştiren araca özel ve universal Android multimedya sistemleri.",
-        features: [
-          "Universal Android ekranlar",
-          "Araca özel uyumluluk",
-          "Apple CarPlay / Android Auto",
-          "Navigasyon ve eğlence",
-          "Uyumluluk odaklı ürün danışmanlığı",
-        ],
-        href: "/products/car-multimedia",
-        icon: Monitor,
-        status: "available",
-        ctaLabel: "Araç Multimedya Sistemlerini Keşfet",
-      },
-      {
-        title: "Araç Güvenlik Sistemleri",
-        description:
-          "Aracı, sürücüyü ve her yolculuğu korumaya yardımcı olan akıllı araç kameraları ve bağlantılı güvenlik sistemleri.",
-        features: [
-          "Akıllı araç kameraları",
-          "Ön/arka kamera desteği",
-          "Desteklenen modellerde 4G uzaktan erişim",
-          "Desteklenen modellerde bulut desteği",
-          "Sürüş ve park güvenliği",
-        ],
-        href: "/products/car-safety-security",
-        icon: Shield,
-        status: "available",
-        ctaLabel: "Güvenlik Sistemlerini Keşfet",
-      },
-      {
-        title: "Motosiklet Akıllı Sistemleri",
-        description:
-          "Kablosuz CarPlay, Android Auto, navigasyon, ses ve güvenlik özelliklerini motosikletlere taşıyan sürüş odaklı akıllı ekran ve kamera sistemleri.",
+          "MotoPlay Series — motosikletlere kablosuz CarPlay, Android Auto, navigasyon ve kayıt özelliklerini taşıyan sürüş odaklı akıllı ekranlar ve kameralar.",
         features: [
           "Kablosuz Apple CarPlay",
           "Android Auto",
-          "Suya dayanıklı ekran tasarımı",
-          "Kamera ve DVR seçenekleri",
-          "Desteklenen modellerde lastik basınç takibi",
+          "Suya dayanıklı ekranlar",
+          "Mini araç kamerası seçeneği",
+          "GPS ve Bluetooth",
         ],
-        href: "/products/motorcycle-smart-systems",
+        href: "/products/motorcycle",
         icon: Bike,
         status: "available",
-        ctaLabel: "Motosiklet Sistemlerini Keşfet",
+        ctaLabel: "MotoPlay Series'i Keşfet",
       },
       {
-        title: "Signature Audio Series",
+        title: "Otomobil Teknoloji Sistemleri",
         description:
-          "Ses, tasarım, kültürel ilham ve Apollon'un uzun vadeli mobilite deneyimi vizyonuyla şekillenen geleceğin premium ses serisi.",
+          "Tek bir otomotiv ailesi: bağlantılı araç kameraları, çok kanallı ve 360° görüş sistemleri ve Qualcomm tabanlı premium multimedya platformları.",
         features: [
-          "Premium ses vizyonu",
-          "Araştırma ve geliştirme aşaması",
-          "Boutique audio konumlandırması",
-          "Kültür ve hareketten ilham alan tasarım",
-          "Erken iş ortaklığı fırsatları",
+          "4G bağlantılı kameralar",
+          "Çok kanallı kayıt",
+          "360° kamera sistemi",
+          "Qualcomm multimedya platformları",
+          "Kablosuz CarPlay / Android Auto",
         ],
-        href: "/products/signature-audio-series",
-        icon: Music,
-        status: "coming-soon",
-        ctaLabel: "Yakında Sayfasını Gör",
-        badge: "Yakında / Ar-Ge",
+        href: "/products/car",
+        icon: Car,
+        status: "available",
+        ctaLabel: "Otomobil Sistemlerini Keşfet",
       },
     ],
     featuredEyebrow: "Öne Çıkan Ürünler",
     featuredTitle: "Apollon kataloğundan seçmeler.",
     products: [
       {
-        name: "MDC-SMART02",
-        category: "Motosiklet Akıllı Sistemleri",
+        name: "APOLLON RIDE VISION",
+        category: "MotoPlay Series",
         description:
-          "Kablosuz CarPlay, Android Auto, yüksek parlaklıklı ekran desteği, kamera entegrasyonu ve sürüş odaklı kontrol özellikleri sunan motosiklet akıllı ekran sistemi.",
-        href: "/products/motorcycle-smart-systems",
+          "Suya dayanıklı gövdesinde premium yüksek parlaklıklı IPS ekran, çift Bluetooth, Android Auto ve GPS sunan motosiklet CarPlay sistemi.",
+        href: "/products/motorcycle/mdc-smart02",
         status: "available",
         ctaLabel: "Ürünü İncele",
       },
       {
-        name: "MDC-PLUS02",
-        category: "Motosiklet Akıllı Sistemleri",
+        name: "APOLLON RX ONE",
+        category: "MotoPlay Series",
         description:
-          "Navigasyon, medya, kamera kaydı, Bluetooth ses ve günlük sürüş kolaylığı için tasarlanan bağlantılı motosiklet ekran ve DVR odaklı sistem.",
-        href: "/products/motorcycle-smart-systems",
+          "Geniş açılı görüş, döngüsel kayıt, G-sensörü ve park modu sunan kompakt 1080P mini motosiklet kamerası.",
+        href: "/products/motorcycle/moto-dash-cam-tr-v2",
         status: "available",
         ctaLabel: "Ürünü İncele",
-      },
-      {
-        name: "Moto Dash Cam TR V2",
-        category: "Motosiklet Akıllı Sistemleri",
-        description:
-          "Full HD kayıt, Wi-Fi uygulama bağlantısı, döngüsel kayıt ve hava koşullarına dayanıklı tasarım sunan kompakt motosiklet araç kamerası çözümü.",
-        href: "/products/motorcycle-smart-systems",
-        status: "available",
-        ctaLabel: "Ürünü İncele",
-      },
-      {
-        name: "DC-UHD04 Smart Dashcam",
-        category: "Araç Güvenlik Sistemleri",
-        description:
-          "2K kayıt, ön/arka kamera desteği, 4G uzaktan erişim, bulut desteği, elektronik çit, bildirimler ve TF kart depolama sunan bağlantılı akıllı araç kamerası.",
-        href: "/products/car-safety-security",
-        status: "available",
-        ctaLabel: "Ürünü İncele",
-      },
-      {
-        name: "DC-UHD5 4G Dashcam",
-        category: "Araç Güvenlik Sistemleri",
-        description:
-          "Bağlantılı araç takibi, uzaktan erişim, bulut destekli güvenlik özellikleri ve modern sürüş güvenliği için 4G akıllı araç kamerası seçeneği.",
-        href: "/products/car-safety-security",
-        status: "available",
-        ctaLabel: "Ürünü İncele",
-      },
-      {
-        name: "Signature Audio Series",
-        category: "Signature Audio Series",
-        description:
-          "Apollon'un ses, tasarım, kültür ve mobilitenin duygusal yönüyle şekillenen, şu anda Ar-Ge aşamasındaki gelecek premium ses vizyonu.",
-        href: "/products/signature-audio-series",
-        status: "coming-soon",
-        ctaLabel: "Detayları Gör",
       },
     ],
-    brandsTitle: "Araca özel multimedya sistemleri",
-    brandsSubtitle:
-      "Android multimedya sistemlerini araç markasına göre keşfedin. Uyumluluk; model, yıl, donanım paketi ve fabrika sistemine göre değiştiği için Apollon genel bir satın alma akışı yerine danışmanlık ve uyumluluk odaklı bir süreç kullanır.",
-    brandsCta: "Uyumluluk Sor",
-    brandsViewLabel: "Kategoriyi Gör",
-    brands: [
-      { brand: "Universal Android Ekranlar", slug: "universal-android-screens" },
-      { brand: "Audi", slug: "audi" },
-      { brand: "BMW", slug: "bmw" },
-      { brand: "Mercedes-Benz", slug: "mercedes-benz" },
-      { brand: "Porsche", slug: "porsche" },
-      { brand: "Toyota", slug: "toyota" },
-      { brand: "Lexus", slug: "lexus" },
-      { brand: "Range Rover / Land Rover", slug: "range-rover-land-rover" },
-    ],
+    viewProductLabel: "Ürünü İncele",
     whyTitle: "Neden Apollon?",
     whyIntro:
       "Apollon yalnızca bir ürün tedarikçisi olarak değil; sürücüler, motosiklet kullanıcıları, montaj noktaları ve distribütörler için rafine ürünler, net iletişim ve uzun vadeli ürün vizyonu sunan premium bir mobilite teknolojisi markası olarak konumlanır.",
@@ -433,6 +259,22 @@ const content: Record<Locale, PageContent> = {
 export default async function ProductsPage({ params }: ProductsPageProps) {
   const { locale } = await params
   const h = content[locale]
+
+  // Motorcycle picks come from this page's content; car picks are derived from
+  // the central catalogue so names and copy stay in sync with the product data.
+  const carFeatured = ["vx5", "vision-360", "q8-signature", "q4-prime"].flatMap((slug) => {
+    const product = getCarProduct(slug)
+    if (!product) return []
+    return [{
+      name: product.name,
+      category: CAR_GROUP_LABELS[product.group][locale].title,
+      description: product[locale].shortDescription,
+      href: `/products/car/${product.slug}`,
+      status: "available" as const,
+      ctaLabel: h.viewProductLabel,
+    }]
+  })
+  const featured = [...h.products, ...carFeatured]
 
   return (
     <main>
@@ -478,14 +320,15 @@ export default async function ProductsPage({ params }: ProductsPageProps) {
       {/* 2. Category Cards */}
       <section id="categories" className="border-t border-border/30 py-24">
         <div className="section-container space-y-14">
-          <SectionHeading eyebrow={h.categoriesEyebrow} title={h.categoriesTitle} />
+          <Reveal><SectionHeading eyebrow={h.categoriesEyebrow} title={h.categoriesTitle} /></Reveal>
           <div className="grid gap-6 md:grid-cols-2">
-            {h.categories.map((cat) => (
-              <LargeCategoryCard
-                key={cat.href}
-                {...cat}
-                href={`/${locale}${cat.href}`}
-              />
+            {h.categories.map((cat, i) => (
+              <Reveal key={cat.href} delay={i * 80}>
+                <LargeCategoryCard
+                  {...cat}
+                  href={`/${locale}${cat.href}`}
+                />
+              </Reveal>
             ))}
           </div>
         </div>
@@ -494,86 +337,57 @@ export default async function ProductsPage({ params }: ProductsPageProps) {
       {/* 3. Featured Products */}
       <section className="border-t border-border/30 py-24">
         <div className="section-container space-y-14">
-          <SectionHeading eyebrow={h.featuredEyebrow} title={h.featuredTitle} />
+          <Reveal><SectionHeading eyebrow={h.featuredEyebrow} title={h.featuredTitle} /></Reveal>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {h.products.map((p) => (
-              <FeaturedProductCard
-                key={p.name}
-                {...p}
-                href={`/${locale}${p.href}`}
-                locale={locale}
-              />
+            {featured.map((p, i) => (
+              <Reveal key={p.name} delay={i * 60}>
+                <FeaturedProductCard
+                  {...p}
+                  href={`/${locale}${p.href}`}
+                  locale={locale}
+                />
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4. Vehicle Brand Categories */}
+      {/* 4. Why Apollon */}
       <section className="border-t border-border/30 py-24">
         <div className="section-container space-y-14">
-          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-            <div className="space-y-4 md:max-w-xl">
-              <h2 className="font-heading text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                {h.brandsTitle}
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                {h.brandsSubtitle}
-              </p>
-            </div>
-            <Link
-              href={`/${locale}/contact`}
-              className="shrink-0 inline-flex items-center rounded-sm border border-bronze bg-bronze px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-bronze/90 hover:shadow-[0_0_20px_oklch(0.70_0.12_65_/_0.3)]"
-            >
-              {h.brandsCta}
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            {h.brands.map((b) => (
-              <VehicleBrandCard
-                key={b.slug}
-                brand={b.brand}
-                href={`/${locale}/products/car-multimedia/${b.slug}`}
-                ctaLabel={h.brandsViewLabel}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Why Apollon */}
-      <section className="border-t border-border/30 py-24">
-        <div className="section-container space-y-14">
-          <div className="space-y-5">
+          <Reveal className="space-y-5">
             <h2 className="font-heading text-3xl font-bold leading-[1.15] tracking-tight text-foreground md:text-4xl lg:text-5xl pb-[0.1em]">
               {h.whyTitle}
             </h2>
             <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
               {h.whyIntro}
             </p>
-          </div>
+          </Reveal>
           <div className="grid gap-5 sm:grid-cols-2">
             {h.values.map((v, i) => (
-              <div key={v.title} className="glass-card rounded-sm p-7 space-y-4">
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs text-bronze/35 tabular-nums">
-                    0{i + 1}
-                  </span>
-                  <span className="h-px flex-1 bg-bronze/10" />
+              <Reveal key={v.title} delay={i * 70}>
+                <div className="glass-card rounded-sm p-7 space-y-4 h-full">
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-xs text-bronze/35 tabular-nums">
+                      0{i + 1}
+                    </span>
+                    <span className="h-px flex-1 bg-bronze/10" />
+                  </div>
+                  <h3 className="font-heading text-base font-semibold text-foreground">
+                    {v.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{v.body}</p>
                 </div>
-                <h3 className="font-heading text-base font-semibold text-foreground">
-                  {v.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{v.body}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 6. Inquiry CTA */}
+      {/* 5. Inquiry CTA */}
       <section className="border-t border-border/30 py-24">
         <div className="section-container">
-          <div className="mx-auto max-w-2xl space-y-10 text-center">
+          <Reveal className="mx-auto max-w-2xl space-y-10 text-center">
             <div className="space-y-5">
               <h2 className="font-heading text-3xl font-bold tracking-tight md:text-4xl">
                 {h.inquiryTitle}
@@ -596,13 +410,13 @@ export default async function ProductsPage({ params }: ProductsPageProps) {
                 {h.inquirySecondary}
               </Link>
               <Link
-                href={`/${locale}/partner-distributor`}
+                href={`/${locale}/contact?type=distributor#contact-form`}
                 className="rounded-sm border border-border/60 px-7 py-3 text-sm font-semibold text-foreground transition-all hover:border-bronze/40 hover:text-bronze"
               >
                 {h.inquiryTertiary}
               </Link>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </main>

@@ -1,5 +1,7 @@
+import Image from "next/image"
 import Link from "next/link"
 import { type Locale } from "@/lib/i18n"
+import { MOTOPLAY_IMAGE_BY_NAME } from "@/lib/products/motoplay"
 
 type Product = {
   name: string
@@ -9,48 +11,48 @@ type Product = {
 
 const content = {
   tr: {
-    eyebrow: "Motosiklet Akıllı Sistemleri",
+    eyebrow: "MotoPlay Series",
     heading: "Sürücünün dünyası için akıllı teknoloji.",
-    body: "Apollon motosiklet sistemleri; kablosuz Apple CarPlay, Android Auto, yüksek parlaklıklı ekran, kamera, lastik basınç takibi, Bluetooth ses ve suya dayanıklı tasarımı sürüş odaklı tek bir deneyimde birleştirir.",
-    cta: "Motosiklet Sistemlerini Keşfet",
-    ctaHref: "/products/motorcycle-smart-systems",
+    body: "Apollon MotoPlay Series; kablosuz Apple CarPlay, Android Auto, yüksek parlaklıklı ekran, kamera, lastik basınç takibi, Bluetooth ses ve suya dayanıklı tasarımı sürüş odaklı tek bir deneyimde birleştirir.",
+    cta: "MotoPlay Series'i Keşfet",
+    ctaHref: "/products/motorcycle",
     products: [
       {
-        name: "MDC-SMART02",
+        name: "APOLLON RIDE VISION",
         description: "Kablosuz CarPlay & Android Auto entegrasyonu",
         tags: ["CarPlay", "Android Auto", "Su Geçirmez"],
       },
       {
-        name: "MDC-PLUS02",
+        name: "APOLLON RIDE ONE",
         description: "Gelişmiş bağlantı ve çoklu kamera desteği",
         tags: ["Gelişmiş Bağlantı", "Çoklu Kamera"],
       },
       {
-        name: "Moto Dash Cam TR V2",
+        name: "APOLLON RX ONE",
         description: "Suya dayanıklı motosiklet kayıt kamerası",
         tags: ["Kayıt", "Su Geçirmez"],
       },
     ] as Product[],
   },
   en: {
-    eyebrow: "Motorcycle Smart Systems",
+    eyebrow: "MotoPlay Series",
     heading: "Smart technology for the rider's world.",
-    body: "Apollon motorcycle systems bring wireless Apple CarPlay, Android Auto, high-brightness displays, cameras, tire pressure monitoring, Bluetooth audio, and waterproof design into one riding-focused experience.",
-    cta: "Explore Motorcycle Systems",
-    ctaHref: "/products/motorcycle-smart-systems",
+    body: "Apollon MotoPlay Series brings wireless Apple CarPlay, Android Auto, high-brightness displays, cameras, tire pressure monitoring, Bluetooth audio, and waterproof design into one riding-focused experience.",
+    cta: "Explore MotoPlay Series",
+    ctaHref: "/products/motorcycle",
     products: [
       {
-        name: "MDC-SMART02",
+        name: "APOLLON RIDE VISION",
         description: "Wireless CarPlay & Android Auto integration",
         tags: ["CarPlay", "Android Auto", "Waterproof"],
       },
       {
-        name: "MDC-PLUS02",
+        name: "APOLLON RIDE ONE",
         description: "Advanced connectivity and multi-camera support",
         tags: ["Advanced Connectivity", "Multi-Camera"],
       },
       {
-        name: "Moto Dash Cam TR V2",
+        name: "APOLLON RX ONE",
         description: "Waterproof motorcycle recording camera system",
         tags: ["Recording", "Waterproof"],
       },
@@ -90,7 +92,24 @@ export function MotorcyclePreview({ locale }: { locale: Locale }) {
               href={`/${locale}${c.ctaHref}`}
               className="group glass-card flex flex-col gap-4 rounded-sm p-5 transition-all hover:border-bronze/40 hover:shadow-[0_0_30px_oklch(0.70_0.12_65_/_0.06)]"
             >
-              <div className="h-40 rounded-sm bg-surface-raised" />
+              {/* Same main.png as the MotoPlay listing cards and detail pages.
+                  White panel to match that section — the supplied product
+                  photography has a white background. */}
+              <div
+                className="relative h-40 overflow-hidden rounded-sm border border-border/40"
+                style={{ background: "#ffffff" }}
+              >
+                {MOTOPLAY_IMAGE_BY_NAME[product.name] && (
+                  <Image
+                    src={MOTOPLAY_IMAGE_BY_NAME[product.name]}
+                    alt={product.name}
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-contain p-3"
+                  />
+                )}
+              </div>
               <div className="space-y-1.5">
                 <h3 className="font-heading text-sm font-semibold text-foreground transition-colors group-hover:text-bronze">
                   {product.name}

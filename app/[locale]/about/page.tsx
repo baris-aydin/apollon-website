@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { type Locale } from "@/lib/i18n"
+import { Reveal } from "@/components/motion/Reveal"
 
 type PageProps = { params: Promise<{ locale: Locale }> }
 
@@ -35,7 +36,6 @@ type PageContent = {
     heading: string
     text: string
     primary: string
-    secondary: string
     tertiary: string
   }
 }
@@ -193,7 +193,6 @@ const content: Record<Locale, PageContent> = {
       heading: "Build the next chapter with Apollon.",
       text: "We are building relationships with distributors, installers, mobility technology partners, and regional collaborators who want to grow with the Apollon brand.",
       primary: "Become a Partner",
-      secondary: "Distributor Application",
       tertiary: "Contact Us",
     },
   },
@@ -348,7 +347,6 @@ const content: Record<Locale, PageContent> = {
       heading: "Apollon'un sonraki bölümünü birlikte inşa edelim.",
       text: "Apollon markasıyla birlikte büyümek isteyen distribütörler, montaj noktaları, mobilite teknolojisi iş ortakları ve bölgesel iş birlikleriyle ilişkiler kuruyoruz.",
       primary: "İş Ortağımız Ol",
-      secondary: "Distribütör Başvurusu",
       tertiary: "İletişime Geç",
     },
   },
@@ -421,7 +419,7 @@ export default async function AboutPage({ params }: PageProps) {
                 {c.hero.primaryCta}
               </Link>
               <Link
-                href={`/${locale}/partner-distributor`}
+                href={`/${locale}/contact?type=distributor#contact-form`}
                 className="rounded-sm border border-border/60 px-7 py-3 text-sm font-semibold text-foreground transition-colors hover:border-bronze/40 hover:text-bronze"
               >
                 {c.hero.secondaryCta}
@@ -434,7 +432,7 @@ export default async function AboutPage({ params }: PageProps) {
       {/* ── SECTION 2: Brand Story ──────────────────────────────────────── */}
       <section className="border-t border-border/30 py-24">
         <div className="section-container">
-          <div className="mx-auto max-w-3xl space-y-8">
+          <Reveal className="mx-auto max-w-3xl space-y-8">
             <h2 className={`${sectionHeadingClass} text-center`}>
               {c.story.heading}
             </h2>
@@ -443,36 +441,38 @@ export default async function AboutPage({ params }: PageProps) {
               <p>{c.story.text2}</p>
               <p>{c.story.text3}</p>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ── SECTION 3: Vision ───────────────────────────────────────────── */}
       <section className="border-t border-border/30 py-24">
         <div className="section-container space-y-12">
-          <div className="mx-auto max-w-3xl space-y-5 text-center">
+          <Reveal className="mx-auto max-w-3xl space-y-5 text-center">
             <h2 className={sectionHeadingClass}>{c.vision.heading}</h2>
             <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
               {c.vision.text}
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {c.vision.cards.map((card, i) => (
-              <div key={i} className={`${glassCard} space-y-3`}>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium tabular-nums text-bronze/50">
-                    0{i + 1}
-                  </span>
-                  <span className="h-px flex-1 bg-border/40" />
+              <Reveal key={i} delay={i * 80}>
+                <div className={`${glassCard} space-y-3 h-full`}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-medium tabular-nums text-bronze/50">
+                      0{i + 1}
+                    </span>
+                    <span className="h-px flex-1 bg-border/40" />
+                  </div>
+                  <h3 className="font-heading text-base font-semibold leading-[1.3]">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {card.text}
+                  </p>
                 </div>
-                <h3 className="font-heading text-base font-semibold leading-[1.3]">
-                  {card.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {card.text}
-                </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -483,24 +483,24 @@ export default async function AboutPage({ params }: PageProps) {
         <div className="section-container">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             {/* Text column */}
-            <div className="space-y-6">
+            <Reveal className="space-y-6">
               <h2 className={sectionHeadingClass}>{c.partnership.heading}</h2>
               <div className="space-y-4 text-base leading-relaxed text-muted-foreground">
                 <p>{c.partnership.text1}</p>
                 <p>{c.partnership.text2}</p>
                 <p>{c.partnership.text3}</p>
               </div>
-            </div>
+            </Reveal>
 
             {/* World map — subtle outline visual */}
-            <div className="flex items-center justify-center py-4 lg:py-0">
+            <Reveal delay={160} className="flex items-center justify-center py-4 lg:py-0">
               <img
                 src="/images/world-map-outline.svg"
                 alt=""
                 aria-hidden="true"
                 className="w-full max-w-lg h-auto opacity-20 select-none pointer-events-none"
               />
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -508,31 +508,32 @@ export default async function AboutPage({ params }: PageProps) {
       {/* ── SECTION 5: What Apollon Believes ────────────────────────────── */}
       <section className="border-t border-border/30 py-24">
         <div className="section-container space-y-12">
-          <div className="mx-auto max-w-2xl space-y-4 text-center">
+          <Reveal className="mx-auto max-w-2xl space-y-4 text-center">
             <h2 className={sectionHeadingClass}>{c.beliefs.heading}</h2>
             <p className="text-base leading-relaxed text-muted-foreground">
               {c.beliefs.intro}
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid gap-5 sm:grid-cols-2">
             {c.beliefs.cards.map((card, i) => (
-              <div
-                key={i}
-                className="rounded-sm border border-border/40 bg-card/30 p-6 backdrop-blur-sm"
-              >
-                <div className="mb-4 flex items-start gap-4">
-                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-sm border border-bronze/20 bg-bronze/5 text-xs font-semibold text-bronze/70">
-                    {i + 1}
-                  </span>
-                  <h3 className="font-heading text-base font-semibold leading-[1.3] text-foreground">
-                    {card.title}
-                  </h3>
+              <Reveal key={i} delay={i * 70}>
+                <div
+                  className="rounded-sm border border-border/40 bg-card/30 p-6 backdrop-blur-sm h-full"
+                >
+                  <div className="mb-4 flex items-start gap-4">
+                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-sm border border-bronze/20 bg-bronze/5 text-xs font-semibold text-bronze/70">
+                      {i + 1}
+                    </span>
+                    <h3 className="font-heading text-base font-semibold leading-[1.3] text-foreground">
+                      {card.title}
+                    </h3>
+                  </div>
+                  <p className="pl-11 text-sm leading-relaxed text-muted-foreground">
+                    {card.text}
+                  </p>
                 </div>
-                <p className="pl-11 text-sm leading-relaxed text-muted-foreground">
-                  {card.text}
-                </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -541,26 +542,27 @@ export default async function AboutPage({ params }: PageProps) {
       {/* ── SECTION 6: Brand Values ──────────────────────────────────────── */}
       <section className="border-t border-border/30 py-24">
         <div className="section-container space-y-12">
-          <div className="text-center">
+          <Reveal className="text-center">
             <h2 className={sectionHeadingClass}>{c.values.heading}</h2>
-          </div>
+          </Reveal>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {c.values.cards.map((card, i) => (
-              <div
-                key={i}
-                className="group rounded-sm border border-border/40 bg-card/30 p-5 backdrop-blur-sm transition-colors hover:border-bronze/20"
-              >
-                <div className="mb-3 flex items-center gap-2">
-                  <span className="h-1 w-1 rounded-full bg-bronze/60" />
-                  <h3 className="font-heading text-sm font-semibold uppercase tracking-[0.15em] text-foreground">
-                    {card.title}
-                  </h3>
+              <Reveal key={i} delay={i * 60}>
+                <div
+                  className="group rounded-sm border border-border/40 bg-card/30 p-5 backdrop-blur-sm transition-colors hover:border-bronze/20 h-full"
+                >
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="h-1 w-1 rounded-full bg-bronze/60" />
+                    <h3 className="font-heading text-sm font-semibold uppercase tracking-[0.15em] text-foreground">
+                      {card.title}
+                    </h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {card.text}
+                  </p>
                 </div>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {card.text}
-                </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -570,18 +572,18 @@ export default async function AboutPage({ params }: PageProps) {
       {/* TODO: Confirm public display approval for all team member details before publishing */}
       <section className="border-t border-border/30 py-24">
         <div className="section-container space-y-12">
-          <div className="mx-auto max-w-2xl space-y-4 text-center">
+          <Reveal className="mx-auto max-w-2xl space-y-4 text-center">
             <h2 className={sectionHeadingClass}>{c.team.heading}</h2>
             <p className="text-base leading-relaxed text-muted-foreground">
               {c.team.intro}
             </p>
-          </div>
+          </Reveal>
 
           <div className="mx-auto grid max-w-2xl gap-5 sm:grid-cols-2">
             {c.team.members.map((member, i) => (
+              <Reveal key={i} delay={i * 100}>
               <div
-                key={i}
-                className="rounded-sm border border-border/40 bg-card/30 p-6 backdrop-blur-sm"
+                className="rounded-sm border border-border/40 bg-card/30 p-6 backdrop-blur-sm h-full"
               >
                 {/* Photo placeholder — TODO: Add approved team photo */}
                 <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-sm border border-border/40 bg-background/60">
@@ -604,6 +606,7 @@ export default async function AboutPage({ params }: PageProps) {
                 </p>
                 {/* TODO: Add LinkedIn / contact link if approved */}
               </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -613,37 +616,39 @@ export default async function AboutPage({ params }: PageProps) {
       {/* Note: stages represent direction, not guaranteed delivery dates */}
       <section className="border-t border-border/30 py-24">
         <div className="section-container space-y-12">
-          <div className="mx-auto max-w-2xl space-y-4 text-center">
+          <Reveal className="mx-auto max-w-2xl space-y-4 text-center">
             <h2 className={sectionHeadingClass}>{c.roadmap.heading}</h2>
             <p className="text-base leading-relaxed text-muted-foreground">
               {c.roadmap.intro}
             </p>
-          </div>
+          </Reveal>
 
           <div className="mx-auto max-w-3xl">
             <div className="relative space-y-0">
               {c.roadmap.stages.map((stage, i) => (
-                <div key={i} className="relative flex gap-6 pb-10 last:pb-0">
-                  {/* Vertical line */}
-                  {i < c.roadmap.stages.length - 1 && (
-                    <div className="absolute left-[15px] top-8 h-full w-px bg-border/40" />
-                  )}
+                <Reveal key={i} delay={i * 80}>
+                  <div className="relative flex gap-6 pb-10 last:pb-0">
+                    {/* Vertical line */}
+                    {i < c.roadmap.stages.length - 1 && (
+                      <div className="absolute left-[15px] top-8 h-full w-px bg-border/40" />
+                    )}
 
-                  {/* Stage number node */}
-                  <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-bronze/30 bg-background text-xs font-semibold text-bronze/70">
-                    {i + 1}
-                  </div>
+                    {/* Stage number node */}
+                    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-bronze/30 bg-background text-xs font-semibold text-bronze/70">
+                      {i + 1}
+                    </div>
 
-                  {/* Stage content */}
-                  <div className="space-y-1.5 pt-0.5">
-                    <h3 className="font-heading text-base font-semibold leading-[1.3] text-foreground">
-                      {stage.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      {stage.text}
-                    </p>
+                    {/* Stage content */}
+                    <div className="space-y-1.5 pt-0.5">
+                      <h3 className="font-heading text-base font-semibold leading-[1.3] text-foreground">
+                        {stage.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        {stage.text}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -662,7 +667,7 @@ export default async function AboutPage({ params }: PageProps) {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,oklch(0.22_0.08_245_/_0.20),transparent)]" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_50%_100%,oklch(0.70_0.12_65_/_0.04),transparent)]" />
 
-            <div className="relative space-y-6">
+            <Reveal className="relative space-y-6">
               <h2 className="font-heading text-3xl font-semibold leading-[1.15] tracking-tight md:text-4xl pb-[0.1em]">
                 {c.cta.heading}
               </h2>
@@ -671,16 +676,10 @@ export default async function AboutPage({ params }: PageProps) {
               </p>
               <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
                 <Link
-                  href={`/${locale}/partner-distributor`}
+                  href={`/${locale}/contact?type=distributor#contact-form`}
                   className="rounded-sm border border-bronze bg-bronze px-7 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-bronze/90 hover:shadow-[0_0_24px_oklch(0.70_0.12_65_/_0.35)]"
                 >
                   {c.cta.primary}
-                </Link>
-                <Link
-                  href={`/${locale}/partner-distributor`}
-                  className="rounded-sm border border-border/60 px-7 py-3 text-sm font-semibold text-foreground transition-colors hover:border-bronze/40 hover:text-bronze"
-                >
-                  {c.cta.secondary}
                 </Link>
                 <Link
                   href={`/${locale}/contact`}
@@ -689,7 +688,7 @@ export default async function AboutPage({ params }: PageProps) {
                   {c.cta.tertiary}
                 </Link>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

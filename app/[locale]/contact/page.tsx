@@ -3,8 +3,13 @@ import Link from "next/link"
 import { type Locale } from "@/lib/i18n"
 import { ContactForm } from "@/components/forms/ContactForm"
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton"
+import { Reveal } from "@/components/motion/Reveal"
+import { COMPANY_ADDRESS_LINES, MAPS_EMBED_URL, MAPS_OPEN_URL } from "@/lib/company"
 
-type PageProps = { params: Promise<{ locale: Locale }> }
+type PageProps = {
+  params: Promise<{ locale: Locale }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
 // ─── WhatsApp config ─────────────────────────────────────────────────────────
 // TODO: Add final WhatsApp number to .env.local:
@@ -41,7 +46,6 @@ type PageContent = {
   office: {
     heading: string
     text: string
-    addressPlaceholder: string
     hoursPlaceholder: string
     mapsButton: string
   }
@@ -94,7 +98,7 @@ const content: Record<Locale, PageContent> = {
           title: "Partnership and distribution",
           text: "For distributor, dealer, installer, reseller, and strategic partnership opportunities.",
           cta: "Become a Partner",
-          href: "/en/partner-distributor",
+          href: "/contact?type=distributor#contact-form",
         },
       ],
     },
@@ -136,8 +140,6 @@ const content: Record<Locale, PageContent> = {
     office: {
       heading: "Office location",
       text: "Visit Apollon or use the map below to find the office location. Please confirm availability before visiting.",
-      // TODO: Add final approved office address before launch
-      addressPlaceholder: "Office address will be added after confirmation.",
       // TODO: Add confirmed business hours
       hoursPlaceholder: "Working hours to be confirmed.",
       mapsButton: "Open in Google Maps",
@@ -154,21 +156,18 @@ const content: Record<Locale, PageContent> = {
         {
           platform: "Instagram",
           description: "Product visuals, updates, and brand stories.",
-          // TODO: Add final approved Instagram URL
-          url: "#",
+          url: "https://www.instagram.com/apollonentertainmentsystems?igsh=MTA1aTEzbnR0eHhmMw%3D%3D&utm_source=qr",
           available: true,
         },
         {
           platform: "TikTok",
           description: "Short-form product highlights and mobility content.",
-          // TODO: Add final approved TikTok URL
-          url: "#",
+          url: "https://www.tiktok.com/@apollones0701?_r=1&_t=ZS-96JBOiEZH8B",
           available: true,
         },
         {
           platform: "YouTube",
           description: "Product videos, guides, and future brand content.",
-          // TODO: Add YouTube channel URL when channel is ready
           url: "#",
           badge: "Coming Soon",
           available: false,
@@ -224,7 +223,7 @@ const content: Record<Locale, PageContent> = {
           title: "İş ortaklığı ve distribütörlük",
           text: "Distribütörlük, bayilik, montaj noktası, satıcılık ve stratejik iş ortaklığı fırsatları için.",
           cta: "İş Ortağımız Ol",
-          href: "/tr/partner-distributor",
+          href: "/contact?type=distributor#contact-form",
         },
       ],
     },
@@ -258,8 +257,6 @@ const content: Record<Locale, PageContent> = {
     office: {
       heading: "Ofis konumu",
       text: "Apollon'u ziyaret etmek veya ofis konumunu görüntülemek için aşağıdaki haritayı kullanın. Ziyaret öncesinde uygunluğu doğrulayın.",
-      // TODO: Add final approved office address before launch
-      addressPlaceholder: "Ofis adresi onaylandıktan sonra eklenecektir.",
       // TODO: Add confirmed business hours
       hoursPlaceholder: "Çalışma saatleri onaylanacaktır.",
       mapsButton: "Google Maps'te Aç",
@@ -276,21 +273,18 @@ const content: Record<Locale, PageContent> = {
         {
           platform: "Instagram",
           description: "Ürün görselleri, güncellemeler ve marka hikâyeleri.",
-          // TODO: Add final approved Instagram URL
-          url: "#",
+          url: "https://www.instagram.com/apollonentertainmentsystems?igsh=MTA1aTEzbnR0eHhmMw%3D%3D&utm_source=qr",
           available: true,
         },
         {
           platform: "TikTok",
           description: "Kısa ürün tanıtımları ve mobilite içerikleri.",
-          // TODO: Add final approved TikTok URL
-          url: "#",
+          url: "https://www.tiktok.com/@apollones0701?_r=1&_t=ZS-96JBOiEZH8B",
           available: true,
         },
         {
           platform: "YouTube",
           description: "Ürün videoları, rehberler ve gelecek marka içerikleri.",
-          // TODO: Add YouTube channel URL when channel is ready
           url: "#",
           badge: "Yakında",
           available: false,
@@ -329,17 +323,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default async function ContactPage({ params }: PageProps) {
+export default async function ContactPage({ params, searchParams }: PageProps) {
   const { locale } = await params
   const c = content[locale]
-  const partnerHref = `/${locale}/partner-distributor`
+
+  // /contact?type=distributor preselects the Distributor / Partnership option
+  const typeParam = (await searchParams).type
+  const initialInquiryType = Array.isArray(typeParam) ? typeParam[0] : typeParam
+  const partnerHref = `/${locale}/contact?type=distributor#contact-form`
 
   // TODO: Add final WhatsApp number to .env.local before launch (NEXT_PUBLIC_WHATSAPP_NUMBER)
   const whatsappUrl = buildWhatsappUrl(locale)
-  // TODO: Add final Google Maps embed URL before launch
-  const mapsEmbedUrl = ""
-  // TODO: Add final Google Maps open URL before launch
-  const mapsOpenUrl = "#"
+  const mapsEmbedUrl = MAPS_EMBED_URL
+  const mapsOpenUrl = MAPS_OPEN_URL
 
   return (
     <main className="min-h-screen">
@@ -386,49 +382,51 @@ export default async function ContactPage({ params }: PageProps) {
       {/* ── SECTION 2: Contact Methods ──────────────────────────────────── */}
       <section className="py-20">
         <div className="section-container">
-          <div className="mb-12 max-w-2xl">
+          <Reveal className="mb-12 max-w-2xl">
             <h2 className={`${sectionHeadingClass} mb-4`}>{c.methods.heading}</h2>
             <p className="text-base leading-relaxed text-muted-foreground">{c.methods.intro}</p>
-          </div>
+          </Reveal>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {c.methods.cards.map((card) => {
+            {c.methods.cards.map((card, idx) => {
               const isInternal = !card.href.startsWith("http") && !card.href.startsWith("#")
               const isAnchor = card.href.startsWith("#")
 
               return (
-                <div key={card.title} className={`${glassCard} flex flex-col`}>
-                  <h3 className="mb-2 font-heading text-base font-semibold leading-[1.3] text-foreground">
-                    {card.title}
-                  </h3>
-                  <p className="mb-5 flex-1 text-sm leading-relaxed text-muted-foreground">
-                    {card.text}
-                  </p>
-                  {isAnchor ? (
-                    <a
-                      href={card.href}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-bronze/80 transition-colors hover:text-bronze"
-                    >
-                      {card.cta} <span aria-hidden>→</span>
-                    </a>
-                  ) : isInternal ? (
-                    <Link
-                      href={card.href}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-bronze/80 transition-colors hover:text-bronze"
-                    >
-                      {card.cta} <span aria-hidden>→</span>
-                    </Link>
-                  ) : (
-                    <a
-                      href={card.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-bronze/80 transition-colors hover:text-bronze"
-                    >
-                      {card.cta} <span aria-hidden>→</span>
-                    </a>
-                  )}
-                </div>
+                <Reveal key={card.title} delay={idx * 70}>
+                  <div className={`${glassCard} flex flex-col h-full`}>
+                    <h3 className="mb-2 font-heading text-base font-semibold leading-[1.3] text-foreground">
+                      {card.title}
+                    </h3>
+                    <p className="mb-5 flex-1 text-sm leading-relaxed text-muted-foreground">
+                      {card.text}
+                    </p>
+                    {isAnchor ? (
+                      <a
+                        href={card.href}
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-bronze/80 transition-colors hover:text-bronze"
+                      >
+                        {card.cta} <span aria-hidden>→</span>
+                      </a>
+                    ) : isInternal ? (
+                      <Link
+                        href={`/${locale}${card.href}`}
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-bronze/80 transition-colors hover:text-bronze"
+                      >
+                        {card.cta} <span aria-hidden>→</span>
+                      </Link>
+                    ) : (
+                      <a
+                        href={card.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-bronze/80 transition-colors hover:text-bronze"
+                      >
+                        {card.cta} <span aria-hidden>→</span>
+                      </a>
+                    )}
+                  </div>
+                </Reveal>
               )
             })}
           </div>
@@ -467,28 +465,30 @@ export default async function ContactPage({ params }: PageProps) {
       {/* TODO: Remove this section or replace with generic "Apollon Team" card if founders do not approve public display */}
       <section className="py-20">
         <div className="section-container">
-          <div className="mb-12 max-w-2xl">
+          <Reveal className="mb-12 text-center">
             <h2 className={`${sectionHeadingClass} mb-4`}>{c.team.heading}</h2>
-            <p className="text-base leading-relaxed text-muted-foreground">{c.team.intro}</p>
-          </div>
+            <p className="mx-auto max-w-xl text-base leading-relaxed text-muted-foreground">{c.team.intro}</p>
+          </Reveal>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 max-w-3xl">
-            {c.team.members.map((member) => (
-              <div key={member.name} className={`${glassCard} flex gap-5`}>
-                {/* TODO: Replace with approved profile photo */}
-                <div className="h-14 w-14 shrink-0 rounded-full border border-border/40 bg-card/60 flex items-center justify-center">
-                  <span className="text-xl font-semibold text-bronze/60">
-                    {member.name.charAt(0)}
-                  </span>
+          <div className="mx-auto grid gap-6 sm:grid-cols-2 max-w-3xl">
+            {c.team.members.map((member, idx) => (
+              <Reveal key={member.name} delay={idx * 80}>
+                <div className={`${glassCard} flex gap-5 h-full`}>
+                  {/* TODO: Replace with approved profile photo */}
+                  <div className="h-14 w-14 shrink-0 rounded-full border border-border/40 bg-card/60 flex items-center justify-center">
+                    <span className="text-xl font-semibold text-bronze/60">
+                      {member.name.charAt(0)}
+                    </span>
+                  </div>
+                  <div className="min-w-0">
+                    {/* TODO: Confirm name and role publicly approved before launch */}
+                    <p className="font-heading text-sm font-semibold text-foreground">{member.name}</p>
+                    <p className="mb-2 text-xs text-bronze/70">{member.role}</p>
+                    <p className="text-xs leading-relaxed text-muted-foreground">{member.description}</p>
+                    {/* TODO: Add approved contact email, phone, and WhatsApp link here */}
+                  </div>
                 </div>
-                <div className="min-w-0">
-                  {/* TODO: Confirm name and role publicly approved before launch */}
-                  <p className="font-heading text-sm font-semibold text-foreground">{member.name}</p>
-                  <p className="mb-2 text-xs text-bronze/70">{member.role}</p>
-                  <p className="text-xs leading-relaxed text-muted-foreground">{member.description}</p>
-                  {/* TODO: Add approved contact email, phone, and WhatsApp link here */}
-                </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -519,10 +519,15 @@ export default async function ContactPage({ params }: PageProps) {
                     <p className="mb-1 text-xs font-medium uppercase tracking-widest text-muted-foreground/60">
                       {locale === "tr" ? "Adres" : "Address"}
                     </p>
-                    {/* TODO: Replace placeholder with final confirmed office address */}
-                    <p className="text-sm leading-relaxed text-muted-foreground italic">
-                      {c.office.addressPlaceholder}
-                    </p>
+                    {/* Street and neighbourhood names stay in Turkish in both
+                        locales — only the İstanbul / Istanbul spelling differs */}
+                    <address className="not-italic text-sm leading-relaxed text-muted-foreground">
+                      {COMPANY_ADDRESS_LINES[locale].map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))}
+                    </address>
                   </div>
                 </div>
 
@@ -562,51 +567,17 @@ export default async function ContactPage({ params }: PageProps) {
               </div>
             </div>
 
-            {/* Google Maps embed */}
+            {/* Google Maps embed — keyless, resolves the pin from the address */}
             <div className="overflow-hidden rounded-sm border border-border/40">
-              {mapsEmbedUrl ? (
-                <iframe
-                  src={mapsEmbedUrl}
-                  width="100%"
-                  height="420"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title={locale === "tr" ? "Apollon ofis konumu" : "Apollon office location"}
-                  className="w-full"
-                />
-              ) : (
-                /* TODO: Replace this placeholder with the Google Maps iframe once the embed URL is confirmed */
-                <div className="flex h-[420px] items-center justify-center bg-card/20 px-8 text-center">
-                  <div>
-                    <div className="mb-3 text-bronze/30">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                        className="mx-auto h-12 w-12"
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-                        />
-                      </svg>
-                    </div>
-                    <p className="text-xs text-muted-foreground/50">
-                      {locale === "tr"
-                        ? "Harita, ofis adresi onaylandıktan sonra eklenecektir."
-                        : "Map will be added after the office address is confirmed."}
-                    </p>
-                  </div>
-                </div>
-              )}
+              <iframe
+                src={mapsEmbedUrl}
+                width="100%"
+                height="420"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={locale === "tr" ? "Apollon ofis konumu" : "Apollon office location"}
+                className="block h-[320px] w-full sm:h-[420px]"
+              />
             </div>
           </div>
         </div>
@@ -624,7 +595,12 @@ export default async function ContactPage({ params }: PageProps) {
 
             {/* Form col */}
             <div className={glassCard}>
-              <ContactForm locale={locale} />
+              {/* key: remount so a new ?type= value re-seeds the inquiry select */}
+              <ContactForm
+                key={initialInquiryType ?? "default"}
+                locale={locale}
+                initialInquiryType={initialInquiryType}
+              />
             </div>
           </div>
         </div>
@@ -633,51 +609,120 @@ export default async function ContactPage({ params }: PageProps) {
       {/* ── SECTION 8: Social Media Links ──────────────────────────────── */}
       <section className="py-20 border-t border-border/30">
         <div className="section-container">
-          <div className="mb-10 max-w-xl">
+          <Reveal className="mb-10 text-center">
             <h2 className={`${sectionHeadingClass} mb-3`}>{c.social.heading}</h2>
-            <p className="text-base leading-relaxed text-muted-foreground">{c.social.text}</p>
-          </div>
+            <p className="mx-auto max-w-xl text-base leading-relaxed text-muted-foreground">{c.social.text}</p>
+          </Reveal>
 
           <div className="flex flex-wrap gap-5">
-            {c.social.links.map((link) => {
-              const inner = (
+            {/* Instagram */}
+            <Reveal delay={0} className="flex flex-1 min-w-[220px]">
+              <a
+                href={c.social.links[0].url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block flex-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze/50 rounded-sm"
+                aria-label="Visit Apollon on Instagram"
+              >
                 <div
-                  className={`${glassCard} flex min-w-[200px] flex-1 flex-col gap-2 transition-colors ${
-                    link.available
-                      ? "hover:border-bronze/30 hover:bg-card/60"
-                      : "opacity-50"
-                  }`}
+                  className="rounded-sm border border-[#c13584]/20 bg-card/40 p-6 backdrop-blur-sm flex flex-col gap-4 h-full transition-all
+                    hover:border-[#c13584]/40 hover:bg-card/60 hover:shadow-[0_0_20px_rgba(193,53,132,0.08)] hover:-translate-y-[2px]"
+                  style={{ background: "linear-gradient(135deg, oklch(0.09 0.015 245 / 0.7) 0%, oklch(0.12 0.02 330 / 0.4) 100%)" }}
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="font-heading text-sm font-semibold text-foreground">
-                      {link.platform}
-                    </p>
-                    {link.badge && (
+                  <div className="flex items-center justify-between">
+                    {/* Instagram gradient icon */}
+                    <div
+                      className="flex h-9 w-9 items-center justify-center rounded-lg"
+                      style={{ background: "linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)" }}
+                      aria-hidden="true"
+                    >
+                      <svg className="h-4.5 w-4.5 text-white" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24" width="18" height="18">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <circle cx="12" cy="12" r="4.5"/>
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                      </svg>
+                    </div>
+                    <span className="text-[10px] font-medium uppercase tracking-widest text-[#e1306c]/60">@apollonentertainmentsystems</span>
+                  </div>
+                  <div>
+                    <p className="font-heading text-sm font-semibold text-foreground mb-1">Instagram</p>
+                    <p className="text-xs leading-relaxed text-muted-foreground">{c.social.links[0].description}</p>
+                  </div>
+                  <span className="mt-auto text-xs text-[#e1306c]/60 transition-colors group-hover:text-[#e1306c]/90">
+                    {locale === "tr" ? "Takip et →" : "Follow →"}
+                  </span>
+                </div>
+              </a>
+            </Reveal>
+
+            {/* TikTok */}
+            <Reveal delay={80} className="flex flex-1 min-w-[220px]">
+              <a
+                href={c.social.links[1].url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block flex-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze/50 rounded-sm"
+                aria-label="Visit Apollon on TikTok"
+              >
+                <div
+                  className="rounded-sm border border-[#69c9d0]/20 bg-card/40 p-6 backdrop-blur-sm flex flex-col gap-4 h-full transition-all
+                    hover:border-[#69c9d0]/40 hover:bg-card/60 hover:shadow-[0_0_20px_rgba(105,201,208,0.07)] hover:-translate-y-[2px]"
+                  style={{ background: "linear-gradient(135deg, oklch(0.09 0.015 245 / 0.7) 0%, oklch(0.11 0.02 195 / 0.3) 100%)" }}
+                >
+                  <div className="flex items-center justify-between">
+                    {/* TikTok icon */}
+                    <div
+                      className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#010101]"
+                      aria-hidden="true"
+                    >
+                      <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.83a8.18 8.18 0 0 0 4.78 1.52V6.9a4.84 4.84 0 0 1-1.01-.21z" fill="#ee1d52"/>
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.83a8.18 8.18 0 0 0 4.78 1.52V6.9a4.84 4.84 0 0 1-1.01-.21z" fill="#69c9d0" opacity="0.5"/>
+                        <path d="M15.82 2.44V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.83a8.18 8.18 0 0 0 4.78 1.52V6.9a4.87 4.87 0 0 1-4.78-4.46z" fill="white"/>
+                      </svg>
+                    </div>
+                    <span className="text-[10px] font-medium uppercase tracking-widest text-[#69c9d0]/60">@apollones0701</span>
+                  </div>
+                  <div>
+                    <p className="font-heading text-sm font-semibold text-foreground mb-1">TikTok</p>
+                    <p className="text-xs leading-relaxed text-muted-foreground">{c.social.links[1].description}</p>
+                  </div>
+                  <span className="mt-auto text-xs text-[#69c9d0]/60 transition-colors group-hover:text-[#69c9d0]/90">
+                    {locale === "tr" ? "Takip et →" : "Follow →"}
+                  </span>
+                </div>
+              </a>
+            </Reveal>
+
+            {/* YouTube — Coming Soon */}
+            <Reveal delay={160} className="flex flex-1 min-w-[220px]">
+              <div className="flex-1">
+                <div
+                  className="rounded-sm border border-[#ff0000]/10 bg-card/40 p-6 backdrop-blur-sm flex flex-col gap-4 h-full opacity-50"
+                >
+                  <div className="flex items-center justify-between">
+                    <div
+                      className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#ff0000]/10"
+                      aria-hidden="true"
+                    >
+                      <svg className="h-[18px] w-[18px] text-[#ff0000]/70" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" width="18" height="18">
+                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+                        <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/>
+                      </svg>
+                    </div>
+                    {c.social.links[2].badge && (
                       <span className="rounded-full border border-border/60 bg-card/40 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/60">
-                        {link.badge}
+                        {c.social.links[2].badge}
                       </span>
                     )}
                   </div>
-                  <p className="text-xs leading-relaxed text-muted-foreground">{link.description}</p>
+                  <div>
+                    <p className="font-heading text-sm font-semibold text-foreground mb-1">YouTube</p>
+                    <p className="text-xs leading-relaxed text-muted-foreground">{c.social.links[2].description}</p>
+                  </div>
                 </div>
-              )
-
-              if (!link.available || link.url === "#") {
-                return <div key={link.platform}>{inner}</div>
-              }
-
-              return (
-                <a
-                  key={link.platform}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block flex-1"
-                >
-                  {inner}
-                </a>
-              )
-            })}
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>

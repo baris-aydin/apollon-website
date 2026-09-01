@@ -69,18 +69,18 @@ The product architecture is organized into four main categories:
 
 #### Motorcycle Smart Systems
 
-- MDC-SMART02
-- MDC-PLUS02
-- Moto Dash Cam TR V2
+- APOLLON RIDE VISION
+- APOLLON RIDE ONE
+- APOLLON RX ONE
 
 #### Signature Audio Series
 
-- Coming Soon
-- Research and development preview
+- Coming Soon — homepage teaser only, no dedicated page
 
 ### Distributor Inquiry Flow
 
-The website includes a dedicated distributor and partnership section designed for prospective business partners. The inquiry flow can collect information such as:
+Distributor and partnership inquiries are handled by the unified contact form. Selecting the
+**Distributor / Partnership Inquiry** type reveals additional business fields:
 
 - Company name
 - Country and city
@@ -89,8 +89,9 @@ The website includes a dedicated distributor and partnership section designed fo
 - Email address
 - Business type
 - Interested product categories
-- Existing sales channels
 - Additional message
+
+`/[lang]/contact?type=distributor` opens the contact form with that inquiry type preselected.
 
 ### Brand-Focused Pages
 
@@ -101,9 +102,7 @@ The website structure includes:
 - Product category pages
 - Product detail pages
 - About
-- Distributor / Partnership
-- Contact
-- Signature Audio Series
+- Contact (including distributor / partnership inquiries)
 - Journal / Coming Soon
 
 ### SEO-Ready Structure
@@ -146,9 +145,7 @@ The project is structured to support:
 /[lang]/products/car-safety-security/[slug]
 /[lang]/products/motorcycle-smart-systems
 /[lang]/products/motorcycle-smart-systems/[slug]
-/[lang]/products/signature-audio-series
 /[lang]/about
-/[lang]/distributor
 /[lang]/contact
 /[lang]/journal
 ```
@@ -171,7 +168,6 @@ app/
 ├── [lang]/
 │   ├── about/
 │   ├── contact/
-│   ├── distributor/
 │   ├── journal/
 │   ├── products/
 │   ├── layout.tsx
@@ -339,7 +335,7 @@ The project is designed for deployment on Vercel.
 - [ ] Add Turkish and English content
 - [ ] Publish core product category pages
 - [ ] Add product detail templates
-- [ ] Add distributor inquiry form
+- [x] Add distributor inquiry flow (unified contact form)
 - [ ] Add contact page and social links
 - [ ] Connect CMS
 - [ ] Configure analytics and SEO

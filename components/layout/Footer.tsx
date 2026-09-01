@@ -1,20 +1,17 @@
 import Link from "next/link"
 import { type Locale } from "@/lib/i18n"
+import { COMPANY_ADDRESS_LINES, COMPANY_EMAIL } from "@/lib/company"
 
 type FooterProps = { locale: Locale }
 
 const products = {
   tr: [
-    { label: "Araç Multimedya", href: "/products/car-multimedia" },
-    { label: "Güvenlik & Dashcam", href: "/products/car-safety-security" },
-    { label: "Motosiklet Sistemleri", href: "/products/motorcycle-smart-systems" },
-    { label: "Signature Audio", href: "/products/signature-audio-series" },
+    { label: "Motosiklet — MotoPlay Series", href: "/products/motorcycle" },
+    { label: "Otomobil Teknoloji Sistemleri", href: "/products/car" },
   ],
   en: [
-    { label: "Car Multimedia", href: "/products/car-multimedia" },
-    { label: "Safety & Dashcam", href: "/products/car-safety-security" },
-    { label: "Motorcycle Systems", href: "/products/motorcycle-smart-systems" },
-    { label: "Signature Audio", href: "/products/signature-audio-series" },
+    { label: "Motorcycle — MotoPlay Series", href: "/products/motorcycle" },
+    { label: "Car Technology Systems", href: "/products/car" },
   ],
 }
 
@@ -22,13 +19,13 @@ const company = {
   tr: [
     { label: "Hakkımızda", href: "/about" },
     { label: "Journal", href: "/journal" },
-    { label: "Distribütörlük", href: "/partner-distributor" },
+    { label: "Distribütörlük", href: "/contact?type=distributor" },
     { label: "İletişim", href: "/contact" },
   ],
   en: [
     { label: "About", href: "/about" },
     { label: "Journal", href: "/journal" },
-    { label: "Partnership", href: "/partner-distributor" },
+    { label: "Partnership", href: "/contact?type=distributor" },
     { label: "Contact", href: "/contact" },
   ],
 }
@@ -77,8 +74,11 @@ export function Footer({ locale }: FooterProps) {
               {tagline[locale]}
             </p>
             <div className="flex items-center gap-3">
-              <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-sm border border-border/60 text-muted-foreground transition-colors hover:border-bronze/40 hover:text-bronze">
+              <a href="https://www.instagram.com/apollonentertainmentsystems?igsh=MTA1aTEzbnR0eHhmMw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Visit Apollon on Instagram" className="flex h-8 w-8 items-center justify-center rounded-sm border border-border/60 text-muted-foreground transition-colors hover:border-bronze/40 hover:text-bronze">
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <a href="https://www.tiktok.com/@apollones0701?_r=1&_t=ZS-96JBOiEZH8B" target="_blank" rel="noopener noreferrer" aria-label="Visit Apollon on TikTok" className="flex h-8 w-8 items-center justify-center rounded-sm border border-border/60 text-muted-foreground transition-colors hover:border-bronze/40 hover:text-bronze">
+                <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/></svg>
               </a>
               <a href="#" aria-label="YouTube" className="flex h-8 w-8 items-center justify-center rounded-sm border border-border/60 text-muted-foreground transition-colors hover:border-bronze/40 hover:text-bronze">
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
@@ -133,11 +133,23 @@ export function Footer({ locale }: FooterProps) {
               {labels.contact}
             </p>
             <address className="not-italic space-y-2.5">
-              <p className="text-sm text-muted-foreground">
-                info@apollonentertainment.com
+              <p>
+                <a
+                  href={`mailto:${COMPANY_EMAIL}`}
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {COMPANY_EMAIL}
+                </a>
               </p>
+              {/* TODO: Replace with the final public phone number before launch */}
               <p className="text-sm text-muted-foreground">+90 (000) 000 00 00</p>
-              <p className="text-sm text-muted-foreground">İstanbul, Türkiye</p>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {COMPANY_ADDRESS_LINES[locale].map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </p>
             </address>
           </div>
         </div>

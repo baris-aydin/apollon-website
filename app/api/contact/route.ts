@@ -1,15 +1,15 @@
-import { NextResponse } from "next/server"
-import { createClient } from "next-sanity"
-
-// TODO: Install resend when ready: npm install resend
-// TODO: Add to .env.local:
-//   SANITY_API_WRITE_TOKEN=your_server_only_write_token
-//   RESEND_API_KEY=your_resend_api_key
-//   CONTACT_NOTIFICATION_EMAIL=internal@yourdomain.com
-//   CONTACT_FROM_EMAIL=noreply@yourdomain.com  (must be a verified Resend sender domain)
-// TODO: Add rate limiting (e.g. upstash/ratelimit) before production launch
+// TODO: Set SANITY_API_WRITE_TOKEN in Vercel env vars before production launch
+// TODO: Set RESEND_API_KEY, FORM_NOTIFICATION_EMAIL, FORM_FROM_EMAIL in Vercel env vars
+// TODO: Verify FORM_FROM_EMAIL domain in Resend dashboard before production
+// TODO: Add rate limiting (e.g. @upstash/ratelimit) before production launch
 // TODO: Add Cloudflare Turnstile or reCAPTCHA after basic setup is confirmed working
-// TODO: Review KVKK / privacy consent wording with legal before launch
+// TODO: Review final KVKK / privacy consent wording with legal before launch
+
+import { NextResponse } from "next/server"
+import { getWriteClient } from "@/sanity/lib/writeClient"
+import { sendLeadNotification } from "@/lib/email/sendLeadNotification"
+import { DISTRIBUTOR_INQUIRY_TYPE, isInquiryType } from "@/lib/inquiryTypes"
+import { isKnownProduct } from "@/lib/products/catalogue"
 
 type ContactFormPayload = {
   name: string
@@ -17,25 +17,22 @@ type ContactFormPayload = {
   phone?: string
   company?: string
   inquiryType: string
+  /** Product inquiries only — an official catalogue name. */
+  product?: string
   subject: string
   message: string
   vehicleBrand?: string
   vehicleModel?: string
   vehicleYear?: string
   preferredContactMethod?: string
+  // Distributor / partnership inquiries only
+  country?: string
+  city?: string
+  businessType?: string
+  interestedCategories?: string[]
   consent: boolean
   locale: "tr" | "en"
   website?: string // honeypot — reject silently if non-empty
-}
-
-function createWriteClient() {
-  return createClient({
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-    apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-05-26",
-    token: process.env.SANITY_API_WRITE_TOKEN,
-    useCdn: false,
-  })
 }
 
 function isValidEmail(email: string): boolean {
@@ -44,6 +41,14 @@ function isValidEmail(email: string): boolean {
 
 function trim(v: unknown): string {
   return typeof v === "string" ? v.trim() : ""
+}
+
+function sanitizeStringArray(v: unknown): string[] {
+  if (!Array.isArray(v)) return []
+  return v
+    .filter((s): s is string => typeof s === "string")
+    .map((s) => s.trim())
+    .filter(Boolean)
 }
 
 export async function POST(request: Request) {
@@ -58,36 +63,57 @@ export async function POST(request: Request) {
     )
   }
 
-  // Honeypot — silent reject to not signal bot detection
+  // Honeypot — silent success to avoid signalling bot detection
   if (body.website) {
     return NextResponse.json({ success: true, message: "ok" })
   }
 
-  // Sanitize all inputs server-side — never trust the client
   const name = trim(body.name)
   const email = trim(body.email)
-  const phone = trim(body.phone)
+  const phone = trim(body.phone).slice(0, 50)
   const company = trim(body.company)
   const inquiryType = trim(body.inquiryType)
+  const product = trim(body.product)
   const subject = trim(body.subject)
   const message = trim(body.message).slice(0, 2000)
   const vehicleBrand = trim(body.vehicleBrand)
   const vehicleModel = trim(body.vehicleModel)
-  const vehicleYear = trim(body.vehicleYear)
+  const vehicleYear = trim(body.vehicleYear).slice(0, 20)
   const preferredContactMethod = trim(body.preferredContactMethod)
+  const country = trim(body.country)
+  const city = trim(body.city)
+  const businessType = trim(body.businessType)
+  const interestedCategories = sanitizeStringArray(body.interestedCategories)
   const consent = body.consent === true
   const locale = body.locale === "en" ? "en" : "tr"
 
-  // Server-side validation
+  const isDistributor = inquiryType === DISTRIBUTOR_INQUIRY_TYPE
+  // Only accept a product name that exists in the catalogue, and only for
+  // product inquiries — anything else is dropped rather than stored.
+  const selectedProduct =
+    inquiryType === "product" && isKnownProduct(product) ? product : ""
+
   const errors: Record<string, string> = {}
   if (!name) errors.name = "Required"
   if (!email) errors.email = "Required"
   else if (!isValidEmail(email)) errors.email = "Invalid email address"
   if (!inquiryType) errors.inquiryType = "Required"
+  else if (!isInquiryType(inquiryType)) errors.inquiryType = "Invalid inquiry type"
   if (!subject) errors.subject = "Required"
   if (!message) errors.message = "Required"
   else if (message.length < 10) errors.message = "Message must be at least 10 characters"
   if (!consent) errors.consent = "Consent is required"
+
+  // Distributor / partnership inquiries carry a business profile
+  if (isDistributor) {
+    if (!company) errors.company = "Required"
+    if (!phone) errors.phone = "Required"
+    if (!country) errors.country = "Required"
+    if (!city) errors.city = "Required"
+    if (!businessType) errors.businessType = "Required"
+    if (interestedCategories.length === 0)
+      errors.interestedCategories = "Select at least one category"
+  }
 
   if (Object.keys(errors).length > 0) {
     return NextResponse.json(
@@ -96,83 +122,91 @@ export async function POST(request: Request) {
     )
   }
 
-  // ── Save to Sanity ────────────────────────────────────────────────────────
-  let savedToSanity = false
-  try {
-    if (!process.env.SANITY_API_WRITE_TOKEN) {
-      // During development, log the lead rather than crashing
-      // TODO: Set SANITY_API_WRITE_TOKEN before production launch
-      console.warn("[contact] SANITY_API_WRITE_TOKEN not set — lead not persisted")
-    } else {
-      const writeClient = createWriteClient()
-      await writeClient.create({
+  const submittedAt = new Date().toISOString()
+
+  // Distributor-specific fields are never stored/sent for other inquiry types
+  const businessFields: {
+    country?: string
+    city?: string
+    businessType?: string
+    interestedCategories?: string[]
+  } = isDistributor
+    ? {
+        country: country || undefined,
+        city: city || undefined,
+        businessType: businessType || undefined,
+        interestedCategories:
+          interestedCategories.length > 0 ? interestedCategories : undefined,
+      }
+    : {}
+
+  const vehicleFields: {
+    vehicleBrand?: string
+    vehicleModel?: string
+    vehicleYear?: string
+  } = isDistributor
+    ? {}
+    : {
+        vehicleBrand: vehicleBrand || undefined,
+        vehicleModel: vehicleModel || undefined,
+        vehicleYear: vehicleYear || undefined,
+      }
+
+  // ── Save to Sanity (primary — must succeed) ───────────────────────────────
+  if (!process.env.SANITY_API_WRITE_TOKEN) {
+    // TODO: Remove this warning and set the token before production
+    console.warn("[contact] SANITY_API_WRITE_TOKEN not set — lead not persisted to Sanity")
+  } else {
+    try {
+      await getWriteClient().create({
         _type: "contactLead",
         name,
         email,
         phone: phone || undefined,
         company: company || undefined,
         inquiryType,
+        product: selectedProduct || undefined,
         subject,
         message,
-        vehicleBrand: vehicleBrand || undefined,
-        vehicleModel: vehicleModel || undefined,
-        vehicleYear: vehicleYear || undefined,
+        ...vehicleFields,
+        ...businessFields,
         preferredContactMethod: preferredContactMethod || undefined,
         consent,
         locale,
         status: "new",
         source: "contact-page",
-        createdAt: new Date().toISOString(),
+        createdAt: submittedAt,
       })
-      savedToSanity = true
+    } catch (err) {
+      console.error("[contact] Sanity write error:", err)
+      return NextResponse.json(
+        { success: false, message: "Something went wrong. Please try again." },
+        { status: 500 }
+      )
     }
-  } catch (err) {
-    console.error("[contact] Sanity write error:", err)
   }
 
-  // ── Email notification ────────────────────────────────────────────────────
-  // Lead save is primary; email is secondary. Failure here does not block success.
-  //
-  // TODO: Uncomment when Resend is installed (npm install resend) and env vars are set:
-  //
-  // try {
-  //   const { Resend } = await import("resend")
-  //   const resend = new Resend(process.env.RESEND_API_KEY)
-  //   await resend.emails.send({
-  //     from: process.env.CONTACT_FROM_EMAIL!,
-  //     to: process.env.CONTACT_NOTIFICATION_EMAIL!,
-  //     subject: `New Apollon Contact Request — ${subject}`,
-  //     html: `
-  //       <h2>New Contact Request</h2>
-  //       <p><strong>Name:</strong> ${name}</p>
-  //       <p><strong>Email:</strong> ${email}</p>
-  //       <p><strong>Phone:</strong> ${phone || "—"}</p>
-  //       <p><strong>Company:</strong> ${company || "—"}</p>
-  //       <p><strong>Inquiry Type:</strong> ${inquiryType}</p>
-  //       <p><strong>Subject:</strong> ${subject}</p>
-  //       <p><strong>Message:</strong> ${message}</p>
-  //       <p><strong>Vehicle Brand:</strong> ${vehicleBrand || "—"}</p>
-  //       <p><strong>Vehicle Model:</strong> ${vehicleModel || "—"}</p>
-  //       <p><strong>Vehicle Year:</strong> ${vehicleYear || "—"}</p>
-  //       <p><strong>Preferred Contact Method:</strong> ${preferredContactMethod || "—"}</p>
-  //       <p><strong>Locale:</strong> ${locale}</p>
-  //       <p><strong>Submitted:</strong> ${new Date().toISOString()}</p>
-  //     `,
-  //   })
-  // } catch (emailErr) {
-  //   console.error("[contact] Email notification failed:", emailErr)
-  // }
-
-  // Fallback log during setup so no lead is lost silently
-  if (!savedToSanity) {
-    console.log("[contact] Lead (not saved to Sanity):", {
+  // ── Email notification (secondary — failure does not block success) ────────
+  try {
+    await sendLeadNotification({
+      type: "contact",
       name,
       email,
+      phone: phone || undefined,
+      company: company || undefined,
       inquiryType,
+      product: selectedProduct || undefined,
       subject,
+      message,
+      ...vehicleFields,
+      ...businessFields,
+      preferredContactMethod: preferredContactMethod || undefined,
       locale,
-      submittedAt: new Date().toISOString(),
+      submittedAt,
     })
+  } catch (emailErr) {
+    console.error("[contact] Email notification failed:", emailErr)
+    // Lead is already saved — return success
   }
 
   return NextResponse.json(
