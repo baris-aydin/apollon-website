@@ -10,8 +10,10 @@ const categoryImages = {
     alt: "Royal Enfield motorcycle digital speedometer smart display",
   },
   car: {
-    src: "/images/home/categories/car-multimedia.jpg",
-    alt: "Apple CarPlay touchscreen integrated into a modern vehicle dashboard",
+    // Cinematic night shot: no infotainment UI, so no region-specific text.
+    src: "/images/car-technology-systems/hero/car-technology-night.jpg",
+    alt: "Modern car at night with headlights cutting through fog on an open road",
+    position: "center 62%",
   },
 }
 

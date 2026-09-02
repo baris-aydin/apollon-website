@@ -14,6 +14,9 @@ const RETIRED_CAR_PATHS = ["car-multimedia", "car-safety-security"];
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [new URL("https://ecdn6-nc.globalso.com/**")],
+    // Next only serves qualities listed here (default: [75] only). 90 is used
+    // for large hero photography so it stays crisp at desktop widths.
+    qualities: [75, 90],
   },
   async redirects() {
     return [

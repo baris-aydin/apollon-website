@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { type Locale } from "@/lib/i18n"
+import { whatsappUrl } from "@/lib/company"
 
 const content = {
   tr: {
@@ -26,11 +27,9 @@ const content = {
   },
 }
 
-const waNumber = "905000000000"
-
 export function ContactCTA({ locale }: { locale: Locale }) {
   const c = content[locale]
-  const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(c.whatsappMessage)}`
+  const waUrl = whatsappUrl(locale)
 
   return (
     <section className="border-t border-border/30 py-24">

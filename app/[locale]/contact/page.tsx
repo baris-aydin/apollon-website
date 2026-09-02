@@ -4,25 +4,17 @@ import { type Locale } from "@/lib/i18n"
 import { ContactForm } from "@/components/forms/ContactForm"
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton"
 import { Reveal } from "@/components/motion/Reveal"
-import { COMPANY_ADDRESS_LINES, MAPS_EMBED_URL, MAPS_OPEN_URL } from "@/lib/company"
+import {
+  COMPANY_ADDRESS_LINES,
+  MAPS_EMBED_URL,
+  MAPS_OPEN_URL,
+  WORKING_HOURS,
+  whatsappUrl,
+} from "@/lib/company"
 
 type PageProps = {
   params: Promise<{ locale: Locale }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-
-// ─── WhatsApp config ─────────────────────────────────────────────────────────
-// TODO: Add final WhatsApp number to .env.local:
-//   NEXT_PUBLIC_WHATSAPP_NUMBER=905XXXXXXXXX  (international format, no spaces, no + prefix)
-
-function buildWhatsappUrl(locale: Locale): string {
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ""
-  const message =
-    locale === "tr"
-      ? "Merhaba, Apollon ürünleri hakkında bilgi almak istiyorum."
-      : "Hello, I would like to get information about Apollon products."
-  if (!number) return "#"
-  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`
 }
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -46,7 +38,7 @@ type PageContent = {
   office: {
     heading: string
     text: string
-    hoursPlaceholder: string
+    hours: string
     mapsButton: string
   }
   form: { heading: string; description: string }
@@ -140,8 +132,7 @@ const content: Record<Locale, PageContent> = {
     office: {
       heading: "Office location",
       text: "Visit Apollon or use the map below to find the office location. Please confirm availability before visiting.",
-      // TODO: Add confirmed business hours
-      hoursPlaceholder: "Working hours to be confirmed.",
+      hours: WORKING_HOURS.en,
       mapsButton: "Open in Google Maps",
     },
     form: {
@@ -257,8 +248,7 @@ const content: Record<Locale, PageContent> = {
     office: {
       heading: "Ofis konumu",
       text: "Apollon'u ziyaret etmek veya ofis konumunu görüntülemek için aşağıdaki haritayı kullanın. Ziyaret öncesinde uygunluğu doğrulayın.",
-      // TODO: Add confirmed business hours
-      hoursPlaceholder: "Çalışma saatleri onaylanacaktır.",
+      hours: WORKING_HOURS.tr,
       mapsButton: "Google Maps'te Aç",
     },
     form: {
@@ -332,8 +322,7 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
   const initialInquiryType = Array.isArray(typeParam) ? typeParam[0] : typeParam
   const partnerHref = `/${locale}/contact?type=distributor#contact-form`
 
-  // TODO: Add final WhatsApp number to .env.local before launch (NEXT_PUBLIC_WHATSAPP_NUMBER)
-  const whatsappUrl = buildWhatsappUrl(locale)
+  const whatsappHref = whatsappUrl(locale)
   const mapsEmbedUrl = MAPS_EMBED_URL
   const mapsOpenUrl = MAPS_OPEN_URL
 
@@ -367,7 +356,7 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
                 {c.hero.primaryCta}
               </a>
               <a
-                href={whatsappUrl}
+                href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-sm border border-border/60 bg-card/40 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur-sm transition-all hover:border-border hover:bg-card/60"
@@ -446,12 +435,12 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
                 <p className="text-sm leading-relaxed text-muted-foreground">{c.whatsapp.text}</p>
               </div>
               <WhatsAppButton
-                href={whatsappUrl}
+                href={whatsappHref}
                 label={c.whatsapp.button}
                 locale={locale}
                 gaSource="contact_page"
                 className={`shrink-0 rounded-sm border px-6 py-3 text-sm font-semibold transition-all ${
-                  whatsappUrl === "#"
+                  whatsappHref === "#"
                     ? "cursor-not-allowed border-border/40 text-muted-foreground opacity-50"
                     : "border-green-500/60 bg-green-500/10 text-green-400 hover:bg-green-500/20 hover:shadow-[0_0_20px_oklch(0.65_0.17_155_/_0.15)]"
                 }`}
@@ -546,9 +535,8 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
                     <p className="mb-1 text-xs font-medium uppercase tracking-widest text-muted-foreground/60">
                       {locale === "tr" ? "Çalışma Saatleri" : "Working Hours"}
                     </p>
-                    {/* TODO: Replace placeholder with confirmed business hours */}
-                    <p className="text-sm leading-relaxed text-muted-foreground italic">
-                      {c.office.hoursPlaceholder}
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {c.office.hours}
                     </p>
                   </div>
                 </div>
@@ -747,7 +735,7 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
                   {c.cta.product}
                 </a>
                 <WhatsAppButton
-                  href={whatsappUrl}
+                  href={whatsappHref}
                   label={c.cta.whatsapp}
                   locale={locale}
                   gaSource="contact_cta"

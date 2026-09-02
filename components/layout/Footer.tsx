@@ -1,6 +1,11 @@
 import Link from "next/link"
 import { type Locale } from "@/lib/i18n"
-import { COMPANY_ADDRESS_LINES, COMPANY_EMAIL } from "@/lib/company"
+import {
+  COMPANY_ADDRESS_LINES,
+  COMPANY_EMAIL,
+  COMPANY_PHONE_DISPLAY,
+  whatsappUrl,
+} from "@/lib/company"
 
 type FooterProps = { locale: Locale }
 
@@ -141,8 +146,16 @@ export function Footer({ locale }: FooterProps) {
                   {COMPANY_EMAIL}
                 </a>
               </p>
-              {/* TODO: Replace with the final public phone number before launch */}
-              <p className="text-sm text-muted-foreground">+90 (000) 000 00 00</p>
+              <p>
+                <a
+                  href={whatsappUrl(locale)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {COMPANY_PHONE_DISPLAY}
+                </a>
+              </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 {COMPANY_ADDRESS_LINES[locale].map((line) => (
                   <span key={line} className="block">

@@ -28,7 +28,7 @@ export default async function LocaleLayout({
       <Header locale={validLocale} />
       {children}
       <Footer locale={validLocale} />
-      <WhatsAppButton />
+      <WhatsAppButton locale={validLocale} />
     </>
   )
 }

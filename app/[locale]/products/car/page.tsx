@@ -109,11 +109,14 @@ export default async function CarProductsPage({ params }: PageProps) {
         {/* Hero image — right side, desktop only */}
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] lg:block">
           <div className="relative h-full w-full overflow-hidden">
+            {/* Cinematic night shot: no infotainment UI, so no region-specific
+                text, third-party branding or watermarks. */}
             <Image
-              src="/images/home/categories/car-multimedia.jpg"
-              alt="Apple CarPlay touchscreen integrated into a modern vehicle dashboard"
+              src="/images/car-technology-systems/hero/car-technology-night.jpg"
+              alt="Modern car at night with headlights cutting through fog on an open road"
               fill
               priority
+              quality={90}
               className="object-cover object-center"
               sizes="(min-width: 1536px) 700px, 46vw"
             />

@@ -222,12 +222,43 @@
   animation: apollon-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Mobile nav drawer: overlay fades, panel slides in from the left */
+@keyframes apollon-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes apollon-drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-overlay-in {
+  animation: apollon-overlay-in 0.2s ease-out both;
+}
+
+.animate-drawer-in {
+  animation: apollon-drawer-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-page-enter {
     animation: none;
   }
   .reveal-visible {
     animation: none !important;
+  }
+  .animate-overlay-in,
+  .animate-drawer-in {
+    animation: none;
   }
 }
 

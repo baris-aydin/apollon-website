@@ -40,7 +40,7 @@ export function ProductCategoryCard({
             fill
             className="object-cover"
             style={{ objectPosition: image.position ?? "center" }}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            sizes="(max-width: 640px) 100vw, 50vw"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
         </div>

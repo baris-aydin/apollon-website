@@ -1,17 +1,15 @@
 'use client'
 
 import { MessageCircle } from "lucide-react"
+import { type Locale } from "@/lib/i18n"
+import { whatsappUrl } from "@/lib/company"
 
 type WhatsAppButtonProps = {
-  phoneNumber?: string
-  message?: string
+  locale: Locale
 }
 
-export function WhatsAppButton({
-  phoneNumber = "905000000000",
-  message = "Merhaba, Apollon ürünleri hakkında bilgi almak istiyorum.",
-}: WhatsAppButtonProps) {
-  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+export function WhatsAppButton({ locale }: WhatsAppButtonProps) {
+  const url = whatsappUrl(locale)
 
   return (
     <a
