@@ -90,6 +90,8 @@ function buildSpecs(product: CarProduct, locale: Locale): SpecRow[] {
   } else {
     rows.push({ label: l.specLabels.type, value: product[locale].productType })
   }
+  // Hardware figures from the official storefront listing, where published.
+  rows.push(...(product[locale].techSpecs ?? []))
   return rows
 }
 

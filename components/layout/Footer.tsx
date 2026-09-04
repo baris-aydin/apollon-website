@@ -3,7 +3,7 @@ import { type Locale } from "@/lib/i18n"
 import {
   COMPANY_ADDRESS_LINES,
   COMPANY_EMAIL,
-  COMPANY_PHONE_DISPLAY,
+  COMPANY_PHONES,
   whatsappUrl,
 } from "@/lib/company"
 
@@ -146,6 +146,16 @@ export function Footer({ locale }: FooterProps) {
                   {COMPANY_EMAIL}
                 </a>
               </p>
+              {COMPANY_PHONES.map((phone) => (
+                <p key={phone.e164}>
+                  <a
+                    href={`tel:${phone.e164}`}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {phone.display}
+                  </a>
+                </p>
+              ))}
               <p>
                 <a
                   href={whatsappUrl(locale)}
@@ -153,7 +163,7 @@ export function Footer({ locale }: FooterProps) {
                   rel="noopener noreferrer"
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {COMPANY_PHONE_DISPLAY}
+                  WhatsApp
                 </a>
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">

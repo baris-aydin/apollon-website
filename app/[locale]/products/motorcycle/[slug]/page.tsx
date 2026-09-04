@@ -69,7 +69,21 @@ type ProductData = {
 
 const products: Record<string, ProductData> = {
   "mdc-smart02": {
-    // APOLLON RIDE VISION / B3 — official product document received 2026-08-31.
+    // APOLLON RIDE VISION.
+    //
+    // Detailed specification confirmed 2026-09-04. The camera is integrated
+    // (previously listed as optional) and records at 1080P - the earlier
+    // document's 1440P mode is no longer published, since 2K/4K must not be
+    // claimed for this model.
+    //
+    // Navigation runs on the rider's connected phone via CarPlay / Android
+    // Auto; no standalone satellite navigation is claimed. "Water-resistant"
+    // is deliberate: no IP rating is confirmed, so "waterproof" is never used.
+    //
+    // The 6.2" IPS size and the 2GB-256GB card range come from the earlier
+    // official document and are retained: the new specification does not
+    // contradict them, it simply does not restate them.
+    //
     // Slug kept as the legacy id so /products/motorcycle/mdc-smart02 keeps working.
     en: {
       heroPrimary: "Request Product Information",
@@ -84,23 +98,24 @@ const products: Record<string, ProductData> = {
       inquiryPrimary: "Request Product Information",
       inquirySecondary: "Contact for Installation / Dealer Info",
       backLabel: "Motorcycle Smart Systems",
-      heroEyebrow: "PREMIUM IPS MOTORCYCLE CARPLAY SYSTEM",
+      heroEyebrow: "1080P CAMERA MOTORCYCLE RIDING DISPLAY",
       heroTitle: "APOLLON RIDE VISION",
-      heroSubtitle: "The premium motorcycle smart-display system, uniting a premium IPS screen, high brightness, dual Bluetooth, Apple CarPlay, Android Auto and GPS in a water-resistant body.",
+      heroSubtitle: "A smart motorcycle riding system combining Apple CarPlay, Android Auto, navigation support and a 1080P riding camera in a single device.",
       promise: "",
       promiseBlocks: [
         "Bring technology to your ride. Connectivity, navigation and a premium display experience in a single system.",
-        "APOLLON RIDE VISION / B3 is a top-tier smart riding system developed for motorcycle riders, bringing a premium IPS display, dual Bluetooth, Apple CarPlay, Android Auto, GPS and high brightness together in a water-resistant construction.",
+        "APOLLON RIDE VISION is a smart motorcycle riding system that combines Apple CarPlay, Android Auto, navigation support and a 1080P riding camera in a single device. A high-brightness IPS display and dual Bluetooth sit in a water-resistant construction developed for motorcycle riding conditions.",
       ],
-      summary: "Premium IPS • High Brightness • Dual Bluetooth • CarPlay • Android Auto • GPS • Water Resistant",
+      summary: "1080P Camera • CarPlay • Android Auto • Navigation • IPS Display • Dual Bluetooth • G-Sensor • Parking Mode",
       features: [
-        "Premium IPS Display",
-        "High Brightness",
-        "Dual Bluetooth",
+        "1080P Camera",
         "Apple CarPlay",
         "Android Auto",
-        "GPS",
-        "Water-Resistant Design",
+        "IPS Display",
+        "Dual Bluetooth",
+        "Navigation",
+        "G-Sensor",
+        "Parking Mode",
       ],
       mainImage: {
         src: "/images/motoplay-series/ride-vision/main.png",
@@ -112,38 +127,46 @@ const products: Record<string, ProductData> = {
       sectionsHeading: "What APOLLON RIDE VISION offers",
       sections: [
         {
-          heading: "Premium IPS Display",
-          text: "A vivid, sharp image experience that keeps the information you need comfortably readable while riding.",
+          heading: "1080P Riding Camera",
+          text: "Record your rides in 1080P directly through Ride Vision’s integrated camera system.",
         },
         {
-          heading: "High Brightness",
-          text: "A high-brightness panel that supports on-screen visibility in bright conditions.",
+          heading: "CarPlay & Android Auto",
+          text: "Access supported navigation, music, calls and smartphone functionality through the Ride Vision display.",
+        },
+        {
+          heading: "GPS & Navigation Support",
+          text: "Use compatible navigation applications through the connected smartphone and follow your route on the Ride Vision display.",
+        },
+        {
+          heading: "IPS Display",
+          text: "Wide viewing angles help keep essential information easy to follow during the ride.",
         },
         {
           heading: "Dual Bluetooth",
-          text: "An advanced Bluetooth architecture that widens the connected-use options available on the motorcycle.",
+          text: "Connect compatible smartphones and Bluetooth devices through dual Bluetooth connectivity.",
         },
         {
-          heading: "Apple CarPlay",
-          text: "Lets you use compatible iPhone features through the motorcycle display.",
+          heading: "G-Sensor Protection",
+          text: "When a sudden impact or shock is detected, the G-Sensor helps protect the relevant recording from being overwritten during loop recording.",
         },
         {
-          heading: "Android Auto",
-          text: "Supports a connected riding experience with compatible Android devices.",
+          heading: "Parking Mode",
+          text: "Supports recording activation when an impact or vibration is detected while parked, when connected through the appropriate electrical setup.",
         },
         {
-          heading: "GPS",
-          text: "Provides GPS support for navigation and route use.",
-        },
-        {
-          heading: "Water Resistant",
-          text: "A durable construction designed with motorcycle riding conditions in mind.",
+          heading: "Loop Recording",
+          text: "Automatically manages storage by replacing older loop-recorded footage as space is needed.",
         },
       ],
       specs: [
         {
           label: "Product name",
           value: "APOLLON RIDE VISION",
+        },
+        {
+          label: "Product type",
+          value: "Smart Motorcycle Riding Display",
         },
         {
           label: "Model reference",
@@ -178,32 +201,52 @@ const products: Record<string, ProductData> = {
           value: "Compatible",
         },
         {
-          label: "Navigation",
-          value: "Real-time GPS compatible",
+          label: "Navigation support",
+          value: "Yes, via connected compatible smartphone",
         },
         {
           label: "Tire-pressure monitoring",
           value: "Integrated support",
         },
         {
-          label: "Camera system",
-          value: "Optional front and rear",
+          label: "Camera",
+          value: "Integrated",
+        },
+        {
+          label: "Video resolution",
+          value: "1080P",
+        },
+        {
+          label: "Riding recording",
+          value: "Yes",
+        },
+        {
+          label: "Loop recording",
+          value: "Yes",
+        },
+        {
+          label: "G-sensor",
+          value: "Yes",
+        },
+        {
+          label: "Parking mode",
+          value: "Yes",
+        },
+        {
+          label: "Parking mode requirement",
+          value: "Appropriate electrical connection",
         },
         {
           label: "Camera sensor",
           value: "Sony IMX307",
         },
         {
-          label: "Recording modes",
-          value: "1440P / 30FPS and 1080P / 30FPS",
-        },
-        {
           label: "BSD",
           value: "Supported on compatible configurations",
         },
         {
-          label: "Storage",
-          value: "2GB–256GB TF card",
+          label: "Memory card support",
+          value: "Yes — 2GB–256GB TF card",
         },
         {
           label: "Power architecture",
@@ -214,8 +257,20 @@ const products: Record<string, ProductData> = {
           value: "5V / 2A voltage-reducing cable",
         },
         {
+          label: "Water resistance",
+          value: "Water-resistant design",
+        },
+        {
           label: "Construction",
-          value: "Water-resistant, motorcycle optimized",
+          value: "Motorcycle optimized",
+        },
+        {
+          label: "Motorcycle compatibility",
+          value: "Universal",
+        },
+        {
+          label: "Warranty",
+          value: "2 years",
         },
       ],
       galleryNote: "",
@@ -255,8 +310,8 @@ const products: Record<string, ProductData> = {
       ],
       galleryContain: true,
       galleryAspect: "4 / 3",
-      metaTitle: "APOLLON RIDE VISION — Premium IPS Motorcycle CarPlay System | Apollon",
-      metaDescription: "APOLLON RIDE VISION / B3 is a premium IPS motorcycle CarPlay system with high brightness, dual Bluetooth, Apple CarPlay, Android Auto, GPS and a water-resistant design.",
+      metaTitle: "APOLLON RIDE VISION — 1080P Camera Motorcycle Riding Display | Apollon Entertainment Systems",
+      metaDescription: "APOLLON RIDE VISION is a smart motorcycle riding display combining Apple CarPlay, Android Auto, navigation through your connected smartphone and an integrated 1080P riding camera with a G-sensor and parking mode.",
     },
     tr: {
       heroPrimary: "Ürün Bilgisi Al",
@@ -271,23 +326,24 @@ const products: Record<string, ProductData> = {
       inquiryPrimary: "Ürün Bilgisi Al",
       inquirySecondary: "Montaj / Bayi Bilgisi İçin İletişime Geç",
       backLabel: "Motosiklet Akıllı Sistemleri",
-      heroEyebrow: "PREMIUM IPS MOTOSİKLET CARPLAY SİSTEMİ",
+      heroEyebrow: "1080P KAMERALI MOTOSİKLET SÜRÜŞ EKRANI",
       heroTitle: "APOLLON RIDE VISION",
-      heroSubtitle: "Premium IPS ekran, yüksek parlaklık, çift Bluetooth, Apple CarPlay, Android Auto ve GPS özelliklerini suya dayanıklı bir yapıda birleştiren üst seviye motosiklet akıllı ekran sistemi.",
+      heroSubtitle: "Apple CarPlay, Android Auto, navigasyon desteği ve 1080P sürüş kamerasını tek cihazda bir araya getiren akıllı motosiklet sürüş sistemi.",
       promise: "",
       promiseBlocks: [
         "Sürüşünüzü teknolojiyle buluşturun. Bağlantı, navigasyon ve premium ekran deneyimi tek sistemde.",
-        "APOLLON RIDE VISION/B3; motosiklet kullanıcıları için geliştirilen Premium IPS ekran, çift Bluetooth, Apple CarPlay, Android Auto, GPS ve yüksek parlaklık özelliklerini suya dayanıklı yapıyla bir araya getiren üst seviye akıllı sürüş sistemidir.",
+        "APOLLON RIDE VISION, motosiklet kullanımı için geliştirilen; CarPlay, Android Auto, navigasyon ve 1080P kamera özelliklerini tek cihazda bir araya getiren akıllı sürüş sistemidir. Yüksek parlaklıklı IPS ekran ve dual Bluetooth, motosiklet sürüş koşulları için geliştirilmiş suya dayanıklı bir gövdede yer alır.",
       ],
-      summary: "Premium IPS • Yüksek Parlaklık • Çift Bluetooth • CarPlay • Android Auto • GPS • Suya Dayanıklı",
+      summary: "1080P Kamera • CarPlay • Android Auto • Navigasyon • IPS Ekran • Dual Bluetooth • G-Sensör • Park Modu",
       features: [
-        "Premium IPS Ekran",
-        "Yüksek Parlaklık",
-        "Çift Bluetooth",
+        "1080P Kamera",
         "Apple CarPlay",
         "Android Auto",
-        "GPS",
-        "Suya Dayanıklı",
+        "IPS Ekran",
+        "Dual Bluetooth",
+        "Navigasyon",
+        "G-Sensör",
+        "Park Modu",
       ],
       mainImage: {
         src: "/images/motoplay-series/ride-vision/main.png",
@@ -299,38 +355,46 @@ const products: Record<string, ProductData> = {
       sectionsHeading: "APOLLON RIDE VISION neler sunar",
       sections: [
         {
-          heading: "Premium IPS Ekran",
-          text: "Canlı ve net görüntü deneyimiyle sürüş sırasında ihtiyaç duyduğunuz bilgilerin rahat görüntülenmesini sağlar.",
+          heading: "1080P Sürüş Kamerası",
+          text: "Ride Vision’ın entegre kamera sistemiyle sürüşlerinizi doğrudan 1080P kaydedin.",
         },
         {
-          heading: "Yüksek Parlaklık",
-          text: "Aydınlık ortamlarda ekran görünürlüğünü destekleyen yüksek parlaklık özelliği sunar.",
+          heading: "CarPlay ve Android Auto",
+          text: "Desteklenen navigasyon, müzik, arama ve akıllı telefon fonksiyonlarına Ride Vision ekranı üzerinden erişin.",
         },
         {
-          heading: "Çift Bluetooth",
-          text: "Gelişmiş Bluetooth bağlantı yapısıyla motosiklet üzerindeki bağlantılı kullanım seçeneklerini genişletir.",
+          heading: "GPS ve Navigasyon Desteği",
+          text: "Uyumlu navigasyon uygulamalarını bağlı telefon üzerinden kullanarak rotanızı Ride Vision ekranından takip edebilirsiniz.",
         },
         {
-          heading: "Apple CarPlay",
-          text: "Uyumlu iPhone özelliklerini motosiklet ekranı üzerinden kullanmanızı sağlar.",
+          heading: "IPS Ekran",
+          text: "Geniş görüş açıları, sürüş sırasında önemli bilgilerin rahatça takip edilmesine yardımcı olur.",
         },
         {
-          heading: "Android Auto",
-          text: "Uyumlu Android cihazlarla bağlantılı sürüş deneyimini destekler.",
+          heading: "Dual Bluetooth",
+          text: "Uyumlu akıllı telefonları ve Bluetooth cihazlarını çift Bluetooth bağlantısıyla bağlayın.",
         },
         {
-          heading: "GPS",
-          text: "Navigasyon ve rota kullanımını destekleyen GPS özelliği sunar.",
+          heading: "G-Sensör Koruması",
+          text: "Ani darbe veya sarsıntı algılandığında ilgili kaydın korunmasına yardımcı olur ve önemli görüntülerin döngüsel kayıt sırasında üzerine yazılmasını önlemeye yardımcı olur.",
         },
         {
-          heading: "Suya Dayanıklı",
-          text: "Motosiklet kullanım şartları düşünülerek tasarlanmış dayanıklı yapı.",
+          heading: "Park Modu",
+          text: "Park halindeyken darbe veya titreşim algılandığında kayıt başlatılmasını destekler; uygun elektrik bağlantısı ile çalışır.",
+        },
+        {
+          heading: "Döngüsel Kayıt",
+          text: "Alan gerektiğinde eski döngüsel kayıtların üzerine yazarak depolamayı otomatik yönetir.",
         },
       ],
       specs: [
         {
           label: "Ürün adı",
           value: "APOLLON RIDE VISION",
+        },
+        {
+          label: "Ürün tipi",
+          value: "Motosiklet Akıllı Sürüş Ekranı",
         },
         {
           label: "Model referansı",
@@ -365,32 +429,52 @@ const products: Record<string, ProductData> = {
           value: "Uyumlu",
         },
         {
-          label: "Navigasyon",
-          value: "Gerçek zamanlı GPS uyumlu",
+          label: "Navigasyon desteği",
+          value: "Bağlı uyumlu akıllı telefon üzerinden",
         },
         {
           label: "Lastik basınç takibi",
           value: "Entegre destek",
         },
         {
-          label: "Kamera sistemi",
-          value: "Opsiyonel ön ve arka",
+          label: "Kamera",
+          value: "Entegre",
+        },
+        {
+          label: "Video çözünürlüğü",
+          value: "1080P",
+        },
+        {
+          label: "Sürüş kaydı",
+          value: "Var",
+        },
+        {
+          label: "Döngüsel kayıt",
+          value: "Var",
+        },
+        {
+          label: "G-Sensör",
+          value: "Var",
+        },
+        {
+          label: "Park modu",
+          value: "Var",
+        },
+        {
+          label: "Park modu gereksinimi",
+          value: "Uygun elektrik bağlantısı",
         },
         {
           label: "Kamera sensörü",
           value: "Sony IMX307",
         },
         {
-          label: "Kayıt modları",
-          value: "1440P / 30FPS ve 1080P / 30FPS",
-        },
-        {
           label: "Kör Nokta Algılama",
           value: "Uyumlu konfigürasyonlarda destekleniyor",
         },
         {
-          label: "Depolama",
-          value: "2GB–256GB TF kart",
+          label: "Hafıza kartı desteği",
+          value: "Var — 2GB–256GB TF kart",
         },
         {
           label: "Güç mimarisi",
@@ -401,8 +485,20 @@ const products: Record<string, ProductData> = {
           value: "5V / 2A voltaj düşürücü kablo",
         },
         {
+          label: "Su dayanıklılığı",
+          value: "Suya dayanıklı tasarım",
+        },
+        {
           label: "Gövde yapısı",
-          value: "Suya dayanıklı, motosiklet optimizasyonlu",
+          value: "Motosiklet optimizasyonlu",
+        },
+        {
+          label: "Motosiklet uyumluluğu",
+          value: "Evrensel",
+        },
+        {
+          label: "Garanti",
+          value: "2 yıl",
         },
       ],
       galleryNote: "",
@@ -442,13 +538,20 @@ const products: Record<string, ProductData> = {
       ],
       galleryContain: true,
       galleryAspect: "4 / 3",
-      metaTitle: "APOLLON RIDE VISION — Premium IPS Motosiklet CarPlay Sistemi | Apollon",
-      metaDescription: "APOLLON RIDE VISION / B3; yüksek parlaklık, çift Bluetooth, Apple CarPlay, Android Auto, GPS ve suya dayanıklı tasarım sunan premium IPS motosiklet CarPlay sistemidir.",
+      metaTitle: "APOLLON RIDE VISION — 1080P Kameralı Motosiklet Sürüş Ekranı | Apollon Entertainment Systems",
+      metaDescription: "APOLLON RIDE VISION; Apple CarPlay, Android Auto, bağlı akıllı telefon üzerinden navigasyon ve entegre 1080P sürüş kamerasını G-Sensör ve park moduyla birleştiren akıllı motosiklet sürüş ekranıdır.",
     },
   },
 
   "mdc-plus02": {
-    // APOLLON RIDE ONE / B2 — official product document received 2026-08-31.
+    // APOLLON RIDE ONE.
+    //
+    // Detailed specification confirmed 2026-09-04. Navigation runs on the
+    // rider's connected phone through CarPlay / Android Auto — the display has
+    // no confirmed standalone satellite navigation, so the copy never claims
+    // built-in GPS navigation. "Water-resistant" is deliberate: no IP rating
+    // is confirmed for this model, so "waterproof" is never used.
+    //
     // Slug kept as the legacy id so /products/motorcycle/mdc-plus02 keeps working.
     en: {
       heroPrimary: "Request Product Information",
@@ -463,23 +566,22 @@ const products: Record<string, ProductData> = {
       inquiryPrimary: "Request Product Information",
       inquirySecondary: "Contact for Installation / Dealer Info",
       backLabel: "Motorcycle Smart Systems",
-      heroEyebrow: "5.5” IPS MOTORCYCLE CARPLAY SYSTEM",
+      heroEyebrow: "5.5\" SMART MOTORCYCLE RIDING DISPLAY",
       heroTitle: "APOLLON RIDE ONE",
-      heroSubtitle: "A smart riding display that brings a 5.5” IPS screen, wireless Apple CarPlay, Android Auto, Bluetooth and GPS together in a water-resistant body built for motorcycle use.",
+      heroSubtitle: "A 5.5-inch IPS smart riding display developed for motorcycle use, with Apple CarPlay and Android Auto on a water-resistant body.",
       promise: "",
       promiseBlocks: [
         "Keep your phone in your pocket. Keep your navigation, your connection and your riding information in front of you.",
-        "APOLLON RIDE ONE / B2 is a smart riding display that brings a 5.5” IPS screen, wireless Apple CarPlay, Android Auto, Bluetooth and GPS together for motorcycle riders. Its water-resistant construction is designed to suit the conditions motorcycles are used in.",
+        "APOLLON RIDE ONE is a 5.5-inch IPS smart riding display developed for motorcycle use. With Apple CarPlay and Android Auto support, compatible smartphone functions such as navigation, music, calls and other supported features can be accessed through the Ride One display. Its water-resistant construction is designed to suit the conditions motorcycles are used in.",
       ],
-      summary: "5.5” IPS • Wireless CarPlay • Android Auto • GPS • Bluetooth • Water Resistant",
+      summary: "5.5\" IPS • Apple CarPlay • Android Auto • Navigation • Bluetooth • Water-Resistant",
       features: [
-        "5.5” IPS Display",
-        "Wireless Apple CarPlay",
+        "5.5\" IPS Display",
+        "Apple CarPlay",
         "Android Auto",
-        "GPS",
+        "Navigation",
         "Bluetooth",
         "Water-Resistant Design",
-        "USB Power",
       ],
       mainImage: {
         src: "/images/motoplay-series/ride-one/main.png",
@@ -491,38 +593,34 @@ const products: Record<string, ProductData> = {
       sectionsHeading: "What APOLLON RIDE ONE offers",
       sections: [
         {
-          heading: "5.5” IPS Display",
-          text: "A colour display experience that makes navigation and connected features comfortable to use on a motorcycle.",
+          heading: "5.5\" IPS Display",
+          text: "A wide-view IPS display designed to keep essential riding information easy to follow on the road.",
         },
         {
-          heading: "Wireless Apple CarPlay",
-          text: "Connect a compatible iPhone to the system wirelessly to make use of CarPlay features.",
+          heading: "CarPlay & Android Auto",
+          text: "Access supported navigation, music, calling and smartphone functionality through the Ride One display.",
         },
         {
-          heading: "Android Auto",
-          text: "Supports a connected riding experience with compatible Android phones.",
+          heading: "Navigation",
+          text: "Follow compatible navigation applications from your connected smartphone directly on the Ride One display.",
         },
         {
-          heading: "GPS",
-          text: "Brings your route onto the motorcycle display with GPS support for navigation.",
-        },
-        {
-          heading: "Bluetooth",
-          text: "Wireless connectivity support makes the system more practical to use while riding.",
+          heading: "Bluetooth Connectivity",
+          text: "Connect compatible smartphones and Bluetooth devices wirelessly.",
         },
         {
           heading: "Water-Resistant Design",
-          text: "A durable construction developed with motorcycle riding conditions in mind.",
-        },
-        {
-          heading: "USB Power",
-          text: "A practical power connection makes the system easy to use on the motorcycle.",
+          text: "Developed for motorcycle use and changing riding conditions.",
         },
       ],
       specs: [
         {
           label: "Product name",
           value: "APOLLON RIDE ONE",
+        },
+        {
+          label: "Product type",
+          value: "Smart Motorcycle Riding Display",
         },
         {
           label: "Model reference",
@@ -565,12 +663,12 @@ const products: Record<string, ProductData> = {
           value: "Up to 64GB",
         },
         {
-          label: "Navigation interface",
-          value: "GPS compatible",
+          label: "Navigation support",
+          value: "Yes, via connected compatible smartphone",
         },
         {
-          label: "Power",
-          value: "Type-C / 12V",
+          label: "Power connection",
+          value: "USB (Type-C), 12V",
         },
         {
           label: "Display modes",
@@ -593,8 +691,20 @@ const products: Record<string, ProductData> = {
           value: "Multiple languages",
         },
         {
+          label: "Water resistance",
+          value: "Water-resistant design",
+        },
+        {
           label: "Construction",
-          value: "Water-resistant, motorcycle optimized",
+          value: "Motorcycle optimized",
+        },
+        {
+          label: "Motorcycle compatibility",
+          value: "Universal",
+        },
+        {
+          label: "Warranty",
+          value: "2 years",
         },
       ],
       galleryNote: "",
@@ -623,8 +733,8 @@ const products: Record<string, ProductData> = {
       galleryContain: true,
       galleryAspect: "4 / 3",
       galleryLastFullWidth: true,
-      metaTitle: "APOLLON RIDE ONE — 5.5” IPS Motorcycle CarPlay System | Apollon",
-      metaDescription: "APOLLON RIDE ONE / B2 is a 5.5” IPS motorcycle CarPlay system with wireless Apple CarPlay, Android Auto, GPS, Bluetooth, USB power and a water-resistant design.",
+      metaTitle: "APOLLON RIDE ONE — Motorcycle CarPlay & Android Auto Display | Apollon Entertainment Systems",
+      metaDescription: "APOLLON RIDE ONE is a 5.5\" IPS smart motorcycle riding display with Apple CarPlay, Android Auto, navigation through your connected smartphone, Bluetooth and a water-resistant design.",
     },
     tr: {
       heroPrimary: "Ürün Bilgisi Al",
@@ -639,23 +749,22 @@ const products: Record<string, ProductData> = {
       inquiryPrimary: "Ürün Bilgisi Al",
       inquirySecondary: "Montaj / Bayi Bilgisi İçin İletişime Geç",
       backLabel: "Motosiklet Akıllı Sistemleri",
-      heroEyebrow: "5.5” IPS MOTOSİKLET CARPLAY SİSTEMİ",
+      heroEyebrow: "5.5\" MOTOSİKLET AKILLI SÜRÜŞ EKRANI",
       heroTitle: "APOLLON RIDE ONE",
-      heroSubtitle: "5.5” IPS ekran, kablosuz Apple CarPlay, Android Auto, Bluetooth ve GPS özelliklerini motosiklet kullanımına uygun suya dayanıklı bir yapıda bir araya getiren akıllı sürüş ekranı.",
+      heroSubtitle: "Motosiklet kullanımı için geliştirilmiş, Apple CarPlay ve Android Auto destekli, suya dayanıklı gövdeye sahip 5.5 inç IPS ekranlı akıllı sürüş sistemi.",
       promise: "",
       promiseBlocks: [
         "Telefonunuz cebinizde kalsın. Navigasyonunuz, bağlantınız ve sürüş bilgileriniz gözünüzün önünde olsun.",
-        "APOLLON RIDE ONE/B2, motosiklet kullanıcıları için 5.5” IPS ekran, kablosuz Apple CarPlay, Android Auto, Bluetooth ve GPS özelliklerini bir araya getiren akıllı sürüş ekranıdır. Suya dayanıklı yapısıyla motosiklet kullanım koşullarına uygun olarak tasarlanmıştır.",
+        "APOLLON RIDE ONE, motosiklet kullanımı için geliştirilmiş 5.5 inç IPS ekranlı akıllı sürüş sistemidir. CarPlay ve Android Auto desteği sayesinde uyumlu akıllı telefonunuzun navigasyon, müzik, arama ve desteklenen fonksiyonlarını Ride One ekranı üzerinden kullanabilirsiniz. Suya dayanıklı yapısıyla motosiklet kullanım koşullarına uygun olarak tasarlanmıştır.",
       ],
-      summary: "5.5” IPS • Kablosuz CarPlay • Android Auto • GPS • Bluetooth • Suya Dayanıklı",
+      summary: "5.5\" IPS • CarPlay • Android Auto • Navigasyon • Bluetooth • Suya Dayanıklı",
       features: [
-        "5.5” IPS Ekran",
-        "Kablosuz Apple CarPlay",
+        "5.5\" IPS Ekran",
+        "Apple CarPlay",
         "Android Auto",
-        "GPS",
+        "Navigasyon",
         "Bluetooth",
         "Suya Dayanıklı Tasarım",
-        "USB Güç Beslemesi",
       ],
       mainImage: {
         src: "/images/motoplay-series/ride-one/main.png",
@@ -667,38 +776,34 @@ const products: Record<string, ProductData> = {
       sectionsHeading: "APOLLON RIDE ONE neler sunar",
       sections: [
         {
-          heading: "5.5” IPS Ekran",
-          text: "Navigasyon ve bağlantılı özelliklerin motosiklet üzerinde rahat kullanılmasını sağlayan renkli ekran deneyimi sunar.",
+          heading: "5.5\" IPS Ekran",
+          text: "Yol üzerinde önemli sürüş bilgilerinin rahatça takip edilmesi için tasarlanmış geniş görüş açılı IPS ekran.",
         },
         {
-          heading: "Kablosuz Apple CarPlay",
-          text: "Uyumlu iPhone’unuzu kablosuz olarak sisteme bağlayarak CarPlay özelliklerinden yararlanmanızı sağlar.",
+          heading: "CarPlay ve Android Auto",
+          text: "Desteklenen navigasyon, müzik, arama ve akıllı telefon fonksiyonlarına Ride One ekranı üzerinden erişin.",
         },
         {
-          heading: "Android Auto",
-          text: "Uyumlu Android telefonlarla bağlantılı sürüş deneyimini destekler.",
+          heading: "Navigasyon",
+          text: "Bağlı akıllı telefonunuzdaki uyumlu navigasyon uygulamalarını doğrudan Ride One ekranından takip edin.",
         },
         {
-          heading: "GPS",
-          text: "Navigasyon kullanımını destekleyen GPS özelliğiyle rotanızı motosiklet ekranına taşır.",
-        },
-        {
-          heading: "Bluetooth",
-          text: "Kablosuz bağlantı desteğiyle sürüş sırasında daha pratik bir kullanım sunar.",
+          heading: "Bluetooth Bağlantısı",
+          text: "Uyumlu akıllı telefonları ve Bluetooth cihazlarını kablosuz olarak bağlayın.",
         },
         {
           heading: "Suya Dayanıklı Tasarım",
-          text: "Motosiklet kullanım koşulları düşünülerek geliştirilen dayanıklı yapıya sahiptir.",
-        },
-        {
-          heading: "USB Güç Beslemesi",
-          text: "Pratik güç bağlantısıyla motosiklet üzerinde kullanım kolaylığı sağlar.",
+          text: "Motosiklet kullanımı ve değişen sürüş koşulları için geliştirilmiştir.",
         },
       ],
       specs: [
         {
           label: "Ürün adı",
           value: "APOLLON RIDE ONE",
+        },
+        {
+          label: "Ürün tipi",
+          value: "Motosiklet Akıllı Sürüş Ekranı",
         },
         {
           label: "Model referansı",
@@ -741,12 +846,12 @@ const products: Record<string, ProductData> = {
           value: "64GB'a kadar",
         },
         {
-          label: "Navigasyon arayüzü",
-          value: "GPS uyumlu",
+          label: "Navigasyon desteği",
+          value: "Bağlı uyumlu akıllı telefon üzerinden",
         },
         {
-          label: "Güç",
-          value: "Type-C / 12V",
+          label: "Güç bağlantısı",
+          value: "USB (Type-C), 12V",
         },
         {
           label: "Ekran modları",
@@ -769,8 +874,20 @@ const products: Record<string, ProductData> = {
           value: "Çoklu dil",
         },
         {
+          label: "Su dayanıklılığı",
+          value: "Suya dayanıklı tasarım",
+        },
+        {
           label: "Gövde yapısı",
-          value: "Suya dayanıklı, motosiklet optimizasyonlu",
+          value: "Motosiklet optimizasyonlu",
+        },
+        {
+          label: "Motosiklet uyumluluğu",
+          value: "Evrensel",
+        },
+        {
+          label: "Garanti",
+          value: "2 yıl",
         },
       ],
       galleryNote: "",
@@ -799,13 +916,24 @@ const products: Record<string, ProductData> = {
       galleryContain: true,
       galleryAspect: "4 / 3",
       galleryLastFullWidth: true,
-      metaTitle: "APOLLON RIDE ONE — 5.5” IPS Motosiklet CarPlay Sistemi | Apollon",
-      metaDescription: "APOLLON RIDE ONE / B2; kablosuz Apple CarPlay, Android Auto, GPS, Bluetooth, USB güç beslemesi ve suya dayanıklı tasarım sunan 5.5” IPS motosiklet CarPlay sistemidir.",
+      metaTitle: "APOLLON RIDE ONE — Motosiklet CarPlay ve Android Auto Ekranı | Apollon Entertainment Systems",
+      metaDescription: "APOLLON RIDE ONE; Apple CarPlay, Android Auto, bağlı akıllı telefon üzerinden navigasyon, Bluetooth ve suya dayanıklı tasarım sunan 5.5\" IPS motosiklet akıllı sürüş ekranıdır.",
     },
   },
 
   "moto-dash-cam-tr-v2": {
-    // APOLLON RX ONE / ZM3 — official product document received 2026-08-31.
+    // APOLLON RX ONE ZM3.
+    //
+    // Detailed specification confirmed 2026-09-04. This supersedes the
+    // 2026-08-31 product document, which described a 1080P screenless camera:
+    // it is a 4K camera with a 1.5" high-brightness IPS display.
+    //
+    // That document's 5V/1A power input is likewise superseded — the confirmed
+    // operating voltage is 12-24V, matching the Apollon specification panel in
+    // rx-one/gallery/rx-one-gallery-04.png.
+    //
+    // 256 GB is the maximum supported card capacity, not a bundled card.
+    //
     // Slug kept as the legacy id so the existing product URL keeps working.
     en: {
       heroPrimary: "Request Product Information",
@@ -820,136 +948,117 @@ const products: Record<string, ProductData> = {
       inquiryPrimary: "Request Product Information",
       inquirySecondary: "Contact for Installation / Dealer Info",
       backLabel: "Motorcycle Smart Systems",
-      heroEyebrow: "COMPACT 1080P MOTORCYCLE CAMERA",
-      heroTitle: "APOLLON RX ONE",
-      heroSubtitle: "A compact motorcycle camera bringing 1080P recording, a wide-angle view, a G-sensor, parking mode and loop recording together in a body sized for the motorcycle.",
+      heroEyebrow: "4K SMART MOTORCYCLE CAMERA",
+      heroTitle: "APOLLON RX ONE ZM3",
+      heroSubtitle: "A compact smart riding camera bringing 4K recording, GPS, Wi-Fi, Bluetooth 5.0, a G-sensor and parking surveillance together in a single system.",
       promise: "",
       promiseBlocks: [
         "Compact design. Uninterrupted recording. Every moment of your ride on record.",
-        "APOLLON RX ONE / ZM3 is a practical recording solution that combines 1080P recording, a wide-angle view, a G-sensor, parking mode and loop recording in a compact form suited to motorcycle use. Its small dimensions let you record your rides without taking up unnecessary space on the motorcycle.",
+        "APOLLON RX ONE ZM3 is a compact smart motorcycle riding camera, designed to combine 4K video recording, GPS, Wi-Fi, Bluetooth 5.0, G-sensor functionality and parking surveillance in a single system.",
       ],
-      summary: "1080P • Wide Angle • G-Sensor • Parking Mode • Loop Recording • Compact Design",
+      summary: "4K • 1.5\" IPS • GPS • Wi-Fi • Bluetooth 5.0 • G-Sensor • Parking Surveillance • Up to 256 GB",
       features: [
-        "1080P Recording",
-        "Wide-Angle View",
+        "4K Video",
+        "1.5\" IPS Display",
+        "GPS",
+        "Wi-Fi",
+        "Bluetooth 5.0",
+        "Mobile App",
         "G-Sensor",
-        "Parking Mode",
+        "Parking Surveillance",
         "Loop Recording",
-        "Easy Installation",
-        "Compact Design",
+        "Up to 256 GB Storage",
       ],
       mainImage: {
         src: "/images/motoplay-series/rx-one/main.png",
-        alt: "APOLLON RX ONE compact motorcycle camera, side view showing the carbon-textured body and wide-angle lens",
+        alt: "APOLLON RX ONE ZM3 compact motorcycle camera, side view showing the carbon-textured body and wide-angle lens",
       },
       mainImageFit: "contain",
       mainImageAspect: "4 / 3",
       imageBackground: "#ffffff",
-      sectionsHeading: "What APOLLON RX ONE offers",
+      sectionsHeading: "What APOLLON RX ONE ZM3 offers",
       sections: [
         {
-          heading: "1080P Recording",
-          text: "Records your everyday rides with clear, usable image quality.",
+          heading: "4K Recording",
+          text: "Capture detailed riding footage in 4K resolution.",
         },
         {
-          heading: "Wide-Angle View",
-          text: "Helps bring a wider section of the road into the camera's field of view.",
+          heading: "1.5\" IPS Display",
+          text: "A compact high-brightness display provides quick access to device and recording information.",
         },
         {
-          heading: "G-Sensor",
-          text: "Sensor technology that helps detect impacts and sudden movements, supporting recording security.",
+          heading: "GPS Ride Data",
+          text: "Record location-linked riding information including latitude, longitude, altitude and compass data.",
         },
         {
-          heading: "Parking Mode",
-          text: "Supports security functions while the motorcycle is parked.",
+          heading: "Wireless Connectivity",
+          text: "Connect through Wi-Fi and Bluetooth 5.0 with compatible devices.",
         },
         {
-          heading: "Loop Recording",
-          text: "Helps manage storage automatically so recording continues without interruption.",
+          heading: "Mobile App",
+          text: "Access compatible functionality through iOS and Android devices.",
         },
         {
-          heading: "Easy Installation",
-          text: "Its compact construction offers a practical installation experience on the motorcycle.",
+          heading: "G-Sensor Protection",
+          text: "Selectable sensitivity levels help protect important recordings when an impact is detected.",
+        },
+        {
+          heading: "Parking Surveillance",
+          text: "Supports security-focused recording while the motorcycle is parked.",
+        },
+        {
+          heading: "Up to 256 GB",
+          text: "Supports external TF/microSD storage up to 256 GB, with Class 10 cards recommended.",
         },
       ],
       specs: [
-        {
-          label: "Product name",
-          value: "APOLLON RX ONE",
-        },
-        {
-          label: "Model reference",
-          value: "ZM3",
-        },
-        {
-          label: "Category",
-          value: "MotoPlay Series",
-        },
-        {
-          label: "Video resolution",
-          value: "1920×1080P / 30FPS",
-        },
-        {
-          label: "Video format",
-          value: "TS",
-        },
-        {
-          label: "Water resistance",
-          value: "IP66",
-        },
-        {
-          label: "Storage",
-          value: "TF card support",
-        },
-        {
-          label: "Power input",
-          value: "5V / 1A",
-        },
-        {
-          label: "Lens",
-          value: "Built-in wide-angle lens",
-        },
-        {
-          label: "Recording mode",
-          value: "Loop recording",
-        },
-        {
-          label: "Parking mode",
-          value: "Supported",
-        },
-        {
-          label: "G-sensor",
-          value: "Supported",
-        },
-        {
-          label: "Operating design",
-          value: "Motorcycle optimized",
-        },
-        {
-          label: "Construction",
-          value: "Vibration-resistant compact body",
-        },
+        { label: "Product name", value: "APOLLON RX ONE ZM3" },
+        { label: "Category", value: "MotoPlay Series" },
+        { label: "Video resolution", value: "4K" },
+        { label: "Video format", value: "H.264 / TS" },
+        { label: "Display", value: "1.5\" high-brightness IPS" },
+        { label: "GPS", value: "Yes" },
+        { label: "GPS data", value: "Latitude, longitude, altitude, compass" },
+        { label: "Wi-Fi", value: "Yes" },
+        { label: "Bluetooth", value: "Bluetooth 5.0" },
+        { label: "Mobile app", value: "iOS / Android" },
+        { label: "G-sensor", value: "High / medium / low sensitivity" },
+        { label: "Parking surveillance", value: "Yes" },
+        { label: "Loop recording", value: "Yes" },
+        { label: "Audio recording", value: "Yes" },
+        { label: "Emergency recording lock", value: "Yes" },
+        { label: "One-button recording lock", value: "Yes" },
+        { label: "External storage", value: "TF / microSD" },
+        { label: "Maximum storage", value: "256 GB" },
+        { label: "Recommended card", value: "Class 10" },
+        { label: "Operating voltage", value: "12–24V" },
+        { label: "Operating temperature", value: "-20°C to 65°C" },
+        { label: "Water resistance", value: "IP66" },
+        { label: "Lens", value: "Built-in wide-angle lens" },
+        { label: "Operating design", value: "Motorcycle optimized" },
+        { label: "Compatibility", value: "Universal" },
+        { label: "Warranty", value: "2 years" },
       ],
       galleryNote: "",
       galleryImages: [
         {
           src: "/images/motoplay-series/rx-one/gallery/rx-one-gallery-01.png",
-          alt: "APOLLON RX ONE three-quarter rear view showing the USB-C connection bay and the mounting threads",
+          alt: "APOLLON RX ONE ZM3 three-quarter rear view showing the USB-C connection bay and the mounting threads",
         },
         {
           src: "/images/motoplay-series/rx-one/gallery/rx-one-gallery-02.png",
-          alt: "APOLLON RX ONE rear face with the orange power button and the carbon-fibre panel",
+          alt: "APOLLON RX ONE ZM3 rear face with the orange power button and the carbon-fibre panel",
         },
         {
           src: "/images/motoplay-series/rx-one/gallery/rx-one-gallery-03.png",
-          alt: "APOLLON RX ONE package contents: camera, mounting bracket, USB-C cable, screws and tools",
+          alt: "APOLLON RX ONE ZM3 package contents: camera, mounting bracket, USB-C cable, screws and tools",
         },
       ],
       galleryContain: true,
       galleryAspect: "4 / 3",
       galleryLastFullWidth: true,
-      metaTitle: "APOLLON RX ONE — Compact 1080P Motorcycle Camera | Apollon",
-      metaDescription: "APOLLON RX ONE / ZM3 is a compact 1080P motorcycle camera with a wide-angle view, G-sensor, parking mode, loop recording and easy installation.",
+      metaTitle: "APOLLON RX ONE ZM3 — 4K Motorcycle Camera | Apollon Entertainment Systems",
+      metaDescription: "APOLLON RX ONE ZM3 is a 4K motorcycle camera with GPS, Wi-Fi, Bluetooth 5.0, a G-sensor, parking monitoring, loop recording and an emergency recording lock.",
     },
     tr: {
       heroPrimary: "Ürün Bilgisi Al",
@@ -964,136 +1073,117 @@ const products: Record<string, ProductData> = {
       inquiryPrimary: "Ürün Bilgisi Al",
       inquirySecondary: "Montaj / Bayi Bilgisi İçin İletişime Geç",
       backLabel: "Motosiklet Akıllı Sistemleri",
-      heroEyebrow: "KOMPAKT 1080P MOTOSİKLET KAMERASI",
-      heroTitle: "APOLLON RX ONE",
-      heroSubtitle: "1080P kayıt, geniş açı, G-Sensörü, park modu ve döngüsel kayıt özelliklerini motosiklete uygun kompakt bir gövdede bir araya getiren motosiklet kamerası.",
+      heroEyebrow: "4K AKILLI MOTOSİKLET KAMERASI",
+      heroTitle: "APOLLON RX ONE ZM3",
+      heroSubtitle: "4K video kaydı, GPS, Wi-Fi, Bluetooth 5.0, G-Sensör ve park gözetimi özelliklerini kompakt bir gövdede bir araya getiren akıllı motosiklet sürüş kamerası.",
       promise: "",
       promiseBlocks: [
         "Kompakt tasarım. Kesintisiz kayıt. Yolculuğunuzun her anı kayıt altında.",
-        "APOLLON RX ONE/ZM3; motosiklet kullanımına uygun kompakt yapısıyla 1080P kayıt, geniş açı, G-Sensörü, park modu ve döngüsel kayıt özelliklerini bir araya getiren pratik bir kayıt çözümüdür. Küçük boyutları sayesinde motosiklet üzerinde gereksiz yer kaplamadan sürüşlerinizi kayıt altına almanızı sağlar.",
+        "APOLLON RX ONE ZM3, motosiklet kullanımı için geliştirilen; 4K video kaydı, GPS, Wi-Fi, Bluetooth 5.0, G-Sensör ve park gözetimi özelliklerini kompakt bir gövdede bir araya getiren akıllı motosiklet sürüş kamerasıdır.",
       ],
-      summary: "1080P • Geniş Açı • G-Sensörü • Park Modu • Döngüsel Kayıt • Kompakt Tasarım",
+      summary: "4K • 1.5\" IPS • GPS • Wi-Fi • Bluetooth 5.0 • G-Sensör • Park Gözetimi • 256 GB’a Kadar",
       features: [
-        "1080P Kayıt",
-        "Geniş Açı",
-        "G-Sensörü",
-        "Park Modu",
+        "4K Video",
+        "1.5\" IPS Ekran",
+        "GPS",
+        "Wi-Fi",
+        "Bluetooth 5.0",
+        "Mobil Uygulama",
+        "G-Sensör",
+        "Park Gözetimi",
         "Döngüsel Kayıt",
-        "Kolay Montaj",
-        "Kompakt Tasarım",
+        "256 GB’a Kadar Depolama",
       ],
       mainImage: {
         src: "/images/motoplay-series/rx-one/main.png",
-        alt: "APOLLON RX ONE kompakt motosiklet kamerası; karbon dokulu gövdesi ve geniş açılı lensiyle yandan görünüm",
+        alt: "APOLLON RX ONE ZM3 kompakt motosiklet kamerası; karbon dokulu gövdesi ve geniş açılı lensiyle yandan görünüm",
       },
       mainImageFit: "contain",
       mainImageAspect: "4 / 3",
       imageBackground: "#ffffff",
-      sectionsHeading: "APOLLON RX ONE neler sunar",
+      sectionsHeading: "APOLLON RX ONE ZM3 neler sunar",
       sections: [
         {
-          heading: "1080P Kayıt",
-          text: "Günlük sürüşlerinizi net ve kullanılabilir görüntü kalitesiyle kayıt altına alır.",
+          heading: "4K Kayıt",
+          text: "Sürüş görüntülerinizi 4K çözünürlükte, detaylı bir şekilde kaydeder.",
         },
         {
-          heading: "Geniş Açı",
-          text: "Yolun daha geniş bölümünün kamera görüş alanına alınmasına yardımcı olur.",
+          heading: "1.5\" IPS Ekran",
+          text: "Kompakt ve yüksek parlaklıklı ekran, cihaz ve kayıt bilgilerine hızlı erişim sağlar.",
         },
         {
-          heading: "G-Sensörü",
-          text: "Darbe ve ani hareketlerin algılanmasına yardımcı olan sensör teknolojisiyle kayıt güvenliğini destekler.",
+          heading: "GPS Sürüş Verisi",
+          text: "Enlem, boylam, rakım ve pusula bilgisini içeren konum bağlantılı sürüş verilerini kaydeder.",
         },
         {
-          heading: "Park Modu",
-          text: "Motosiklet park halindeyken güvenlik fonksiyonlarını destekler.",
+          heading: "Kablosuz Bağlantı",
+          text: "Wi-Fi ve Bluetooth 5.0 ile uyumlu cihazlara bağlanır.",
         },
         {
-          heading: "Döngüsel Kayıt",
-          text: "Depolama alanının otomatik yönetilmesine yardımcı olarak kayıt sürekliliğini destekler.",
+          heading: "Mobil Uygulama",
+          text: "iOS ve Android cihazlar üzerinden uyumlu fonksiyonlara erişim sunar.",
         },
         {
-          heading: "Kolay Montaj",
-          text: "Kompakt yapısıyla motosiklet üzerinde pratik bir kurulum deneyimi sunar.",
+          heading: "G-Sensör Koruması",
+          text: "Seçilebilir hassasiyet seviyeleri, darbe algılandığında önemli kayıtların korunmasına yardımcı olur.",
+        },
+        {
+          heading: "Park Gözetimi",
+          text: "Motosiklet park halindeyken güvenlik odaklı kayıt fonksiyonlarını destekler.",
+        },
+        {
+          heading: "256 GB’a Kadar",
+          text: "256 GB’a kadar harici TF/microSD depolamayı destekler; Class 10 kart önerilir.",
         },
       ],
       specs: [
-        {
-          label: "Ürün adı",
-          value: "APOLLON RX ONE",
-        },
-        {
-          label: "Model referansı",
-          value: "ZM3",
-        },
-        {
-          label: "Kategori",
-          value: "MotoPlay Serisi",
-        },
-        {
-          label: "Video çözünürlüğü",
-          value: "1920×1080P / 30FPS",
-        },
-        {
-          label: "Video formatı",
-          value: "TS",
-        },
-        {
-          label: "Su dayanıklılığı",
-          value: "IP66",
-        },
-        {
-          label: "Depolama",
-          value: "TF kart desteği",
-        },
-        {
-          label: "Güç girişi",
-          value: "5V / 1A",
-        },
-        {
-          label: "Lens",
-          value: "Dahili geniş açılı lens",
-        },
-        {
-          label: "Kayıt modu",
-          value: "Döngüsel kayıt",
-        },
-        {
-          label: "Park modu",
-          value: "Destekleniyor",
-        },
-        {
-          label: "G-Sensörü",
-          value: "Destekleniyor",
-        },
-        {
-          label: "Kullanım yapısı",
-          value: "Motosiklet optimizasyonlu",
-        },
-        {
-          label: "Gövde yapısı",
-          value: "Titreşime dayanıklı kompakt gövde",
-        },
+        { label: "Ürün adı", value: "APOLLON RX ONE ZM3" },
+        { label: "Kategori", value: "MotoPlay Serisi" },
+        { label: "Video çözünürlüğü", value: "4K" },
+        { label: "Video formatı", value: "H.264 / TS" },
+        { label: "Ekran", value: "1.5\" yüksek parlaklıklı IPS" },
+        { label: "GPS", value: "Var" },
+        { label: "GPS verisi", value: "Enlem, boylam, rakım, pusula" },
+        { label: "Wi-Fi", value: "Var" },
+        { label: "Bluetooth", value: "Bluetooth 5.0" },
+        { label: "Mobil uygulama", value: "iOS / Android" },
+        { label: "G-Sensör", value: "Yüksek / orta / düşük hassasiyet" },
+        { label: "Park gözetimi", value: "Var" },
+        { label: "Döngüsel kayıt", value: "Var" },
+        { label: "Ses kaydı", value: "Var" },
+        { label: "Acil durum kayıt kilidi", value: "Var" },
+        { label: "Tek tuşla kayıt kilidi", value: "Var" },
+        { label: "Harici depolama", value: "TF / microSD" },
+        { label: "Maksimum depolama", value: "256 GB" },
+        { label: "Önerilen kart", value: "Class 10" },
+        { label: "Çalışma voltajı", value: "12–24V" },
+        { label: "Çalışma sıcaklığı", value: "-20°C – 65°C" },
+        { label: "Su dayanıklılığı", value: "IP66" },
+        { label: "Lens", value: "Dahili geniş açılı lens" },
+        { label: "Kullanım yapısı", value: "Motosiklet optimizasyonlu" },
+        { label: "Uyumluluk", value: "Universal" },
+        { label: "Garanti", value: "2 yıl" },
       ],
       galleryNote: "",
       galleryImages: [
         {
           src: "/images/motoplay-series/rx-one/gallery/rx-one-gallery-01.png",
-          alt: "APOLLON RX ONE arka üçte bir görünüm; USB-C bağlantı yuvası ve montaj dişleri",
+          alt: "APOLLON RX ONE ZM3 arka üçte bir görünüm; USB-C bağlantı yuvası ve montaj dişleri",
         },
         {
           src: "/images/motoplay-series/rx-one/gallery/rx-one-gallery-02.png",
-          alt: "APOLLON RX ONE arka yüzeyi; turuncu güç tuşu ve karbon fiber panel",
+          alt: "APOLLON RX ONE ZM3 arka yüzeyi; turuncu güç tuşu ve karbon fiber panel",
         },
         {
           src: "/images/motoplay-series/rx-one/gallery/rx-one-gallery-03.png",
-          alt: "APOLLON RX ONE paket içeriği: kamera, montaj aparatı, USB-C kablo, vidalar ve aparatlar",
+          alt: "APOLLON RX ONE ZM3 paket içeriği: kamera, montaj aparatı, USB-C kablo, vidalar ve aparatlar",
         },
       ],
       galleryContain: true,
       galleryAspect: "4 / 3",
       galleryLastFullWidth: true,
-      metaTitle: "APOLLON RX ONE — Kompakt 1080P Motosiklet Kamerası | Apollon",
-      metaDescription: "APOLLON RX ONE / ZM3; geniş açı, G-Sensörü, park modu, döngüsel kayıt ve kolay montaj sunan kompakt 1080P motosiklet kamerasıdır.",
+      metaTitle: "APOLLON RX ONE ZM3 — 4K Motosiklet Kamerası | Apollon Entertainment Systems",
+      metaDescription: "APOLLON RX ONE ZM3; GPS, Wi-Fi, Bluetooth 5.0, G-Sensörü, park gözetimi, döngüsel kayıt ve acil durum kayıt kilidi sunan 4K motosiklet kamerasıdır.",
     },
   },
 }

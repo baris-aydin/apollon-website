@@ -6,6 +6,8 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton"
 import { Reveal } from "@/components/motion/Reveal"
 import {
   COMPANY_ADDRESS_LINES,
+  COMPANY_EMAIL,
+  COMPANY_PHONES,
   MAPS_EMBED_URL,
   MAPS_OPEN_URL,
   WORKING_HOURS,
@@ -537,6 +539,38 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
                     </p>
                     <p className="text-sm leading-relaxed text-muted-foreground">
                       {c.office.hours}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Phone — both public lines, each dialable */}
+                <div className="flex gap-3">
+                  <div className="mt-0.5 h-5 w-5 shrink-0 text-bronze/60">
+                    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-7.18 0-13-5.82-13-13V3.5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="mb-1 text-xs font-medium uppercase tracking-widest text-muted-foreground/60">
+                      {locale === "tr" ? "Telefon" : "Phone"}
+                    </p>
+                    {COMPANY_PHONES.map((phone) => (
+                      <p key={phone.e164} className="text-sm leading-relaxed">
+                        <a
+                          href={`tel:${phone.e164}`}
+                          className="text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          {phone.display}
+                        </a>
+                      </p>
+                    ))}
+                    <p className="mt-2 text-sm leading-relaxed">
+                      <a
+                        href={`mailto:${COMPANY_EMAIL}`}
+                        className="text-muted-foreground transition-colors hover:text-foreground"
+                      >
+                        {COMPANY_EMAIL}
+                      </a>
                     </p>
                   </div>
                 </div>

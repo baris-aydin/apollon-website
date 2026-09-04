@@ -114,16 +114,16 @@ const content: Record<Locale, PageContent> = {
         name: "APOLLON RIDE VISION",
         category: "MotoPlay Series",
         description:
-          "A motorcycle CarPlay system with a premium high-brightness IPS display, dual Bluetooth, Android Auto and GPS in a water-resistant body.",
+          "A smart motorcycle riding display with Apple CarPlay, Android Auto, smartphone navigation and an integrated 1080P riding camera.",
         href: "/products/motorcycle/mdc-smart02",
         status: "available",
         ctaLabel: "View Product",
       },
       {
-        name: "APOLLON RX ONE",
+        name: "APOLLON RX ONE ZM3",
         category: "MotoPlay Series",
         description:
-          "A compact 1080P mini dash camera for motorcycles with wide-angle coverage, loop recording, G-sensor and parking mode.",
+          "A 4K smart motorcycle camera with a 1.5\" IPS display, GPS, Wi-Fi and Bluetooth 5.0, plus loop recording, a G-sensor and parking surveillance.",
         href: "/products/motorcycle/moto-dash-cam-tr-v2",
         status: "available",
         ctaLabel: "View Product",
@@ -208,16 +208,16 @@ const content: Record<Locale, PageContent> = {
         name: "APOLLON RIDE VISION",
         category: "MotoPlay Series",
         description:
-          "Suya dayanıklı gövdesinde premium yüksek parlaklıklı IPS ekran, çift Bluetooth, Android Auto ve GPS sunan motosiklet CarPlay sistemi.",
+          "Apple CarPlay, Android Auto, akıllı telefon üzerinden navigasyon ve entegre 1080P sürüş kamerası sunan akıllı motosiklet sürüş ekranı.",
         href: "/products/motorcycle/mdc-smart02",
         status: "available",
         ctaLabel: "Ürünü İncele",
       },
       {
-        name: "APOLLON RX ONE",
+        name: "APOLLON RX ONE ZM3",
         category: "MotoPlay Series",
         description:
-          "Geniş açılı görüş, döngüsel kayıt, G-sensörü ve park modu sunan kompakt 1080P mini motosiklet kamerası.",
+          "1.5\" IPS ekran, GPS, Wi-Fi ve Bluetooth 5.0 bağlantısının yanı sıra döngüsel kayıt, G-sensör ve park gözetimi sunan 4K akıllı motosiklet kamerası.",
         href: "/products/motorcycle/moto-dash-cam-tr-v2",
         status: "available",
         ctaLabel: "Ürünü İncele",

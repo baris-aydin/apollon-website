@@ -32,7 +32,7 @@ export const MOTOPLAY_PRODUCTS: MotoPlayProduct[] = [
   },
   {
     slug: "moto-dash-cam-tr-v2",
-    name: "APOLLON RX ONE",
+    name: "APOLLON RX ONE ZM3",
     mainImage: "/images/motoplay-series/rx-one/main.png",
   },
 ]

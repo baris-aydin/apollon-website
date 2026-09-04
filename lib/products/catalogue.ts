@@ -6,7 +6,7 @@ import { type Locale } from "@/lib/i18n"
 import { CAR_PRODUCTS } from "@/lib/products/car"
 
 export const MOTORCYCLE_PRODUCT_NAMES = [
-  "APOLLON RX ONE",
+  "APOLLON RX ONE ZM3",
   "APOLLON RIDE ONE",
   "APOLLON RIDE VISION",
 ] as const

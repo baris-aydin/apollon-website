@@ -19,18 +19,18 @@ const content = {
     products: [
       {
         name: "APOLLON RIDE VISION",
-        description: "Kablosuz CarPlay & Android Auto entegrasyonu",
-        tags: ["CarPlay", "Android Auto", "Su Geçirmez"],
+        description: "1080P kamera, CarPlay, Android Auto ve navigasyon",
+        tags: ["1080P Kamera", "CarPlay", "Android Auto", "Navigasyon"],
       },
       {
         name: "APOLLON RIDE ONE",
-        description: "Gelişmiş bağlantı ve çoklu kamera desteği",
-        tags: ["Gelişmiş Bağlantı", "Çoklu Kamera"],
+        description: "5.5\" IPS ekran, CarPlay, Android Auto ve navigasyon",
+        tags: ["5.5\" IPS", "CarPlay", "Android Auto", "Navigasyon"],
       },
       {
-        name: "APOLLON RX ONE",
-        description: "Suya dayanıklı motosiklet kayıt kamerası",
-        tags: ["Kayıt", "Su Geçirmez"],
+        name: "APOLLON RX ONE ZM3",
+        description: "4K, GPS ve Wi-Fi’li akıllı motosiklet kamerası",
+        tags: ["4K", "GPS", "Wi-Fi", "Bluetooth 5.0"],
       },
     ] as Product[],
   },
@@ -43,18 +43,18 @@ const content = {
     products: [
       {
         name: "APOLLON RIDE VISION",
-        description: "Wireless CarPlay & Android Auto integration",
-        tags: ["CarPlay", "Android Auto", "Waterproof"],
+        description: "1080P camera, CarPlay, Android Auto and navigation",
+        tags: ["1080P Camera", "CarPlay", "Android Auto", "Navigation"],
       },
       {
         name: "APOLLON RIDE ONE",
-        description: "Advanced connectivity and multi-camera support",
-        tags: ["Advanced Connectivity", "Multi-Camera"],
+        description: "5.5\" IPS display with CarPlay, Android Auto and navigation",
+        tags: ["5.5\" IPS", "CarPlay", "Android Auto", "Navigation"],
       },
       {
-        name: "APOLLON RX ONE",
-        description: "Waterproof motorcycle recording camera system",
-        tags: ["Recording", "Waterproof"],
+        name: "APOLLON RX ONE ZM3",
+        description: "4K smart motorcycle camera with GPS and Wi-Fi",
+        tags: ["4K", "GPS", "Wi-Fi", "Bluetooth 5.0"],
       },
     ] as Product[],
   },
